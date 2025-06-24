@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini Amazon - Tienda</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #ffffff;
+    }
+    header {
+      background-color: #232f3e;
+      color: white;
+      padding: 1em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      margin: 0;
+      color: #ffcc00;
+    }
+    nav a {
+      color: rgba(247, 247, 247, 0.904);
+      margin: 0 0.5em;
+      text-decoration: none;
+      padding: 0.5em;
+      background-color: #530101;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+    .categorias {
+      background-color: #034392;
+      color: white;
+      padding: 0.5em;
+      display: flex;
+      gap: 1em;
+      overflow-x: auto;
+    }
+    .categorias a {
+      color: rgb(247, 247, 247);
+      text-decoration: none;
+      background-color: #0771f3;
+      padding: 0.5em 1em;
+      border-radius: 5px;
+    }
+    .producto {
+      background: rgb(247, 243, 243);
+      margin: 1em;
+      padding: 1em;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(177, 16, 16, 0.918);
+      text-align: center;
+    }
+    .producto img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+    .grid-productos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1em;
+      padding: 1em;
+    }
+    .boton-carrito {
+      background-color: #f0c14b;
+      border: 1px solid #a88734;
+      padding: 0.5em;
+      cursor: pointer;
+      border-radius: 4px;
+      font-weight: bold;
+      display: block;
+      width: 100%;
+      margin-top: 5px;
+      text-align: center;
+      text-decoration: none;
+      color: black;
+    }
+    #listaCarritoPreview {
+      background-color: #ffffff;
+      color: #000;
+      margin: 1em;
+      padding: 1em;
+      border-radius: 8px;
+      box-shadow: 0 0 4px rgba(0,0,0,0.2);
+    }
+    #listaCarritoPreview h3 {
+      margin-top: 0;
+    }
+    #listaCarritoPreview ul {
+      list-style: disc;
+      padding-left: 1.5em;
+    }
+    footer {
+      background-color: #232f3e;
+      color: white;
+      padding: 2em;
+      font-size: 14px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1em;
+    }
+    .footer-grid h4 {
+      color: #ff9900;
+      margin-bottom: 0.5em;
+    }
+    .footer-grid a {
+      color: #ddd;
+      text-decoration: none;
+      margin-bottom: 0.3em;
+      display: block;
+    }
+    .footer-bottom {
+      text-align: center;
+      margin-top: 2em;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mini Amazon</h1>
+    <nav>
+      <a href="../categorias_general/categoria.html">Categorías</a>
+      <a href="../opciones/contactogeneral1.html">Contacto</a>
+      <a href="../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
+      <a href="../index.html">Cerrar sesión</a>
+    </nav>
+  </header>
+
+  <section class="categorias">
+    <!-- Cambia los enlaces por las categorías reales -->
+    <a href="../categorias_general/categorias/plata.html">Plata</a>
+    <a href="../categorias_general/categorias/catalogos1.html">Catálogos1</a>
+    <a href="../categorias_general/categorias/catalogos2.html">Catálogos2</a>
+    <a href="../categorias_general/categorias/calzado.html">Calzado mexicano</a>
+  </section>
+
+  <main class="grid-productos">
+    <!-- Cambia los productos por las categorías reales -->
+    <div class="producto">
+    <img src="imagenes/plata1.jpeg" alt="Collar de Plata">
+    <h3>Collar de Plata</h3>
+    <p>Q180.00</p>
+    <button class="boton-carrito" data-nombre="Collar de Plata" data-precio="180">Agregar al carrito</button>
+    <a href="../productos/producto_plata/producto_plata1.html" class="boton-carrito">Ver descripción</a>
+  </div>
+   <!-- Cambia los productos por las categorías reales -->
+    <div class="producto">
+    <img src="imagenes/plata1.jpeg" alt="Collar de Plata">
+    <h3>Collar de Plata</h3>
+    <p>Q180.00</p>
+    <button class="boton-carrito" data-nombre="Collar de Plata" data-precio="180">Agregar al carrito</button>
+    <a href="../productos/producto_plata/producto_plata1.html" class="boton-carrito">Ver descripción</a>
+  </div>
+   <!-- Cambia los productos por las categorías reales -->
+    <div class="producto">
+    <img src="imagenes/plata1.jpeg" alt="Collar de Plata">
+    <h3>Collar de Plata</h3>
+    <p>Q180.00</p>
+    <button class="boton-carrito" data-nombre="Collar de Plata" data-precio="180">Agregar al carrito</button>
+    <a href="../productos/producto_plata/producto_plata1.html" class="boton-carrito">Ver descripción</a>
+  </div>
+   <!-- Cambia los productos por las categorías reales -->
+    <div class="producto">
+    <img src="imagenes/plata1.jpeg" alt="Collar de Plata">
+    <h3>Collar de Plata</h3>
+    <p>Q180.00</p>
+    <button class="boton-carrito" data-nombre="Collar de Plata" data-precio="180">Agregar al carrito</button>
+    <a href="../productos/producto_plata/producto_plata1.html" class="boton-carrito">Ver descripción</a>
+  </div>
+   <!-- Cambia los productos por las categorías reales -->
+    <div class="producto">
+    <img src="imagenes/plata1.jpeg" alt="Collar de Plata">
+    <h3>Collar de Plata</h3>
+    <p>Q180.00</p>
+    <button class="boton-carrito" data-nombre="Collar de Plata" data-precio="180">Agregar al carrito</button>
+    <a href="../productos/producto_plata/producto_plata1.html" class="boton-carrito">Ver descripción</a>
+  </div>
+   <!-- Cambia los productos por las categorías reales -->
+    <div class="producto">
+    <img src="imagenes/plata1.jpeg" alt="Collar de Plata">
+    <h3>Collar de Plata</h3>
+    <p>Q180.00</p>
+    <button class="boton-carrito" data-nombre="Collar de Plata" data-precio="180">Agregar al carrito</button>
+    <a href="../productos/producto_plata/producto_plata1.html" class="boton-carrito">Ver descripción</a>
+  </div>
+   <!-- Cambia los productos por las categorías reales -->
+    <div class="producto">
+    <img src="imagenes/plata1.jpeg" alt="Collar de Plata">
+    <h3>Collar de Plata</h3>
+    <p>Q180.00</p>
+    <button class="boton-carrito" data-nombre="Collar de Plata" data-precio="180">Agregar al carrito</button>
+    <a href="../productos/producto_plata/producto_plata1.html" class="boton-carrito">Ver descripción</a>
+  </div>
+   <!-- Cambia los productos por las categorías reales -->
+    <div class="producto">
+    <img src="imagenes/plata1.jpeg" alt="Collar de Plata">
+    <h3>Collar de Plata</h3>
+    <p>Q180.00</p>
+    <button class="boton-carrito" data-nombre="Collar de Plata" data-precio="180">Agregar al carrito</button>
+    <a href="../productos/producto_plata/producto_plata1.html" class="boton-carrito">Ver descripción</a>
+  </div>
+   <!-- Cambia los productos por las categorías reales -->
+    <div class="producto">
+    <img src="imagenes/plata1.jpeg" alt="Collar de Plata">
+    <h3>Collar de Plata</h3>
+    <p>Q180.00</p>
+    <button class="boton-carrito" data-nombre="Collar de Plata" data-precio="180">Agregar al carrito</button>
+    <a href="../productos/producto_plata/producto_plata1.html" class="boton-carrito">Ver descripción</a>
+  </div>
+   <!-- Cambia los productos por las categorías reales -->
+    <div class="producto">
+    <img src="imagenes/plata1.jpeg" alt="Collar de Plata">
+    <h3>Collar de Plata</h3>
+    <p>Q180.00</p>
+    <button class="boton-carrito" data-nombre="Collar de Plata" data-precio="180">Agregar al carrito</button>
+    <a href="../productos/producto_plata/producto_plata1.html" class="boton-carrito">Ver descripción</a>
+  </div>
+   <!-- Cambia los productos por las categorías reales -->
+    <div class="producto">
+    <img src="imagenes/plata1.jpeg" alt="Collar de Plata">
+    <h3>Collar de Plata</h3>
+    <p>Q180.00</p>
+    <button class="boton-carrito" data-nombre="Collar de Plata" data-precio="180">Agregar al carrito</button>
+    <a href="../productos/producto_plata/producto_plata1.html" class="boton-carrito">Ver descripción</a>
+  </div>
+   <!-- Cambia los productos por las categorías reales -->
+    <div class="producto">
+    <img src="imagenes/plata1.jpeg" alt="Collar de Plata">
+    <h3>Collar de Plata</h3>
+    <p>Q180.00</p>
+    <button class="boton-carrito" data-nombre="Collar de Plata" data-precio="180">Agregar al carrito</button>
+    <a href="../productos/producto_plata/producto_plata1.html" class="boton-carrito">Ver descripción</a>
+  </div>
+   <!-- Cambia los productos por las categorías reales -->
+    <div class="producto">
+    <img src="imagenes/plata1.jpeg" alt="Collar de Plata">
+    <h3>Collar de Plata</h3>
+    <p>Q180.00</p>
+    <button class="boton-carrito" data-nombre="Collar de Plata" data-precio="180">Agregar al carrito</button>
+    <a href="../productos/producto_plata/producto_plata1.html" class="boton-carrito">Ver descripción</a>
+  </div>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <h4>Acerca de Mini Amazon</h4>
+        <a href="#">Quiénes somos</a> <!-- Cambia por tu página -->
+        <a href="#">Blog</a>
+        <a href="#">Empleos</a>
+      </div>
+      <div>
+        <h4>Ayuda</h4>
+        <a href="#">Devoluciones</a>
+        <a href="#">Centro de ayuda</a>
+        <a href="#">Seguimiento de pedidos</a>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <a href="#">Términos de uso</a>
+        <a href="#">Política de privacidad</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2025 Mini Amazon. Todos los derechos reservados.
+    </div>
+  </footer>
+
+  <script>
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+    function actualizarContador() {
+      const contador = document.getElementById('contadorCarrito');
+      if (contador) contador.textContent = carrito.reduce((acc, p) => acc + (p.cantidad || 1), 0);
+    }
+
+    function mostrarVistaCarrito() {
+      const vista = document.getElementById("listaCarritoPreview");
+      if (!vista) return;
+
+      vista.innerHTML = "<h3>Vista previa del carrito</h3>";
+      const ul = document.createElement("ul");
+      carrito.forEach(producto => {
+        const cantidad = producto.cantidad || 1;
+        const li = document.createElement("li");
+        li.textContent = `${producto.nombre} x${cantidad} - Q${producto.precio}`;
+        ul.appendChild(li);
+      });
+      vista.appendChild(ul);
+    }
+
+    document.querySelectorAll('.boton-carrito').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (!btn.dataset.nombre) return;
+        const nombre = btn.dataset.nombre;
+        const precio = parseFloat(btn.dataset.precio);
+        let existente = carrito.find(p => p.nombre === nombre);
+        if (existente) {
+          existente.cantidad += 1;
+        } else {
+          carrito.push({ nombre, precio, cantidad: 1 });
+        }
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        alert(nombre + ' agregado al carrito');
+        actualizarContador();
+        mostrarVistaCarrito();
+      });
+    });
+
+    actualizarContador();
+    mostrarVistaCarrito();
+  </script>
+</body>
+</html>
