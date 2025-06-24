@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Categorías de Productos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background-color: #f3f4f6;
+    }
+
+    header {
+      background-color: #232f3e;
+      color: white;
+      padding: 1em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+      color: #ffcc00;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 0.5em;
+      background-color: #530101;
+      padding: 0.5em 1em;
+      border-radius: 5px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    h2 {
+      text-align: center;
+      margin: 1em 0;
+    }
+
+    .contenedor {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1em;
+    }
+
+    .categoria {
+      width: 90%;
+      max-width: 600px;
+      background: white;
+      margin: 1em 0;
+      padding: 1em;
+      border-radius: 10px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+      text-align: center;
+      transition: transform 0.2s;
+    }
+
+    .categoria:hover {
+      transform: scale(1.02);
+    }
+
+    .categoria img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .categoria a {
+      text-decoration: none;
+      display: block;
+      margin-top: 0.7em;
+      font-size: 18px;
+      color: #232f3e;
+      font-weight: bold;
+    }
+
+    footer {
+      background-color: #232f3e;
+      color: white;
+      text-align: center;
+      padding: 1em 1em 2em;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1em;
+      padding: 1em;
+    }
+
+    .footer-grid h4 {
+      margin-bottom: 0.5em;
+    }
+
+    .footer-grid a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      margin: 0.2em 0;
+      font-size: 14px;
+    }
+
+    .footer-bottom {
+      margin-top: 1em;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Mini Amazon</h1>
+    <nav>
+      <a href="../pagina_principal/pagina_principal.html">Inicio</a>
+      <a href="../opciones/contactogeneral2.html">Contacto</a>
+      <a href="../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
+      <a href="../index.html">Cerrar sesión</a>
+    </nav>
+  </header>
+
+  <h2>🗂️ Categorías de Productos</h2>
+
+  <main class="contenedor">
+    <div class="categoria">
+      <img src="imagenes/plata1.jpeg" alt="Plata">
+      <a href="../categorias_general/categorias/plata.html">💍 Productos de Plata</a>
+    </div>
+    <div class="categoria">
+      <img src="imagenes/catalogo1.jpeg" alt="Catálogos 1">
+      <a href="../categorias_general/categorias/catalogos1.html">📘 Catálogos 1 - LeCleire, Flushing</a>
+    </div>
+        <div class="categoria">
+      <img src="imagenes/catalogo1.jpeg" alt="Catálogos 2">
+      <a href="../categorias_general/categorias/catalogos2.html">📘 Catálogos 2 - Coameticos, splash</a>
+    </div>
+    <div class="categoria">
+      <img src="imagenes/calzado.jpeg" alt="Calzado Mexicano">
+      <a href="../categorias_general/categorias/calzado.html">👟 Calzado Mexicano</a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <h4>Acerca de Mini Amazon</h4>
+        <a href="#">Quiénes somos</a>
+        <a href="#">Blog</a>
+        <a href="#">Empleos</a>
+      </div>
+      <div>
+        <h4>Ayuda</h4>
+        <a href="#">Devoluciones</a>
+        <a href="#">Centro de ayuda</a>
+        <a href="#">Seguimiento de pedidos</a>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <a href="#">Términos de uso</a>
+        <a href="#">Política de privacidad</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2025 Mini Amazon. Todos los derechos reservados.
+    </div>
+  </footer>
+
+  <script>
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+    function actualizarContador() {
+      const contador = document.getElementById('contadorCarrito');
+      if (contador) {
+        const total = carrito.reduce((acc, p) => acc + (p.cantidad || 1), 0);
+        contador.textContent = total;
+      }
+    }
+
+    actualizarContador();
+  </script>
+
+</body>
+</html>

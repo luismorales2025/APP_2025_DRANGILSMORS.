@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smartphone Genérico - Mini Amazon</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+
+    header {
+      background-color: #232f3e;
+      color: white;
+      padding: 1em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      color: #ffcc00;
+      font-size: 1.5em;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 0.5em;
+      background-color: #530101;
+      padding: 0.5em 1em;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .producto-detalle {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2em;
+      max-width: 1000px;
+      margin: 2em auto;
+      padding: 2em;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .producto-detalle img {
+      max-width: 350px;
+      border-radius: 10px;
+    }
+
+    .info-producto {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #333;
+    }
+
+    p {
+      line-height: 1.5;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 1em;
+      display: block;
+    }
+
+    input[type="number"] {
+      padding: 5px;
+      width: 60px;
+      font-size: 1em;
+      margin-top: 5px;
+    }
+
+    button {
+      margin-top: 15px;
+      background-color: #f0c14b;
+      border: 1px solid #a88734;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #e2b33c;
+    }
+
+    #contadorCarrito {
+      font-weight: bold;
+    }
+
+    /* Productos relacionados */
+    .relacionado {
+      max-width: 1000px;
+      margin: 1em auto;
+      padding: 1em;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .relacionado h3 {
+      margin-top: 0;
+    }
+
+    .relacionado .item {
+      display: flex;
+      align-items: center;
+      gap: 1em;
+      margin-top: 1em;
+    }
+
+    .relacionado img {
+      width: 80px;
+      border-radius: 5px;
+    }
+
+    .relacionado a {
+      text-decoration: none;
+      color: #034392;
+      font-weight: bold;
+    }
+
+    /* Footer estilo Amazon */
+    footer {
+      background-color: #232f3e;
+      color: white;
+      padding: 2em;
+      font-size: 14px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1em;
+    }
+
+    .footer-grid h4 {
+      color: #ff9900;
+      margin-bottom: 0.5em;
+    }
+
+    .footer-grid a {
+      color: #ddd;
+      text-decoration: none;
+      margin-bottom: 0.3em;
+      display: block;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 2em;
+      color: #ccc;
+    }
+
+    @media screen and (max-width: 768px) {
+      .producto-detalle {
+        flex-direction: column;
+        align-items: center;
+      }
+      .producto-detalle img {
+        max-width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mini Amazon</h1>
+    <nav>
+      <a href="../../pagina_principal/pagina_principal.html">Inicio</a>
+      <a href="../../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
+    </nav>
+  </header>
+
+  <main class="producto-detalle">
+    <img src="../imagenes/imagen_coleccion1.jpeg" alt="Smartphone Genérico"> <!-- 🖼️ Cambia aquí la imagen -->
+    <div class="info-producto">
+      <h2>Smartphone Genérico</h2> <!-- 📝 Cambia aquí el nombre del producto -->
+      <p><strong>Precio:</strong> Q2,500.00</p> <!-- 💲 Cambia el precio si quieres -->
+      <p><strong>Descripción:</strong> Teléfono inteligente con pantalla HD, batería de larga duración, cámara frontal de 12MP, y diseño moderno y elegante.</p>
+
+      <label for="cantidad">Cantidad:</label>
+      <input type="number" id="cantidad" value="1" min="1" />
+
+      <button onclick="agregarAlCarrito()">Agregar al carrito</button>
+    </div>
+  </main>
+
+  <section class="relacionado">
+    <h3>Productos relacionados</h3>
+    <div class="item">
+      <img src="../imagenes/imagen_coleccion2.jpeg" alt="Relacionado">
+      <div>
+        <p><strong>Funda para Smartphone</strong></p>
+        <p>Q125.00</p>
+        <a href="producto2.html">Ver más</a> <!-- 🔁 Cambia este link si tienes otro producto -->
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <h4>Acerca de Mini Amazon</h4>
+        <a href="#">Quiénes somos</a> <!-- 🧾 Cámbialo por tu link -->
+        <a href="#">Blog</a>
+        <a href="#">Empleos</a>
+      </div>
+      <div>
+        <h4>Ayuda</h4>
+        <a href="#">Devoluciones</a>
+        <a href="#">Centro de ayuda</a>
+        <a href="#">Seguimiento de pedidos</a>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <a href="#">Términos de uso</a>
+        <a href="#">Política de privacidad</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2025 Mini Amazon. Todos los derechos reservados.
+    </div>
+  </footer>
+
+  <script>
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+    function actualizarContador() {
+      const contador = document.getElementById('contadorCarrito');
+      if (contador) {
+        const total = carrito.reduce((acc, prod) => acc + (prod.cantidad || 1), 0);
+        contador.textContent = total;
+      }
+    }
+
+    function agregarAlCarrito() {
+      const cantidad = parseInt(document.getElementById('cantidad').value);
+      const nombre = "Smartphone Genérico"; // 📝 Cámbialo si el producto es diferente
+      const precio = 2500; // 💲 Ajusta si cambias el precio
+
+      if (isNaN(cantidad) || cantidad < 1) {
+        alert("⚠️ Cantidad inválida.");
+        return;
+      }
+
+      let existente = carrito.find(p => p.nombre === nombre);
+      if (existente) {
+        existente.cantidad += cantidad;
+      } else {
+        carrito.push({ nombre, precio, cantidad });
+      }
+
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+      alert(`✅ Se agregaron ${cantidad} ${nombre} al carrito.`);
+      actualizarContador();
+    }
+
+    actualizarContador();
+  </script>
+</body>
+</html>
