@@ -123,17 +123,20 @@
 </head>
 <body>
   <header>
-    <h1>Mini Amazon</h1>
+    <h1>DRANGILS MORALES</h1>
     <nav>
       <a href="../../pagina_principal/pagina_principal.html">Inicio</a>
+      <a href="../categoria.html">Categorías</a>
+      <a href="../../opciones/contactogeneral6.html">Contacto</a>
       <a href="../../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
+      <a href="../../index.html">Cerrar sesión</a>
     </nav>
   </header>
 
   <main class="producto-detalle">
-    <img src="../../imagenes/calzado2.jpg" alt="Calzado Vino mexicano Karla Vázquez">
+    <img src="../../imagenes/calzado2.jpg" alt="Calzado Vino mexicano Karla Vázquez #2">
     <div class="info-producto">
-      <h2>Calzado Vino mexicano Karla Vázquez</h2> <!-- Cambia aquí el nombre del producto -->
+      <h2>Calzado Vino mexicano Karla Vázquez #2</h2> <!-- Cambia aquí el nombre del producto -->
       <p><strong>Precio:</strong> Q150.00</p>
       <p><strong>Descripción:</strong> 100% mexicano elaborado en texiteles de alta calidad y lo mejor en modas.</p>
       
@@ -154,42 +157,11 @@
     </div>
   </main>
 
-  <!-- Productos relacionados -->
-  <section class="relacionado">
-    <h3>Productos relacionados</h3>
-    <div>
-      <img src="../imagenes/imagen_coleccion2.jpeg" alt="Relacionado 1">
-      <div>
-        <p><strong>Zapato Casual ABC</strong></p>
-        <p>Q249.00</p>
-        <!-- Cambia este link al producto real -->
-        <a href="producto2.html">Ver más</a> <!-- ← cambia aquí el enlace -->
-      </div>
-    </div>
-  </section>
-
   <!-- Pie de página estilo Amazon -->
   <footer>
     <div class="footer-grid">
       <div>
-        <h4>Sobre Nosotros</h4>
-        <a href="#">Quiénes somos</a> <!-- cambia el # por tu link real -->
-        <a href="#">Blog</a>
-        <a href="#">Carreras</a>
-      </div>
-      <div>
-        <h4>Soporte</h4>
-        <a href="#">Ayuda</a>
-        <a href="#">Devoluciones</a>
-        <a href="#">Pedidos</a>
-      </div>
-      <div>
-        <h4>Legal</h4>
-        <a href="#">Términos de uso</a>
-        <a href="#">Política de privacidad</a>
-      </div>
-    </div>
-    <p style="text-align: center; margin-top: 2em;">© 2025 Mini Amazon, Inc. o sus afiliados</p>
+    <p style="text-align: center; margin-top: 2em;">© 2025 DRANGILS MORALES_APPS</p>
   </footer>
 
   <script>
@@ -205,8 +177,8 @@
 
     function agregarAlCarrito() {
       const cantidad = parseInt(document.getElementById('cantidad').value);
-      const nombre = "Zapato Deportivo XYZ"; // ← cambia aquí el nombre
-      const precio = 299;
+      const nombre = "Calzado Vino mexicano Karla Vázquez #2"; // ← cambia aquí el nombre
+      const precio = 150;
       const talla = document.getElementById('talla').value;
 
       if (isNaN(cantidad) || cantidad < 1) {
