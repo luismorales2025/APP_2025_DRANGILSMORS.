@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Productos de Plata</title>
+  <title>Próximamente - DRANGILS MORALES</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #ffffff;
+      background-color: #f5f5f5;
     }
 
     header {
@@ -18,12 +18,12 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
     }
 
     header h1 {
       margin: 0;
       color: #ffcc00;
+      font-size: 1.5em;
     }
 
     nav a {
@@ -31,231 +31,72 @@
       text-decoration: none;
       margin: 0 0.5em;
       background-color: #530101;
-      padding: 0.4em 0.8em;
+      padding: 0.5em 1em;
       border-radius: 5px;
       font-weight: bold;
-      font-size: 13px;
     }
 
-    h2 {
-      text-align: center;
-      margin: 1em 0 0.5em;
+    .contenedor-aviso {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      margin: 100px auto;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr); /* 5 tarjetas por fila */
-      gap: 1em;
-      padding: 1em;
-    }
-
-    .producto {
-      background: #fff;
-      padding: 0.8em;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-      text-align: center;
-      font-size: 14px;
-    }
-
-    .producto img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-      border-radius: 5px;
-      margin-bottom: 0.5em;
-    }
-
-    .producto h3 {
-      margin: 0.4em 0 0.2em;
-      font-size: 15px;
-    }
-
-    .producto p {
-      margin: 0.2em 0 0.4em;
-    }
-
-    .boton-carrito {
-      margin: 0.3em 0;
-      padding: 0.4em;
-      background-color: #f0c14b;
-      border: 1px solid #a88734;
-      border-radius: 4px;
-      text-decoration: none;
-      color: black;
+    .etiqueta-diagonal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-45deg);
+      background-color: #ff4d4d;
+      color: white;
+      padding: 12px 60px;
       font-weight: bold;
-      font-size: 13px;
-      width: 100%;
-      display: block;
-      box-sizing: border-box;
+      font-size: 18px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     }
 
     footer {
       background-color: #232f3e;
       color: white;
-      text-align: left;
-      padding: 1.5em 2em;
-      margin-top: 2em;
-      font-size: 13px;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 2em;
-      margin-bottom: 1em;
-    }
-
-    .footer-grid h4 {
-      margin-top: 0;
-      color: #ffcc00;
-    }
-
-    .footer-grid a {
-      display: block;
-      color: white;
-      text-decoration: none;
-      margin: 0.3em 0;
-      font-size: 13px;
+      padding: 2em;
+      font-size: 14px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
     }
 
     .footer-bottom {
       text-align: center;
-      font-size: 12px;
-      color: #ddd;
-    }
-
-    @media screen and (max-width: 1200px) {
-      .grid {
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      }
+      color: #ccc;
     }
   </style>
 </head>
 <body>
-
   <header>
-    <h1>Mini Amazon</h1>
+    <h1>DRANGILS MORALES</h1>
     <nav>
       <a href="../../pagina_principal/pagina_principal.html">Inicio</a>
       <a href="../categoria.html">Categorías</a>
-      <a href="../../opciones/contactogeneral5.html">Contacto</a>
-      <a href="../../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
+      <a href="../../opciones/contactogeneral6.html">Contacto</a>
+      <a href="../../opciones/vercarrito.html">Carrito (0)</a>
       <a href="../../index.html">Cerrar sesión</a>
     </nav>
   </header>
 
-  <h2>💍 Productos de Catalogo2</h2>
-
-  <section class="grid">
-    <!-- PRODUCTO1 -->
-    <div class="producto">
-      <img src="imagenes/plata1.jpeg" alt="Collar de Plata">
-      <h3>Collar de Plata</h3>
-      <p>Q180.00</p>
-      <button class="boton-carrito" data-nombre="Collar de Plata" data-precio="180">Agregar al carrito</button>
-      <a class="boton-carrito" href="../../productos/producto_catalogo2/catalogos1.html">Ver descripción</a>
-    </div>
-    <!-- PRODUCTO2 -->
-    <div class="producto">
-      <img src="imagenes/plata1.jpeg" alt="Collar de Plata">
-      <h3>Collar de Plata</h3>
-      <p>Q180.00</p>
-      <button class="boton-carrito" data-nombre="Collar de Plata" data-precio="180">Agregar al carrito</button>
-      <a class="boton-carrito" href="../../productos/producto_catalogo2/catalogos2.html">Ver descripción</a>
-    </div>
-    <!-- PRODUCTO3 -->
-    <div class="producto">
-      <img src="imagenes/plata1.jpeg" alt="Collar de Plata">
-      <h3>Collar de Plata</h3>
-      <p>Q180.00</p>
-      <button class="boton-carrito" data-nombre="Collar de Plata" data-precio="180">Agregar al carrito</button>
-      <a class="boton-carrito" href="../../productos/producto_catalogo2/catalogos3.html">Ver descripción</a>
-    </div>
-    <!-- PRODUCTO4 -->
-    <div class="producto">
-      <img src="imagenes/plata1.jpeg" alt="Collar de Plata">
-      <h3>Collar de Plata</h3>
-      <p>Q180.00</p>
-      <button class="boton-carrito" data-nombre="Collar de Plata" data-precio="180">Agregar al carrito</button>
-      <a class="boton-carrito" href="../../productos/producto_catalogo2/catalogos4.html">Ver descripción</a>
-    </div>
-    <!-- PRODUCTO5 -->
-    <div class="producto">
-      <img src="imagenes/plata1.jpeg" alt="Collar de Plata">
-      <h3>Collar de Plata</h3>
-      <p>Q180.00</p>
-      <button class="boton-carrito" data-nombre="Collar de Plata" data-precio="180">Agregar al carrito</button>
-      <a class="boton-carrito" href="../../productos/producto_catalogo2/catalogos5.html">Ver descripción</a>
-    </div>
-    <!-- PRODUCTO6 -->
-    <div class="producto">
-      <img src="imagenes/plata1.jpeg" alt="Collar de Plata">
-      <h3>Collar de Plata</h3>
-      <p>Q180.00</p>
-      <button class="boton-carrito" data-nombre="Collar de Plata" data-precio="180">Agregar al carrito</button>
-      <a class="boton-carrito" href="../../productos/producto_catalogo2/catalogos6.html">Ver descripción</a>
-    </div>
-    <!-- Agrega más si deseas -->
-  </section>
+  <div class="contenedor-aviso">
+    <div class="etiqueta-diagonal">Próximamente Julio 2025</div>
+  </div>
 
   <footer>
-    <div class="footer-grid">
-      <div>
-        <h4>Acerca de Mini Amazon</h4>
-        <a href="#">Quiénes somos</a>
-        <a href="#">Blog</a>
-        <a href="#">Empleos</a>
-      </div>
-      <div>
-        <h4>Ayuda</h4>
-        <a href="#">Devoluciones</a>
-        <a href="#">Centro de ayuda</a>
-        <a href="#">Seguimiento de pedidos</a>
-      </div>
-      <div>
-        <h4>Legal</h4>
-        <a href="#">Términos de uso</a>
-        <a href="#">Política de privacidad</a>
-      </div>
-    </div>
     <div class="footer-bottom">
-      © 2025 Mini Amazon. Todos los derechos reservados.
+      © 2025 DRANGILS MORALES. Todos los derechos reservados.
     </div>
   </footer>
-
-  <script>
-    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-
-    function actualizarContador() {
-      const contador = document.getElementById('contadorCarrito');
-      if (contador) {
-        const total = carrito.reduce((acc, p) => acc + (p.cantidad || 1), 0);
-        contador.textContent = total;
-      }
-    }
-
-    document.querySelectorAll('.boton-carrito').forEach(btn => {
-      btn.addEventListener('click', () => {
-        if (!btn.dataset.nombre) return;
-
-        const nombre = btn.dataset.nombre;
-        const precio = parseFloat(btn.dataset.precio);
-
-        let existente = carrito.find(p => p.nombre === nombre);
-        if (existente) {
-          existente.cantidad += 1;
-        } else {
-          carrito.push({ nombre, precio, cantidad: 1 });
-        }
-
-        localStorage.setItem('carrito', JSON.stringify(carrito));
-        alert(nombre + ' agregado al carrito');
-        actualizarContador();
-      });
-    });
-
-    actualizarContador();
-  </script>
 </body>
 </html>
+
