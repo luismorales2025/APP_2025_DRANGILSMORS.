@@ -1,0 +1,204 @@
+<!-- archivo: productos/producto1.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detalle del Producto</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #232f3e;
+      color: white;
+      padding: 1em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      color: #ff9900;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 1em;
+      text-decoration: none;
+      padding: 0.5em 1em;
+      background-color: #37475a;
+      border-radius: 5px;
+    }
+
+    .producto-detalle {
+      display: flex;
+      gap: 2em;
+      flex-wrap: wrap;
+      padding: 2em;
+    }
+
+    .producto-detalle img {
+      max-width: 300px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+
+    .info-producto {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .info-producto button {
+      background-color: #f0c14b;
+      border: 1px solid #a88734;
+      padding: 0.5em 1em;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 1em;
+    }
+
+    .info-producto select,
+    input[type="number"] {
+      padding: 0.5em;
+      margin: 0.5em 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    footer {
+      background-color: #232f3e;
+      color: white;
+      padding: 2em;
+      margin-top: 4em;
+      font-size: 14px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1em;
+    }
+
+    .footer-grid h4 {
+      margin-bottom: 0.5em;
+      color: #ff9900;
+    }
+
+    .footer-grid a {
+      color: #ddd;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.5em;
+    }
+
+    .relacionado {
+      margin: 2em;
+      padding: 1em;
+      background-color: #f7f7f7;
+      border-radius: 8px;
+    }
+
+    .relacionado h3 {
+      margin-top: 0;
+    }
+
+    .relacionado img {
+      max-width: 100px;
+      border-radius: 5px;
+    }
+
+    .relacionado div {
+      display: flex;
+      align-items: center;
+      gap: 1em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>DRANGILS MORALES</h1>
+    <nav>
+      <a href="../../pagina_principal/pagina_principal.html">Inicio</a>
+      <a href="../categoria.html">Categorías</a>
+      <a href="../../opciones/contactogeneral6.html">Contacto</a>
+      <a href="../../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
+      <a href="../../index.html">Cerrar sesión</a>
+    </nav>
+  </header>
+
+  <main class="producto-detalle">
+    <img src="../../imagenes/calzado66.jpg" alt="Calzado Camel mexicano Karla Vázquez #66">
+    <div class="info-producto">
+      <h2>Calzado Camel mexicano Karla Vázquez #66</h2> <!-- Cambia aquí el nombre del producto -->
+      <p><strong>Precio:</strong> Q150.00</p>
+      <p><strong>Descripción:</strong> 100% mexicano elaborado en texiteles de alta calidad y lo mejor en modas.</p>
+      
+      <!-- Tallas disponibles si es calzado -->
+      <label for="talla">Talla disponible:</label>
+      <select id="talla">
+        <option>35</option>
+        <option>36</option>
+        <option>37</option>
+        <option>38</option>
+      </select>
+
+      <br>
+      <label for="cantidad">Cantidad:</label>
+      <input type="number" id="cantidad" value="1" min="1" />
+
+      <button onclick="agregarAlCarrito()">Agregar al carrito</button>
+    </div>
+  </main>
+
+  <!-- Pie de página estilo Amazon -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+    <p style="text-align: center; margin-top: 2em;">© 2025 DRANGILS MORALES_APPS</p>
+  </footer>
+
+  <script>
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+    function actualizarContador() {
+      const contador = document.getElementById('contadorCarrito');
+      if (contador) {
+        const total = carrito.reduce((acc, prod) => acc + (prod.cantidad || 1), 0);
+        contador.textContent = total;
+      }
+    }
+
+    function agregarAlCarrito() {
+      const cantidad = parseInt(document.getElementById('cantidad').value);
+      const nombre = "Calzado Camel mexicano Karla Vázquez #66"; // ← cambia aquí el nombre
+      const precio = 150;
+      const talla = document.getElementById('talla').value;
+
+      if (isNaN(cantidad) || cantidad < 1) {
+        alert("Cantidad inválida");
+        return;
+      }
+
+      let existente = carrito.find(p => p.nombre === nombre && p.talla === talla);
+      if (existente) {
+        existente.cantidad += cantidad;
+      } else {
+        carrito.push({ nombre, precio, cantidad, talla });
+      }
+
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+      alert(`Se agregaron ${cantidad} ${nombre} Talla ${talla} al carrito`);
+      actualizarContador();
+    }
+
+    actualizarContador();
+  </script>
+</body>
+</html>
