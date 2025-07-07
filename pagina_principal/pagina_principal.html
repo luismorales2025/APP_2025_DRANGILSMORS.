@@ -5,111 +5,153 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DRANGILS MORALES - Tienda</title>
   <style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #ffffff;
-  }
-  header {
-    background-color: #232f3e;
-    color: white;
-    padding: 1em;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-  header h1 {
-    margin: 0;
-    color: #ffcc00;
-    font-size: 1.2em;
-  }
-  nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5em;
-    margin-top: 0.5em;
-  }
-  nav a {
-    color: rgba(247, 247, 247, 0.904);
-    text-decoration: none;
-    padding: 0.5em;
-    background-color: #530101;
-    border-radius: 5px;
-    font-size: 13px;
-  }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('../imagenes/plata.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+    }
 
-  .categorias {
-    background-color: #034392;
-    color: white;
-    padding: 0.5em;
-    display: flex;
-    gap: 0.5em;
-    overflow-x: auto;
-    white-space: nowrap;
-    scroll-behavior: smooth;
-  }
-  .categorias a {
-    color: rgb(247, 247, 247);
-    text-decoration: none;
-    background-color: #0771f3;
-    padding: 0.5em 1em;
-    border-radius: 5px;
-    flex-shrink: 0;
-    font-size: 14px;
-  }
+    header {
+      background-color: rgba(35, 47, 62, 0.9);
+      color: white;
+      padding: 1em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
 
-  .producto {
-    background: rgb(247, 243, 243);
-    margin: 1em;
-    padding: 1em;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(177, 16, 16, 0.918);
-    text-align: center;
-  }
-  .producto img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 5px;
-    margin-bottom: 0.5em;
-  }
+    header h1 {
+      margin: 0;
+      color: #ffcc00;
+      font-size: 1.5em;
+      animation: flotar 2s ease-in-out infinite alternate;
+      text-shadow: 0 0 10px #ffcc00;
+    }
 
-  .grid-productos {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1em;
-    padding: 1em;
-  }
+    @keyframes flotar {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-5px); }
+    }
 
-  .boton-carrito {
-    background-color: #f0c14b;
-    border: 1px solid #a88734;
-    padding: 0.5em;
-    cursor: pointer;
-    border-radius: 4px;
-    font-weight: bold;
-    display: block;
-    width: 100%;
-    margin-top: 5px;
-    text-align: center;
-    text-decoration: none;
-    color: black;
-  }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5em;
+      margin-top: 0.5em;
+    }
 
-  footer {
-    background-color: #232f3e;
-    color: white;
-    padding: 2em;
-    font-size: 14px;  
-  }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 0.5em 1em;
+      background-color: #ff007f;
+      border-radius: 8px;
+      font-size: 13px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: transform 0.2s, background-color 0.3s;
+    }
 
-  .footer-bottom {
-    text-align: center;
-    margin-top: 2em;
-    color: #ccc;
-  }
-</style>
+    nav a:hover {
+      background-color: #ff3399;
+      transform: scale(1.1);
+    }
+
+    .categorias {
+      background-color: rgba(2, 117, 216, 0.9);
+      color: white;
+      padding: 0.5em;
+      display: flex;
+      gap: 0.5em;
+      overflow-x: auto;
+      white-space: nowrap;
+      scroll-behavior: smooth;
+    }
+
+    .categorias a {
+      color: white;
+      text-decoration: none;
+      background-color: #00c4ff;
+      padding: 0.5em 1em;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: transform 0.3s, background-color 0.3s;
+    }
+
+    .categorias a:hover {
+      background-color: #00e1ff;
+      transform: scale(1.1);
+    }
+
+    .grid-productos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1em;
+      padding: 2em;
+      backdrop-filter: blur(5px);
+    }
+
+    .producto {
+      background: rgba(255, 255, 255, 0.85);
+      margin: 1em;
+      padding: 1em;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .producto:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    .producto img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 0.5em;
+    }
+
+    .boton-carrito, .boton-descripcion {
+      background-color: #ff5722;
+      border: none;
+      padding: 0.7em;
+      cursor: pointer;
+      border-radius: 8px;
+      font-weight: bold;
+      display: block;
+      width: 100%;
+      margin-top: 5px;
+      text-align: center;
+      text-decoration: none;
+      color: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: transform 0.3s, background-color 0.3s;
+    }
+
+    .boton-carrito:hover, .boton-descripcion:hover {
+      background-color: #ff7043;
+      transform: scale(1.05);
+    }
+
+    footer {
+      background-color: rgba(35, 47, 62, 0.9);
+      color: white;
+      padding: 2em;
+      font-size: 14px;
+      margin-top: 2em;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 1em;
+      color: #ccc;
+    }
+  </style>
 </head>
 <body>
   <header>
