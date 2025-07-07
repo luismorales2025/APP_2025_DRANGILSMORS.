@@ -9,95 +9,104 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
     }
 
     body {
       height: 100vh;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #020024, #090979, #00d4ff);
-      background-size: 400% 400%;
-      animation: fondoAnimado 12s ease infinite;
+      background: url('imagenes/plata.jpeg') no-repeat center center/cover;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
+      position: relative;
+      overflow: hidden;
+      color: #fff;
     }
 
-    @keyframes fondoAnimado {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
+    .overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.3); /* Menos oscura para que se vea la imagen */
+      backdrop-filter: blur(3px);
     }
 
     .caja-bienvenida {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(12px);
-      border-radius: 20px;
-      padding: 2em 3em;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      position: relative;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 25px;
+      padding: 3em 4em;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
       text-align: center;
-      max-width: 90%;
       animation: flotar 4s ease-in-out infinite;
+      max-width: 90%;
+      border: 2px solid rgba(255, 255, 255, 0.2);
     }
 
     @keyframes flotar {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+      50% { transform: translateY(-8px); }
     }
 
-    .caja-bienvenida h1 {
-      font-size: 2em;
-      color: #ffcc00;
-      margin-bottom: 0.5em;
+    .titulo {
+      font-size: 3em;
+      color: #ffcc00;  /* Amarillo brillante */
+      text-shadow: 0 0 15px #ffcc00, 0 0 30px #ffffff;
+      animation: brillo 2.5s infinite alternate;
     }
 
-    .caja-bienvenida p {
-      font-size: 1em;
-      color: #e0e0e0;
-      margin-bottom: 1.5em;
+    @keyframes brillo {
+      0% { text-shadow: 0 0 10px #ffcc00, 0 0 20px #fff; }
+      100% { text-shadow: 0 0 20px #ffffff, 0 0 40px #ffcc00; }
+    }
+
+    .descripcion {
+      font-size: 1.3em;
+      color: #fff;
+      margin: 1.5em 0 2em 0;
+      text-shadow: 0 0 5px rgba(0,0,0,0.5);
     }
 
     .btn-ingresar {
-      background: linear-gradient(90deg, #00d2ff, #3a47d5);
-      border: none;
-      padding: 0.8em 2em;
-      font-size: 1em;
-      border-radius: 8px;
-      color: white;
+      display: inline-block;
+      padding: 1em 3em;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #FFD700, #FFA500);
+      color: #222;
       font-weight: bold;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      font-size: 1.2em;
       text-decoration: none;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .btn-ingresar:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.6);
     }
 
     @media screen and (max-width: 600px) {
       .caja-bienvenida {
-        padding: 1.5em;
+        padding: 2em;
       }
 
-      .caja-bienvenida h1 {
-        font-size: 1.5em;
+      .titulo {
+        font-size: 2em;
       }
 
-      .btn-ingresar {
-        font-size: 0.95em;
-        padding: 0.7em 1.5em;
+      .descripcion {
+        font-size: 1em;
       }
     }
   </style>
 </head>
 <body>
+  <div class="overlay"></div>
+
   <div class="caja-bienvenida">
-    <h1>¡Bienvenido a DRANGILS MORALES!</h1>
-    <p>Descubrí productos únicos hechos con pasión. No necesitás registrarte para comprar. ¡Adelante!</p>
-    <a href="pagina_principal/pagina_principal.html" class="btn-ingresar">Ingresar a la tienda</a>
+    <h1 class="titulo">¡Bienvenido a DRANGILS MORALES!</h1>
+    <p class="descripcion">Explora nuestros productos con pasión y estilo. No hace falta registrarse, ¡adelante!</p>
+    <a href="pagina_principal/pagina_principal.html" class="btn-ingresar">Entrar a la Tienda</a>
   </div>
 </body>
 </html>
-
