@@ -1,4 +1,3 @@
-<!-- archivo: productos/producto1.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,10 +6,14 @@
   <title>Detalle del Producto</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #fff;
+      font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 0;
+      color: #333;
+
+      /* Fondo con imagen */
+      background: url('../../imagenes/plata.jpeg') no-repeat center center fixed;
+      background-size: cover;
     }
 
     header {
@@ -24,100 +27,126 @@
 
     header h1 {
       margin: 0;
-      color: #ff9900;
+      color: #ffcc00;
+      font-size: 1.5em;
+      animation: flotar 2s ease-in-out infinite alternate;
+      text-shadow: 0 0 10px #ffcc00;
     }
 
     nav a {
-    color: rgba(247, 247, 247, 0.904);
-    text-decoration: none;
-    padding: 0.5em;
-    background-color: #530101;
-    border-radius: 5px;
-    font-size: 13px;
-   } 
-    
+      color: white;
+      margin: 0 0.5em;
+      text-decoration: none;
+      padding: 0.5em 1em;
+      background-color: #f1633f;
+      border-radius: 8px;
+      transition: transform 0.2s, background-color 0.3s;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    nav a:hover {
+      background-color: #ff3399;
+      transform: scale(1.1);
+    }
+
     .producto-detalle {
       display: flex;
-      gap: 2em;
       flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 2em;
       padding: 2em;
     }
 
+    /* TAMAÑO DE LA IMAGEN */
     .producto-detalle img {
-      max-width: 300px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
+      width: 500px;
+      height: 500px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .producto-detalle img:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
     }
 
     .info-producto {
-      flex: 1;
-      min-width: 250px;
+      max-width: 500px;
+      background-color: rgba(2, 182, 206, 0.95);
+      padding: 1.5em;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      animation: flotar 3s ease-in-out infinite alternate;
     }
 
-    .info-producto button {
-      background-color: #f0c14b;
-      border: 1px solid #a88734;
-      padding: 0.5em 1em;
-      border-radius: 4px;
-      cursor: pointer;
+    /* TITULO DEL PRODUCTO*/
+    .info-producto h2 {
+      font-size: 22px;
+      color: #fffb00;
+      text-shadow: 1px 1px #fff;
+      margin-bottom: 10px;
+    }
+
+    /* INFO DEL PRODUCTO */
+    .info-producto p {
+      font-size: 20px;
+      line-height: 2;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .info-producto label {
       font-weight: bold;
-      margin-top: 1em;
+      color: #333;
     }
 
     .info-producto select,
-    input[type="number"] {
+    .info-producto input[type="number"] {
       padding: 0.5em;
       margin: 0.5em 0;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 8px;
+      width: 100%;
+    }
+
+    .info-producto button {
+      background-color: #ff5722;
+      border: none;
+      padding: 0.7em;
+      border-radius: 10px;
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+      width: 100%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .info-producto button:hover {
+      background-color: #ff7043;
+      transform: scale(1.05);
     }
 
     footer {
       background-color: #232f3e;
       color: white;
       padding: 2em;
-      margin-top: 4em;
-      font-size: 14px;
+      text-align: center;
+      margin-top: 3em;
     }
 
-    .footer-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1em;
+    footer p {
+      font-size: 13px;
+      color: #ccc;
     }
 
-    .footer-grid h4 {
-      margin-bottom: 0.5em;
-      color: #ff9900;
-    }
-
-    .footer-grid a {
-      color: #ddd;
-      text-decoration: none;
-      display: block;
-      margin-bottom: 0.5em;
-    }
-
-    .relacionado {
-      margin: 2em;
-      padding: 1em;
-      background-color: #f7f7f7;
-      border-radius: 8px;
-    }
-
-    .relacionado h3 {
-      margin-top: 0;
-    }
-
-    .relacionado img {
-      max-width: 100px;
-      border-radius: 5px;
-    }
-
-    .relacionado div {
-      display: flex;
-      align-items: center;
-      gap: 1em;
+    @keyframes flotar {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-5px); }
     }
   </style>
 </head>
