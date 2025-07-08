@@ -10,8 +10,6 @@
       margin: 0;
       padding: 0;
       color: #333;
-
-      /* Fondo con imagen */
       background: url('../../imagenes/plata.jpeg') no-repeat center center fixed;
       background-size: cover;
     }
@@ -21,6 +19,7 @@
       color: white;
       padding: 1em;
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
     }
@@ -31,23 +30,34 @@
       font-size: 1.5em;
       animation: flotar 2s ease-in-out infinite alternate;
       text-shadow: 0 0 10px #ffcc00;
+      flex: 1 1 100%;
+      text-align: center;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 4px;
+      width: 100%;
+      margin-top: 0.5em;
     }
 
     nav a {
       color: white;
-      margin: 0 0.5em;
       text-decoration: none;
       padding: 0.5em 1em;
       background-color: #f1633f;
       border-radius: 8px;
-      transition: transform 0.2s, background-color 0.3s;
       font-weight: bold;
       box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      font-size: 14px;
+      transition: transform 0.2s, background-color 0.3s;
     }
 
     nav a:hover {
       background-color: #ff3399;
-      transform: scale(1.1);
+      transform: scale(1.05);
     }
 
     .producto-detalle {
@@ -59,10 +69,10 @@
       padding: 2em;
     }
 
-    /* TAMAÑO DE LA IMAGEN */
     .producto-detalle img {
-      width: 500px;
-      height: 500px;
+      width: 100%;
+      max-width: 400px;
+      height: auto;
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -70,7 +80,7 @@
     }
 
     .producto-detalle img:hover {
-      transform: scale(1.1);
+      transform: scale(1.05);
       box-shadow: 0 8px 20px rgba(0,0,0,0.4);
     }
 
@@ -83,7 +93,6 @@
       animation: flotar 3s ease-in-out infinite alternate;
     }
 
-    /* TITULO DEL PRODUCTO*/
     .info-producto h2 {
       font-size: 22px;
       color: #fffb00;
@@ -91,7 +100,6 @@
       margin-bottom: 10px;
     }
 
-    /* INFO DEL PRODUCTO */
     .info-producto p {
       font-size: 20px;
       line-height: 2;
@@ -148,6 +156,44 @@
       0% { transform: translateY(0); }
       100% { transform: translateY(-5px); }
     }
+
+    /* 📱 Responsive para móviles */
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      nav a {
+        width: 90%;
+        margin: 2px 0;
+        font-size: 13px;
+        text-align: center;
+        padding: 0.6em;
+      }
+
+      header h1 {
+        font-size: 1.2em;
+      }
+
+      .info-producto {
+        width: 90%;
+        padding: 1em;
+      }
+
+      .info-producto p {
+        font-size: 16px;
+      }
+
+      .info-producto h2 {
+        font-size: 18px;
+      }
+
+      .producto-detalle img {
+        max-width: 90%;
+        height: auto;
+      }
+    }
   </style>
 </head>
 <body>
@@ -155,11 +201,10 @@
     <h1>DRANGILS MORALES</h1>
     <nav>
       <a href="../../pagina_principal/pagina_principal.html">Inicio</a>
-      <a href="../categoria.html">Categorías</a>
+      <a href="../../categorias_general/categoria.html">Categorías</a>
       <a href="../../opciones/contactogeneral6.html">Contacto</a>
       <a href="../../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
     </nav>
-  </header>
 
   <main class="producto-detalle">
     <img src="../../imagenes/calzado24.jpg" alt="Calzado Maquillaje mexicano Giselle #24">
