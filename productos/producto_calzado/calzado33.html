@@ -38,9 +38,9 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 0.5em;
-      margin-top: 1em;
+      gap: 4px;
       width: 100%;
+      margin-top: 0.5em;
     }
 
     nav a {
@@ -157,7 +157,7 @@
       100% { transform: translateY(-5px); }
     }
 
-    /* Estilo para pantallas pequeñas (celulares) */
+    /* 📱 Responsive para móviles */
     @media (max-width: 600px) {
       nav {
         flex-direction: column;
@@ -166,14 +166,19 @@
 
       nav a {
         width: 90%;
-        text-align: center;
+        margin: 2px 0;
         font-size: 13px;
-        padding: 0.5em;
+        text-align: center;
+        padding: 0.6em;
       }
 
       header h1 {
         font-size: 1.2em;
-        margin-bottom: 0.5em;
+      }
+
+      .info-producto {
+        width: 90%;
+        padding: 1em;
       }
 
       .info-producto p {
@@ -183,6 +188,11 @@
       .info-producto h2 {
         font-size: 18px;
       }
+
+      .producto-detalle img {
+        max-width: 90%;
+        height: auto;
+      }
     }
   </style>
 </head>
@@ -191,12 +201,10 @@
     <h1>DRANGILS MORALES</h1>
     <nav>
       <a href="../../pagina_principal/pagina_principal.html">Inicio</a>
-      <a href="../categoria.html">Categorías</a>
+      <a href="../../categorias_general/categoria.html">Categorías</a>
       <a href="../../opciones/contactogeneral6.html">Contacto</a>
       <a href="../../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
-      <a href="../../index.html">Cerrar sesión</a>
     </nav>
-  </header>
 
   <main class="producto-detalle">
     <img src="../../imagenes/calzado33.jpg" alt="Calzado Negro mexicano Giselle #33">
