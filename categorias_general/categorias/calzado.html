@@ -59,26 +59,53 @@
       transform: scale(1.1);
     }
 
+    .categorias {
+      background-color: rgba(2, 117, 216, 0.9);
+      color: white;
+      padding: 0.5em;
+      display: flex;
+      gap: 0.5em;
+      overflow-x: auto;
+      white-space: nowrap;
+      scroll-behavior: smooth;
+    }
+
+    .categorias a {
+      color: white;
+      text-decoration: none;
+      background-color: #00c4ff;
+      padding: 0.5em 1em;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: transform 0.3s, background-color 0.3s;
+    }
+
+    .categorias a:hover {
+      background-color: #00e1ff;
+      transform: scale(1.1);
+    }
+
     .grid-productos {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 1em;
       padding: 2em;
       backdrop-filter: blur(5px);
     }
 
     .producto {
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.85);
+      margin: 1em;
       padding: 1em;
       border-radius: 12px;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
       text-align: center;
       transition: transform 0.3s, box-shadow 0.3s;
     }
 
     .producto:hover {
       transform: translateY(-8px) scale(1.03);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
     }
 
     .producto img {
@@ -92,10 +119,11 @@
     .boton-carrito, .boton-descripcion {
       background-color: #ff5722;
       border: none;
-      padding: 0.6em;
+      padding: 0.7em;
       cursor: pointer;
       border-radius: 8px;
       font-weight: bold;
+      display: block;
       width: 100%;
       margin-top: 5px;
       text-align: center;
@@ -103,7 +131,6 @@
       color: white;
       box-shadow: 0 4px 8px rgba(0,0,0,0.3);
       transition: transform 0.3s, background-color 0.3s;
-      font-size: 14px;
     }
 
     .boton-carrito:hover, .boton-descripcion:hover {
@@ -124,22 +151,6 @@
       margin-top: 1em;
       color: #ccc;
     }
-
-/* Teléfonos */
-@media (max-width: 768px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr); /* en cel solo 2 por fila */
-  }
-}
-    .producto img {
-      height: 120px;
-    }
-
-    .boton-carrito, .boton-descripcion {
-      font-size: 13px;
-      padding: 0.5em;
-    }
-
   </style>
 </head>
 <body>
@@ -1485,5 +1496,4 @@
 </script>
 </body>
 </html>
-
 
