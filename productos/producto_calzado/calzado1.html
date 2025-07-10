@@ -70,10 +70,9 @@
     }
 
     .producto-detalle img {
-      width: 100%;
-      max-width: 400px;
-      height: auto;
-      border-radius: 10px;
+      width: 400px;
+      height: 450px;
+      border-radius: 8px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       cursor: pointer;
@@ -157,7 +156,6 @@
       100% { transform: translateY(-5px); }
     }
 
-    /* 📱 Responsive para móviles */
     @media (max-width: 600px) {
       nav {
         flex-direction: column;
@@ -181,14 +179,6 @@
         padding: 1em;
       }
 
-      .info-producto p {
-        font-size: 16px;
-      }
-
-      .info-producto h2 {
-        font-size: 18px;
-      }
-
       .producto-detalle img {
         max-width: 90%;
         height: auto;
@@ -210,11 +200,10 @@
   <main class="producto-detalle">
     <img src="../../imagenes/calzado1.jpg" alt="Calzado Bicolor mexicano Karla Vázquez #1">
     <div class="info-producto">
-      <h2>Calzado Bicolor mexicano Karla Vázquez #1</h2> <!-- Cambia aquí el nombre del producto -->
-      <p><strong>Precio:</strong> Q150.00</p>
-      <p><strong>Descripción:</strong> 100% mexicano elaborado en texiteles de alta calidad y lo mejor en modas.</p>
-      
-      <!-- Tallas disponibles si es calzado -->
+      <h2>Calzado Bicolor mexicano Karla Vázquez #1</h2>
+      <p><strong>Precio:</strong> Q180.00</p>
+      <p><strong>Descripción:</strong> 100% mexicano, elaborado en textiles de alta calidad y lo mejor en modas. Perfecto para lucir auténtico y elegante.</p>
+
       <label for="talla">Talla disponible:</label>
       <select id="talla">
         <option>35</option>
@@ -224,7 +213,6 @@
         <option>39</option>
       </select>
 
-      <br>
       <label for="cantidad">Cantidad:</label>
       <input type="number" id="cantidad" value="1" min="1" />
 
@@ -232,32 +220,28 @@
     </div>
   </main>
 
-  <!-- Pie de página estilo Amazon -->
   <footer>
-    <div class="footer-grid">
-      <div>
-    <p style="text-align: center; margin-top: 2em;">© 2025 DRANGILS MORALES_APPS</p>
+    <p>© 2025 DRANGILS MORALES_APPS</p>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
     function actualizarContador() {
       const contador = document.getElementById('contadorCarrito');
-      if (contador) {
-        const total = carrito.reduce((acc, prod) => acc + (prod.cantidad || 1), 0);
-        contador.textContent = total;
-      }
+      const total = carrito.reduce((acc, prod) => acc + (prod.cantidad || 1), 0);
+      contador.textContent = total;
     }
 
     function agregarAlCarrito() {
       const cantidad = parseInt(document.getElementById('cantidad').value);
-      const nombre = "Calzado Bicolor mexicano Karla Vázquez #1"; // ← cambia aquí el nombre
-      const precio = 150;
+      const nombre = "Calzado Bicolor mexicano Karla Vázquez #1";
+      const precio = 180;
       const talla = document.getElementById('talla').value;
 
       if (isNaN(cantidad) || cantidad < 1) {
-        alert("Cantidad inválida");
+        Swal.fire('Cantidad inválida', '', 'error');
         return;
       }
 
@@ -269,8 +253,20 @@
       }
 
       localStorage.setItem('carrito', JSON.stringify(carrito));
-      alert(`Se agregaron ${cantidad} ${nombre} Talla ${talla} al carrito`);
       actualizarContador();
+
+      Swal.fire({
+        title: 'Producto agregado',
+        text: `${cantidad} ${nombre} Talla ${talla} fue agregado al carrito` ,
+        icon: 'success',
+        showCancelButton: true,
+        confirmButtonText: 'Ver carrito',
+        cancelButtonText: 'Seguir comprando'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = '../../opciones/vercarrito.html';
+        }
+      });
     }
 
     actualizarContador();
