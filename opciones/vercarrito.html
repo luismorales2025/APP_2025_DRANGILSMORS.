@@ -59,6 +59,7 @@
   </style>
 </head>
 <body>
+
   <h1>🛒 Tu Carrito</h1>
   <div id="carritoContainer"></div>
   <div id="total"></div>
@@ -93,14 +94,14 @@
             <td>
               <button onclick="cambiarCantidad(${index}, 1)">➕</button>
               <button onclick="cambiarCantidad(${index}, -1)">➖</button>
-              <button onclick="eliminarProducto(${index})">🗑</button>
+              <button onclick="eliminarProducto(${index})">🗑️</button>
             </td>
           </tr>`;
       });
 
       tabla += '</table>';
       container.innerHTML = tabla;
-      totalDiv.textContent = Total a pagar: Q${total.toFixed(2)};
+      totalDiv.textContent = `Total a pagar: Q${total.toFixed(2)}`;
     }
 
     function cambiarCantidad(index, cambio) {
@@ -119,19 +120,22 @@
     }
 
     document.getElementById('btnEnviar').onclick = () => {
-      if (carrito.length === 0) return alert('Tu carrito está vacío');
+      if (carrito.length === 0) {
+        alert('Tu carrito está vacío');
+        return;
+      }
 
       let total = 0;
       let mensaje = 'Hola, quiero comprar estos productos:\n\n';
       carrito.forEach(p => {
         const subtotal = p.precio * p.cantidad;
         total += subtotal;
-        mensaje += - ${p.nombre} x${p.cantidad} (Q${p.precio.toFixed(2)} c/u) = Q${subtotal.toFixed(2)}\n;
+        mensaje += `- ${p.nombre} x${p.cantidad} (Q${p.precio.toFixed(2)} c/u) = Q${subtotal.toFixed(2)}\n`;
       });
-      mensaje += \nTotal a pagar: Q${total.toFixed(2)}\n\n¿Están disponibles?;
+      mensaje += `\nTotal a pagar: Q${total.toFixed(2)}\n\n¿Están disponibles?`;
 
       const numero = '50253298462';
-      const url = https://wa.me/${numero}?text=${encodeURIComponent(mensaje)};
+      const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
       window.open(url, '_blank');
     };
 
