@@ -3,78 +3,156 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Carrito de compras</title>
+  <title>Carrito de Compras</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ffe6f0, #e6f7ff);
       padding: 2em;
     }
+
     h1 {
       text-align: center;
-      color: #232f3e;
+      color: #ff007f;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
+
+    .producto {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 1em;
+      margin-bottom: 1em;
+      background: #fff;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .producto button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 0.5em 1em;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #carritoContainer, #total {
+      margin-top: 2em;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 1em;
+      background: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      border-radius: 10px;
+      overflow: hidden;
     }
+
     th, td {
       padding: 1em;
-      background: white;
-      border: 1px solid #ddd;
+      border-bottom: 1px solid #eee;
       text-align: center;
     }
+
     th {
-      background-color: #232f3e;
-      color: white;
+      background: #232f3e;
+      color: #ffcc00;
     }
-    button {
-      padding: 0.3em 0.7em;
-      margin: 0 0.3em;
-      border: none;
-      background-color: #ff9900;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    #total {
-      font-weight: bold;
-      font-size: 18px;
-      text-align: right;
-      margin-top: 1em;
-    }
-    #btnEnviar {
-      display: block;
+
+    #btnPagar {
       margin: 2em auto;
+      display: block;
       padding: 1em 2em;
-      background: green;
+      background-color: #28a745;
       color: white;
       font-size: 16px;
       border: none;
+      border-radius: 10px;
       cursor: pointer;
-      border-radius: 8px;
+    }
+
+    #formularioPago {
+      display: none;
+      margin-top: 2em;
+      background: white;
+      padding: 2em;
+      border-radius: 12px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    #formularioPago input,
+    #formularioPago button {
+      width: 100%;
+      padding: 0.8em;
+      margin-bottom: 1em;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    #formularioPago button {
+      background: #007bff;
+      color: white;
+      font-weight: bold;
+      border: none;
+    }
+
+    #formularioPago button:hover {
+      background: #0056b3;
+    }
+
+    #mensajeRespuesta {
+      text-align: center;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <h1>🛒 Tu Carrito</h1>
+  <h1>🛒 Carrito de Compras</h1>
+
   <div id="carritoContainer"></div>
   <div id="total"></div>
-  <button id="btnEnviar">Pagar por WhatsApp</button>
+
+  <button id="btnPagar" style="display:none;">Pagar</button>
+
+  <div id="formularioPago">
+    <h2>Enviar Comprobante de Pago</h2>
+    <form id="formularioEnvio" enctype="multipart/form-data">
+      <input type="text" name="nombre" placeholder="Tu nombre" required><br>
+      <input type="text" name="asunto" placeholder="Asunto del correo" required><br>
+      <input type="file" name="archivo" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" required><br>
+      <button type="submit">Enviar</button>
+    </form>
+    <p id="mensajeRespuesta"></p>
+  </div>
 
   <script>
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
+    function agregarAlCarrito(nombre, precio) {
+      const index = carrito.findIndex(p => p.nombre === nombre);
+      if (index >= 0) {
+        carrito[index].cantidad += 1;
+      } else {
+        carrito.push({ nombre, precio, cantidad: 1 });
+      }
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+      renderCarrito();
+    }
+
     function renderCarrito() {
       const container = document.getElementById('carritoContainer');
       const totalDiv = document.getElementById('total');
+      const btnPagar = document.getElementById('btnPagar');
       container.innerHTML = '';
 
       if (carrito.length === 0) {
         container.innerHTML = '<p>No hay productos en tu carrito.</p>';
         totalDiv.innerHTML = '';
+        btnPagar.style.display = 'none';
         return;
       }
 
@@ -101,6 +179,7 @@
       tabla += '</table>';
       container.innerHTML = tabla;
       totalDiv.textContent = `Total a pagar: Q${total.toFixed(2)}`;
+      btnPagar.style.display = 'block';
     }
 
     function cambiarCantidad(index, cambio) {
@@ -118,22 +197,27 @@
       renderCarrito();
     }
 
-    document.getElementById('btnEnviar').onclick = () => {
-      if (carrito.length === 0) return alert('Tu carrito está vacío');
+    // Mostrar formulario al pagar
+    document.getElementById('btnPagar').addEventListener('click', () => {
+      document.getElementById('formularioPago').style.display = 'block';
+    });
 
-      let total = 0;
-      let mensaje = 'Hola, quiero comprar estos productos:\n\n';
-      carrito.forEach(p => {
-        const subtotal = p.precio * p.cantidad;
-        total += subtotal;
-        mensaje += `- ${p.nombre} x${p.cantidad} (Q${p.precio.toFixed(2)} c/u) = Q${subtotal.toFixed(2)}\n`;
+    // Enviar archivo al backend (Netlify Function)
+    document.getElementById('formularioEnvio').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      document.getElementById('mensajeRespuesta').textContent = "Enviando...";
+
+      const res = await fetch('/.netlify/functions/enviarCorreo', {
+        method: 'POST',
+        body: formData
       });
-      mensaje += `\nTotal a pagar: Q${total.toFixed(2)}\n\n¿Están disponibles?`;
 
-      const numero = '50253298462';
-      const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
-      window.open(url, '_blank');
-    };
+      const result = await res.json();
+      document.getElementById('mensajeRespuesta').textContent = result.ok
+        ? "✅ Enviado correctamente"
+        : "❌ Error: " + result.error;
+    });
 
     renderCarrito();
   </script>
