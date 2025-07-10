@@ -7,11 +7,11 @@
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #fffcf9, #fff0f5);
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      background-color: #f3f4f6;
     }
 
     header {
@@ -28,20 +28,42 @@
       margin: 0;
       font-size: 22px;
       color: #ffcc00;
+      text-shadow: 0 0 10px #ffcc00;
+      animation: flotar 2s ease-in-out infinite alternate;
     }
 
-     nav a {
-    color: rgba(247, 247, 247, 0.904);
-    text-decoration: none;
-    padding: 0.5em;
-    background-color: #530101;
-    border-radius: 5px;
-    font-size: 13px;
-  }
-    
+    @keyframes flotar {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-5px); }
+    }
+
+    nav {
+      display: flex;
+      gap: 0.5em;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 0.5em 1em;
+      background-color: #ff007f;
+      border-radius: 8px;
+      font-size: 13px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: transform 0.2s, background-color 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #ff3399;
+      transform: scale(1.1);
+    }
+
     h2 {
       text-align: center;
-      margin: 1em 0;
+      margin: 1em 0 0.5em;
+      font-size: 24px;
+      color: #232f3e;
     }
 
     .contenedor {
@@ -55,62 +77,71 @@
     .categoria {
       width: 90%;
       max-width: 600px;
-      background: white;
       margin: 1em 0;
-      padding: 1em;
-      border-radius: 10px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-      text-align: center;
-      transition: transform 0.2s;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      animation: aparecer 0.6s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes aparecer {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .categoria:hover {
-      transform: scale(1.02);
-    }
-
-    .categoria img {
-      width: 100%;
-      border-radius: 8px;
+      transform: scale(1.04);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
     }
 
     .categoria a {
-      text-decoration: none;
       display: block;
-      margin-top: 0.7em;
-      font-size: 18px;
-      color: #232f3e;
+      text-align: center;
+      padding: 3em 1em;
+      text-decoration: none;
+      font-size: 22px;
       font-weight: bold;
+      color: white;
+      background-size: cover;
+      background-position: center;
+      background-blend-mode: overlay;
+      background-color: rgba(255, 0, 128, 0.5);
+      transition: background-color 0.4s, color 0.3s;
+    }
+
+    .categoria a:hover {
+      background-color: rgba(255, 51, 153, 0.6);
+      color: #ffeb3b;
     }
 
     footer {
       background-color: #232f3e;
       color: white;
       text-align: center;
-      padding: 1em 1em 2em;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1em;
-      padding: 1em;
-    }
-
-    .footer-grid h4 {
-      margin-bottom: 0.5em;
-    }
-
-    .footer-grid a {
-      display: block;
-      color: white;
-      text-decoration: none;
-      margin: 0.2em 0;
+      padding: 1.5em 1em;
       font-size: 14px;
+      margin-top: auto;
     }
 
     .footer-bottom {
       margin-top: 1em;
       font-size: 13px;
+      color: #ccc;
+    }
+
+    @media screen and (max-width: 600px) {
+      .categoria a {
+        font-size: 18px;
+        padding: 2.5em 1em;
+      }
     }
   </style>
 </head>
@@ -126,27 +157,34 @@
     </nav>
   </header>
 
-  <h2> Categorías de Productos</h2>
+  <h2>Categorías de Productos</h2>
 
   <main class="contenedor">
     <div class="categoria">
-      <a href="../categorias_general/categorias/plata.html"> Productos de Plata</a>
+      <a href="../categorias_general/categorias/plata.html" style="background-image: url('https://via.placeholder.com/600x200?text=Plata');">
+        ✨ Productos de Plata
+      </a>
     </div>
     <div class="categoria">
-      <a href="../categorias_general/categorias/catalogos1.html"> Catálogos 1 - LeCleire, Flushing</a>
-    </div>
-        <div class="categoria">
-      <a href="../categorias_general/categorias/catalogos2.html"> Catálogos 2 - CoSmeticos, splash</a>
+      <a href="../categorias_general/categorias/catalogos1.html" style="background-image: url('https://via.placeholder.com/600x200?text=Catalogos1');">
+        💄 Catálogos 1 - LeCleire, Flushing
+      </a>
     </div>
     <div class="categoria">
-      <a href="../categorias_general/categorias/calzado.html"> Calzado Mexicano</a>
+      <a href="../categorias_general/categorias/catalogos2.html" style="background-image: url('https://via.placeholder.com/600x200?text=Catalogos2');">
+        🌸 Catálogos 2 - Cosméticos, Splash
+      </a>
+    </div>
+    <div class="categoria">
+      <a href="../categorias_general/categorias/calzado.html" style="background-image: url('https://via.placeholder.com/600x200?text=Calzado');">
+        👠 Calzado Mexicano
+      </a>
     </div>
   </main>
 
   <footer>
-    
     <div class="footer-bottom">
-     © 2025 DRANGILS MORALES. Todos los derechos reservados.
+      © 2025 DRANGILS MORALES. Todos los derechos reservados.
     </div>
   </footer>
 
@@ -166,3 +204,4 @@
 
 </body>
 </html>
+
