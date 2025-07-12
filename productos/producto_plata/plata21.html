@@ -192,7 +192,7 @@
     <nav>
       <a href="../../pagina_principal/pagina_principal.html">Inicio</a>
       <a href="../../categorias_general/categoria.html">Categorías</a>
-      <a href="../../opciones/contactogeneral6.html">Contacto</a>
+      <a href="../../opciones/contactogeneral3.html">Contacto</a>
       <a href="../../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
     </nav>
   </header>
@@ -229,18 +229,17 @@
       const cantidad = parseInt(document.getElementById('cantidad').value);
       const nombre = "Aretes diseñados en forma ovalada con circonias pequeñas blancas y circonia multicolor super elegante en combinación para cualquier evento #21";
       const precio = 159;
-      const talla = document.getElementById('talla').value;
 
       if (isNaN(cantidad) || cantidad < 1) {
         Swal.fire('Cantidad inválida', '', 'error');
         return;
       }
 
-      let existente = carrito.find(p => p.nombre === nombre && p.talla === talla);
+      let existente = carrito.find(p => p.nombre === nombre);
       if (existente) {
         existente.cantidad += cantidad;
       } else {
-        carrito.push({ nombre, precio, cantidad, talla });
+        carrito.push({ nombre, precio, cantidad });
       }
 
       localStorage.setItem('carrito', JSON.stringify(carrito));
@@ -248,7 +247,7 @@
 
       Swal.fire({
         title: 'Producto agregado',
-        text: `${cantidad} ${nombre} Talla ${talla} fue agregado al carrito` ,
+        text: `${cantidad} ${nombre} fue agregado al carrito`,
         icon: 'success',
         showCancelButton: true,
         confirmButtonText: 'Ver carrito',
