@@ -232,6 +232,8 @@
     <p style="text-align: center; margin-top: 2em;">© 2025 DRANGILS MORALES_APPS</p>
   </footer>
 
+  <!-- SweetAlert incluido -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
@@ -243,12 +245,12 @@
 
     function agregarAlCarrito() {
       const cantidad = parseInt(document.getElementById('cantidad').value);
-      const nombre = "#107";
+      const nombre = "Calzado Guess/Maquillaje mexicano Guess #107"; // ✅ SOLO ESTO CAMBIADO
       const precio = 150;
       const talla = document.getElementById('talla').value;
 
       if (isNaN(cantidad) || cantidad < 1) {
-        alert("Cantidad inválida");
+        Swal.fire('Cantidad inválida', '', 'error');
         return;
       }
 
@@ -260,11 +262,24 @@
       }
 
       localStorage.setItem('carrito', JSON.stringify(carrito));
-      alert(`Se agregaron ${cantidad} ${nombre} Talla ${talla} al carrito`);
       actualizarContador();
+
+      Swal.fire({
+        title: 'Producto agregado',
+        text: `${cantidad} ${nombre} Talla ${talla} fue agregado al carrito`,
+        icon: 'success',
+        showCancelButton: true,
+        confirmButtonText: 'Ver carrito',
+        cancelButtonText: 'Seguir comprando'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = '../../opciones/vercarrito.html';
+        }
+      });
     }
 
     actualizarContador();
   </script>
 </body>
 </html>
+
