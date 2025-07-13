@@ -157,7 +157,6 @@
       100% { transform: translateY(-5px); }
     }
 
-    /* 📱 Responsive para móviles */
     @media (max-width: 600px) {
       nav {
         flex-direction: column;
@@ -205,6 +204,7 @@
       <a href="../../opciones/contactogeneral6.html">Contacto</a>
       <a href="../../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
     </nav>
+  </header>
 
   <main class="producto-detalle">
     <img src="../../imagenes/calzado115.jpg" alt="Calzado Negro mexicano Karla Vázquez #115">
@@ -222,7 +222,6 @@
         <option>39</option>
       </select>
 
-      <br>
       <label for="cantidad">Cantidad:</label>
       <input type="number" id="cantidad" value="1" min="1" />
 
@@ -230,22 +229,18 @@
     </div>
   </main>
 
-  <!-- Pie de página estilo Amazon -->
   <footer>
-    <div class="footer-grid">
-      <div>
     <p style="text-align: center; margin-top: 2em;">© 2025 DRANGILS MORALES_APPS</p>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
     function actualizarContador() {
       const contador = document.getElementById('contadorCarrito');
-      if (contador) {
-        const total = carrito.reduce((acc, prod) => acc + (prod.cantidad || 1), 0);
-        contador.textContent = total;
-      }
+      const total = carrito.reduce((acc, prod) => acc + (prod.cantidad || 1), 0);
+      contador.textContent = total;
     }
 
     function agregarAlCarrito() {
@@ -255,7 +250,7 @@
       const talla = document.getElementById('talla').value;
 
       if (isNaN(cantidad) || cantidad < 1) {
-        alert("Cantidad inválida");
+        Swal.fire('Cantidad inválida', '', 'error');
         return;
       }
 
@@ -267,8 +262,20 @@
       }
 
       localStorage.setItem('carrito', JSON.stringify(carrito));
-      alert(`Se agregaron ${cantidad} ${nombre} Talla ${talla} al carrito`);
       actualizarContador();
+
+      Swal.fire({
+        title: 'Producto agregado',
+        text: `${cantidad} ${nombre} Talla ${talla} fue agregado al carrito`,
+        icon: 'success',
+        showCancelButton: true,
+        confirmButtonText: 'Ver carrito',
+        cancelButtonText: 'Seguir comprando'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = '../../opciones/vercarrito.html';
+        }
+      });
     }
 
     actualizarContador();
