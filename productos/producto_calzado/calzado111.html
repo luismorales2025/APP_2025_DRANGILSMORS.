@@ -269,8 +269,20 @@
       }
 
       localStorage.setItem('carrito', JSON.stringify(carrito));
-      alert(`Se agregaron ${cantidad} ${nombre} Talla ${talla} al carrito`);
       actualizarContador();
+
+      Swal.fire({
+        title: 'Producto agregado',
+        text: `${cantidad} ${nombre} Talla ${talla} fue agregado al carrito`,
+        icon: 'success',
+        showCancelButton: true,
+        confirmButtonText: 'Ver carrito',
+        cancelButtonText: 'Seguir comprando'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = '../../opciones/vercarrito.html';
+        }
+      });
     }
 
     actualizarContador();
