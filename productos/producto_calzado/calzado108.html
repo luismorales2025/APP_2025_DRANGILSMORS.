@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Detalle del Producto</title>
+  <title>Calzado Camel #108</title>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -157,7 +157,6 @@
       100% { transform: translateY(-5px); }
     }
 
-    /* 📱 Responsive para móviles */
     @media (max-width: 600px) {
       nav {
         flex-direction: column;
@@ -205,15 +204,15 @@
       <a href="../../opciones/contactogeneral6.html">Contacto</a>
       <a href="../../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
     </nav>
+  </header>
 
   <main class="producto-detalle">
     <img src="../../imagenes/calzado108.jpg" alt="Calzado Camel mexicano Karla Vázquez #108">
     <div class="info-producto">
-      <h2>Calzado Camel mexicano Karla Vázquez #108</h2> <!-- Cambia aquí el nombre del producto -->
+      <h2>Calzado Camel mexicano Karla Vázquez #108</h2>
       <p><strong>Precio:</strong> Q150.00</p>
-      <p><strong>Descripción:</strong> 100% mexicano elaborado en texiteles de alta calidad y lo mejor en modas.</p>
+      <p><strong>Descripción:</strong> 100% mexicano elaborado en textiles de alta calidad y lo mejor en modas.</p>
       
-      <!-- Tallas disponibles si es calzado -->
       <label for="talla">Talla disponible:</label>
       <select id="talla">
         <option>37</option>
@@ -221,7 +220,6 @@
         <option>39</option>
       </select>
 
-      <br>
       <label for="cantidad">Cantidad:</label>
       <input type="number" id="cantidad" value="1" min="1" />
 
@@ -229,14 +227,10 @@
     </div>
   </main>
 
-  <!-- Pie de página estilo Amazon -->
   <footer>
-    <div class="footer-grid">
-      <div>
-    <p style="text-align: center; margin-top: 2em;">© 2025 DRANGILS MORALES_APPS</p>
+    <p>© 2025 DRANGILS MORALES_APPS</p>
   </footer>
 
-  <!-- SweetAlert incluido -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
@@ -249,7 +243,7 @@
 
     function agregarAlCarrito() {
       const cantidad = parseInt(document.getElementById('cantidad').value);
-      const nombre = "Calzado Camel mexicano Karla Vázquez #108"; // ✅ SOLO ESTO CAMBIADO
+      const nombre = "Calzado Camel mexicano Karla Vázquez #108";
       const precio = 150;
       const talla = document.getElementById('talla').value;
 
