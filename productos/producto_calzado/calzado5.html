@@ -7,10 +7,12 @@
   <title>Detalle del Producto</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #fff;
+      font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 0;
+      color: #333;
+      background: url('../../imagenes/plata.jpeg') no-repeat center center fixed;
+      background-size: cover;
     }
 
     header {
@@ -18,106 +20,180 @@
       color: white;
       padding: 1em;
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
     }
 
     header h1 {
       margin: 0;
-      color: #ff9900;
+      color: #ffcc00;
+      font-size: 1.5em;
+      animation: flotar 2s ease-in-out infinite alternate;
+      text-shadow: 0 0 10px #ffcc00;
+      flex: 1 1 100%;
+      text-align: center;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 4px;
+      width: 100%;
+      margin-top: 0.5em;
     }
 
     nav a {
-    color: rgba(247, 247, 247, 0.904);
-    text-decoration: none;
-    padding: 0.5em;
-    background-color: #530101;
-    border-radius: 5px;
-    font-size: 13px;
-   } 
+      color: white;
+      text-decoration: none;
+      padding: 0.5em 1em;
+      background-color: #f1633f;
+      border-radius: 8px;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      font-size: 14px;
+      transition: transform 0.2s, background-color 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #ff3399;
+      transform: scale(1.05);
+    }
 
     .producto-detalle {
       display: flex;
-      gap: 2em;
       flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 2em;
       padding: 2em;
     }
 
     .producto-detalle img {
-      max-width: 300px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .producto-detalle img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
     }
 
     .info-producto {
-      flex: 1;
-      min-width: 250px;
+      max-width: 500px;
+      background-color: rgba(2, 182, 206, 0.95);
+      padding: 1.5em;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      animation: flotar 3s ease-in-out infinite alternate;
     }
 
-    .info-producto button {
-      background-color: #f0c14b;
-      border: 1px solid #a88734;
-      padding: 0.5em 1em;
-      border-radius: 4px;
-      cursor: pointer;
+    .info-producto h2 {
+      font-size: 22px;
+      color: #fffb00;
+      text-shadow: 1px 1px #fff;
+      margin-bottom: 10px;
+    }
+
+    .info-producto p {
+      font-size: 20px;
+      line-height: 2;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .info-producto label {
       font-weight: bold;
-      margin-top: 1em;
+      color: #333;
     }
 
     .info-producto select,
-    input[type="number"] {
+    .info-producto input[type="number"] {
       padding: 0.5em;
       margin: 0.5em 0;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 8px;
+      width: 100%;
+    }
+
+    .info-producto button {
+      background-color: #ff5722;
+      border: none;
+      padding: 0.7em;
+      border-radius: 10px;
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+      width: 100%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .info-producto button:hover {
+      background-color: #ff7043;
+      transform: scale(1.05);
     }
 
     footer {
       background-color: #232f3e;
       color: white;
       padding: 2em;
-      margin-top: 4em;
-      font-size: 14px;
+      text-align: center;
+      margin-top: 3em;
     }
 
-    .footer-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1em;
+    footer p {
+      font-size: 13px;
+      color: #ccc;
     }
 
-    .footer-grid h4 {
-      margin-bottom: 0.5em;
-      color: #ff9900;
+    @keyframes flotar {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-5px); }
     }
 
-    .footer-grid a {
-      color: #ddd;
-      text-decoration: none;
-      display: block;
-      margin-bottom: 0.5em;
-    }
+    /* 📱 Responsive para móviles */
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        align-items: center;
+      }
 
-    .relacionado {
-      margin: 2em;
-      padding: 1em;
-      background-color: #f7f7f7;
-      border-radius: 8px;
-    }
+      nav a {
+        width: 90%;
+        margin: 2px 0;
+        font-size: 13px;
+        text-align: center;
+        padding: 0.6em;
+      }
 
-    .relacionado h3 {
-      margin-top: 0;
-    }
+      header h1 {
+        font-size: 1.2em;
+      }
 
-    .relacionado img {
-      max-width: 100px;
-      border-radius: 5px;
-    }
+      .info-producto {
+        width: 90%;
+        padding: 1em;
+      }
 
-    .relacionado div {
-      display: flex;
-      align-items: center;
-      gap: 1em;
+      .info-producto p {
+        font-size: 16px;
+      }
+
+      .info-producto h2 {
+        font-size: 18px;
+      }
+
+      .producto-detalle img {
+        max-width: 90%;
+        height: auto;
+      }
     }
   </style>
 </head>
@@ -126,13 +202,11 @@
     <h1>DRANGILS MORALES</h1>
     <nav>
       <a href="../../pagina_principal/pagina_principal.html">Inicio</a>
-      <a href="../categoria.html">Categorías</a>
+      <a href="../../categorias_general/categoria.html">Categorías</a>
       <a href="../../opciones/contactogeneral6.html">Contacto</a>
       <a href="../../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
-      <a href="../../index.html">Cerrar sesión</a>
     </nav>
   </header>
-
   <main class="producto-detalle">
     <img src="../../imagenes/calzado5.jpg" alt="Calzado Vino mexicano Karla Vázquez #5">
     <div class="info-producto">
@@ -149,7 +223,6 @@
         <option>39</option>
       </select>
 
-      <br>
       <label for="cantidad">Cantidad:</label>
       <input type="number" id="cantidad" value="1" min="1" />
 
@@ -157,22 +230,18 @@
     </div>
   </main>
 
-  <!-- Pie de página estilo Amazon -->
   <footer>
-    <div class="footer-grid">
-      <div>
     <p style="text-align: center; margin-top: 2em;">© 2025 DRANGILS MORALES_APPS</p>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
     function actualizarContador() {
       const contador = document.getElementById('contadorCarrito');
-      if (contador) {
-        const total = carrito.reduce((acc, prod) => acc + (prod.cantidad || 1), 0);
-        contador.textContent = total;
-      }
+      const total = carrito.reduce((acc, prod) => acc + (prod.cantidad || 1), 0);
+      contador.textContent = total;
     }
 
     function agregarAlCarrito() {
@@ -182,7 +251,7 @@
       const talla = document.getElementById('talla').value;
 
       if (isNaN(cantidad) || cantidad < 1) {
-        alert("Cantidad inválida");
+        Swal.fire('Cantidad inválida', '', 'error');
         return;
       }
 
@@ -194,8 +263,20 @@
       }
 
       localStorage.setItem('carrito', JSON.stringify(carrito));
-      alert(`Se agregaron ${cantidad} ${nombre} Talla ${talla} al carrito`);
       actualizarContador();
+
+      Swal.fire({
+        title: 'Producto agregado',
+        text: `${cantidad} ${nombre} Talla ${talla} fue agregado al carrito`,
+        icon: 'success',
+        showCancelButton: true,
+        confirmButtonText: 'Ver carrito',
+        cancelButtonText: 'Seguir comprando'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = '../../opciones/vercarrito.html';
+        }
+      });
     }
 
     actualizarContador();
