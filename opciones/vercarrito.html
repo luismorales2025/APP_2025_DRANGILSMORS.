@@ -3,143 +3,268 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Carrito de compras</title>
+  <title>Carrito de Compras</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      padding: 2em;
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('../../imagenes/plata.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
     }
-    h1 {
+
+    header {
+      background-color: #232f3e;
+      padding: 1em;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      color: #ffcc00;
+      text-shadow: 0 0 10px #ffcc00;
+      animation: flotar 2s ease-in-out infinite alternate;
+      flex: 1 1 100%;
       text-align: center;
-      color: #232f3e;
     }
-    table {
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
       width: 100%;
-      border-collapse: collapse;
-      margin-top: 1em;
+      margin-top: 0.5em;
     }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 0.6em 1.2em;
+      background-color: #f1633f;
+      border-radius: 10px;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      font-size: 14px;
+      transition: transform 0.2s, background-color 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #ff3399;
+      transform: scale(1.05);
+    }
+
+    main {
+      padding: 2em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: flotar 3s ease-in-out infinite alternate;
+    }
+
+    table {
+      width: 90%;
+      max-width: 800px;
+      border-collapse: collapse;
+      background-color: rgba(0,0,0,0.7);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+
     th, td {
       padding: 1em;
-      background: white;
-      border: 1px solid #ddd;
       text-align: center;
     }
+
     th {
-      background-color: #232f3e;
-      color: white;
+      background-color: #ffcc00;
+      color: #000;
     }
+
+    td {
+      color: #fff;
+      border-bottom: 1px solid #444;
+    }
+
     button {
-      padding: 0.3em 0.7em;
-      margin: 0 0.3em;
+      padding: 0.4em 0.8em;
+      margin: 0 0.2em;
       border: none;
-      background-color: #ff9900;
-      color: white;
-      font-weight: bold;
+      border-radius: 6px;
       cursor: pointer;
-      border-radius: 5px;
-    }
-    #total {
-      font-weight: bold;
-      font-size: 18px;
-      text-align: right;
-      margin-top: 1em;
-    }
-    #btnEnviar {
-      display: block;
-      margin: 2em auto;
-      padding: 1em 2em;
-      background: green;
-      color: white;
       font-size: 16px;
+      transition: transform 0.2s, background-color 0.3s;
+    }
+
+    .sumar { background: #4caf50; color: #fff; }
+    .restar { background: #f44336; color: #fff; }
+    .borrar { background: #ff5722; color: #fff; }
+
+    button:hover {
+      transform: scale(1.1);
+    }
+
+    #total {
+      margin-top: 2em;
+      font-size: 20px;
+      background: rgba(0,0,0,0.7);
+      padding: 1em 2em;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+
+    #btnPagar {
+      margin-top: 2em;
+      padding: 1em 2em;
+      background: #25d366;
+      color: #fff;
+      font-size: 18px;
       border: none;
-      cursor: pointer;
-      border-radius: 8px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease;
+    }
+
+    #btnPagar:hover {
+      background: #1ebe57;
+      transform: scale(1.05);
+    }
+
+    @keyframes flotar {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-5px); }
+    }
+
+    @media (max-width: 600px) {
+      table, th, td {
+        font-size: 12px;
+      }
+
+      nav a {
+        width: 90%;
+        text-align: center;
+      }
     }
   </style>
 </head>
 <body>
 
-  <h1>🛒 Tu Carrito</h1>
+<header>
+  <h1>DRANGILS MORALES</h1>
+  <nav>
+    <a href="../../pagina_principal/pagina_principal.html">Inicio</a>
+    <a href="../../categorias_general/categoria.html">Categorías</a>
+    <a href="../../opciones/contactogeneral6.html">Contacto</a>
+    <a href="../../opciones/vercarrito.html">Carrito</a>
+  </nav>
+</header>
+
+<main>
+  <h2>🛒 Tu Carrito</h2>
   <div id="carritoContainer"></div>
   <div id="total"></div>
-  <button id="btnEnviar">Pagar por WhatsApp</button>
+  <button id="btnPagar">Pagar por WhatsApp</button>
+</main>
 
-  <script>
-    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+<!-- SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
-    function renderCarrito() {
-      const container = document.getElementById('carritoContainer');
-      const totalDiv = document.getElementById('total');
-      container.innerHTML = '';
+  function renderCarrito() {
+    const container = document.getElementById('carritoContainer');
+    const totalDiv = document.getElementById('total');
+    container.innerHTML = '';
 
-      if (carrito.length === 0) {
-        container.innerHTML = '<p>No hay productos en tu carrito.</p>';
-        totalDiv.innerHTML = '';
-        return;
-      }
-
-      let total = 0;
-      let tabla = '<table><tr><th>Producto</th><th>Precio</th><th>Cantidad</th><th>Subtotal</th><th>Acciones</th></tr>';
-
-      carrito.forEach((producto, index) => {
-        const subtotal = producto.precio * producto.cantidad;
-        total += subtotal;
-        tabla += `
-          <tr>
-            <td>${producto.nombre}</td>
-            <td>Q${producto.precio.toFixed(2)}</td>
-            <td>${producto.cantidad}</td>
-            <td>Q${subtotal.toFixed(2)}</td>
-            <td>
-              <button onclick="cambiarCantidad(${index}, 1)">➕</button>
-              <button onclick="cambiarCantidad(${index}, -1)">➖</button>
-              <button onclick="eliminarProducto(${index})">🗑️</button>
-            </td>
-          </tr>`;
-      });
-
-      tabla += '</table>';
-      container.innerHTML = tabla;
-      totalDiv.textContent = `Total a pagar: Q${total.toFixed(2)}`;
+    if (carrito.length === 0) {
+      container.innerHTML = '<p style="background: rgba(0,0,0,0.6); padding: 1em; border-radius:10px;">No hay productos en tu carrito.</p>';
+      totalDiv.innerHTML = '';
+      return;
     }
 
-    function cambiarCantidad(index, cambio) {
-      carrito[index].cantidad += cambio;
-      if (carrito[index].cantidad <= 0) {
-        carrito.splice(index, 1);
-      }
-      localStorage.setItem('carrito', JSON.stringify(carrito));
-      renderCarrito();
-    }
+    let total = 0;
+    let tabla = '<table><tr><th>Producto</th><th>Talla</th><th>Precio</th><th>Cantidad</th><th>Subtotal</th><th>Acciones</th></tr>';
 
-    function eliminarProducto(index) {
+    carrito.forEach((producto, index) => {
+      const subtotal = producto.precio * producto.cantidad;
+      total += subtotal;
+      tabla += `
+        <tr>
+          <td>${producto.nombre}</td>
+          <td>${producto.talla}</td>
+          <td>Q${producto.precio.toFixed(2)}</td>
+          <td>${producto.cantidad}</td>
+          <td>Q${subtotal.toFixed(2)}</td>
+          <td>
+            <button class="sumar" onclick="cambiarCantidad(${index}, 1)">➕</button>
+            <button class="restar" onclick="cambiarCantidad(${index}, -1)">➖</button>
+            <button class="borrar" onclick="confirmarEliminar(${index})">🗑️</button>
+          </td>
+        </tr>`;
+    });
+
+    tabla += '</table>';
+    container.innerHTML = tabla;
+    totalDiv.innerHTML = `Total a pagar: <strong>Q${total.toFixed(2)}</strong>`;
+  }
+
+  function cambiarCantidad(index, cambio) {
+    carrito[index].cantidad += cambio;
+    if (carrito[index].cantidad <= 0) {
       carrito.splice(index, 1);
-      localStorage.setItem('carrito', JSON.stringify(carrito));
-      renderCarrito();
+    }
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+    renderCarrito();
+  }
+
+  function confirmarEliminar(index) {
+    Swal.fire({
+      title: '¿Eliminar producto?',
+      text: 'Esta acción no se puede deshacer.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        carrito.splice(index, 1);
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        renderCarrito();
+      }
+    });
+  }
+
+  document.getElementById('btnPagar').onclick = () => {
+    if (carrito.length === 0) {
+      Swal.fire('Tu carrito está vacío', '', 'info');
+      return;
     }
 
-    document.getElementById('btnEnviar').onclick = () => {
-      if (carrito.length === 0) {
-        alert('Tu carrito está vacío');
-        return;
-      }
+    let total = 0;
+    let mensaje = 'Hola, quiero comprar estos productos:\n\n';
+    carrito.forEach(p => {
+      const subtotal = p.precio * p.cantidad;
+      total += subtotal;
+      mensaje += `- ${p.nombre} (Talla: ${p.talla}) x${p.cantidad} = Q${subtotal.toFixed(2)}\n`;
+    });
+    mensaje += `\nTotal: Q${total.toFixed(2)}\n¿Están disponibles?`;
 
-      let total = 0;
-      let mensaje = 'Hola, quiero comprar estos productos:\n\n';
-      carrito.forEach(p => {
-        const subtotal = p.precio * p.cantidad;
-        total += subtotal;
-        mensaje += `- ${p.nombre} x${p.cantidad} (Q${p.precio.toFixed(2)} c/u) = Q${subtotal.toFixed(2)}\n`;
-      });
-      mensaje += `\nTotal a pagar: Q${total.toFixed(2)}\n\n¿Están disponibles?`;
+    const numero = '50253298462';
+    const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, '_blank');
 
-      const numero = '50253298462';
-      const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
-      window.open(url, '_blank');
-    };
-
+    localStorage.removeItem('carrito');
+    carrito = [];
     renderCarrito();
-  </script>
+  };
+
+  renderCarrito();
+</script>
+
 </body>
 </html>
