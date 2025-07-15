@@ -3,114 +3,82 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Carrito de compras</title>
+  <title>Carrito de Compras</title>
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 0;
-      color: #333;
+      font-family: 'Poppins', Arial, sans-serif;
       background: url('../imagenes/plata.jpeg') no-repeat center center fixed;
       background-size: cover;
-    }
-
-    header {
-      background-color: #232f3e;
-      color: white;
-      padding: 1em;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    header h1 {
       margin: 0;
-      color: #ffcc00;
-      font-size: 1.5em;
-      animation: flotar 2s ease-in-out infinite alternate;
-      text-shadow: 0 0 10px #ffcc00;
-      flex: 1 1 100%;
-      text-align: center;
-    }
-
-    nav {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 4px;
-      width: 100%;
-      margin-top: 0.5em;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      padding: 0.5em 1em;
-      background-color: #f1633f;
-      border-radius: 8px;
-      font-weight: bold;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      font-size: 14px;
-      transition: transform 0.2s, background-color 0.3s;
-    }
-
-    nav a:hover {
-      background-color: #ff3399;
-      transform: scale(1.05);
+      padding: 1em;
+      color: #333;
     }
 
     h1 {
       text-align: center;
-      color: #fff;
+      color: #ffcc00;
+      text-shadow: 0 0 10px #ffcc00;
+      animation: flotar 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes flotar {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-5px); }
+    }
+
+    .tabla-container {
+      overflow-x: auto;
+      background: rgba(255,255,255,0.95);
+      padding: 1em;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       margin-top: 1em;
     }
 
     table {
-      width: 90%;
-      max-width: 800px;
-      margin: 2em auto;
+      width: 100%;
       border-collapse: collapse;
-      background-color: rgba(255,255,255,0.95);
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      animation: flotar 3s ease-in-out infinite alternate;
+      min-width: 600px; /* Para que se mantenga ordenado */
     }
 
     th, td {
-      padding: 1em;
+      padding: 0.8em;
       border: 1px solid #ddd;
       text-align: center;
+      font-size: 14px;
     }
 
     th {
       background-color: #232f3e;
       color: white;
+      font-size: 15px;
+    }
+
+    td {
+      background-color: #f9f9f9;
     }
 
     button {
-      padding: 0.4em 0.8em;
-      margin: 0 0.3em;
+      padding: 0.4em 0.7em;
       border: none;
-      background-color: #ff9900;
+      background-color: #ff5722;
       color: white;
-      font-weight: bold;
-      cursor: pointer;
       border-radius: 5px;
-      transition: transform 0.2s;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
     }
 
     button:hover {
+      background-color: #ff7043;
       transform: scale(1.05);
     }
 
     #total {
-      font-weight: bold;
-      font-size: 20px;
-      text-align: center;
-      color: #fff;
       margin-top: 1em;
+      font-size: 18px;
+      text-align: right;
+      font-weight: bold;
+      color: #232f3e;
     }
 
     #btnEnviar {
@@ -123,66 +91,39 @@
       border: none;
       cursor: pointer;
       border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-      transition: transform 0.3s;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: background 0.3s;
     }
 
     #btnEnviar:hover {
-      transform: scale(1.05);
+      background: #0f8d0f;
     }
 
-    footer {
-      background-color: #232f3e;
-      color: white;
-      padding: 1em;
-      text-align: center;
-      margin-top: 3em;
-    }
-
-    @keyframes flotar {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-5px); }
-    }
-
+    /* Responsive */
     @media (max-width: 600px) {
-      nav {
-        flex-direction: column;
-        align-items: center;
+      th, td {
+        font-size: 12px;
+        padding: 0.5em;
       }
 
-      nav a {
-        width: 90%;
-        margin: 2px 0;
-        font-size: 13px;
-        text-align: center;
-        padding: 0.6em;
+      #btnEnviar {
+        width: 100%;
+        font-size: 14px;
       }
 
-      table {
-        width: 95%;
+      #total {
+        font-size: 16px;
       }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>DRANGILS MORALES</h1>
-    <nav>
-      <a href="../pagina_principal/pagina_principal.html">Inicio</a>
-      <a href="../categorias_general/categoria.html">Categorías</a>
-      <a href="../opciones/contactogeneral6.html">Contacto</a>
-    </nav>
-  </header>
-
   <h1>🛒 Tu Carrito</h1>
-  <div id="carritoContainer"></div>
+
+  <div class="tabla-container" id="carritoContainer"></div>
   <div id="total"></div>
   <button id="btnEnviar">Pagar por WhatsApp</button>
-
-  <footer>
-    <p>© 2025 DRANGILS MORALES_APPS</p>
-  </footer>
 
   <script>
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
@@ -193,7 +134,7 @@
       container.innerHTML = '';
 
       if (carrito.length === 0) {
-        container.innerHTML = '<p style="color:white; text-align:center;">No hay productos en tu carrito.</p>';
+        container.innerHTML = '<p>No hay productos en tu carrito.</p>';
         totalDiv.innerHTML = '';
         return;
       }
@@ -207,7 +148,7 @@
         tabla += `
           <tr>
             <td>${producto.nombre}</td>
-            <td>${producto.talla}</td>
+            <td>${producto.talla || '-'}</td>
             <td>Q${producto.precio.toFixed(2)}</td>
             <td>${producto.cantidad}</td>
             <td>Q${subtotal.toFixed(2)}</td>
@@ -250,7 +191,7 @@
       carrito.forEach(p => {
         const subtotal = p.precio * p.cantidad;
         total += subtotal;
-        mensaje += `- ${p.nombre} (Talla ${p.talla}) x${p.cantidad} = Q${subtotal.toFixed(2)}\n`;
+        mensaje += `- ${p.nombre} (Talla: ${p.talla || '-'}) x${p.cantidad} = Q${subtotal.toFixed(2)}\n`;
       });
       mensaje += `\nTotal a pagar: Q${total.toFixed(2)}\n\n¿Están disponibles?`;
 
@@ -258,7 +199,7 @@
       const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
       window.open(url, '_blank');
 
-      // 🧹 Limpiar el carrito después de pagar
+      // Limpiar carrito después de enviar
       carrito = [];
       localStorage.removeItem('carrito');
       renderCarrito();
