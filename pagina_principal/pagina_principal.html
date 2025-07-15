@@ -85,6 +85,31 @@
       transform: scale(1.1);
     }
 
+    /* VIDEO ESTILO BANNER ALARGADO Y DELGADO */
+    .video-promocional {
+      display: flex;
+      justify-content: center;
+      margin-top: 1em;
+      padding: 0 1em;
+    }
+
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 2000px;
+      aspect-ratio: 100 / 25; /* horizontal largo y delgado */
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .video-wrapper video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
     .grid-productos {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -164,11 +189,20 @@
   </header>
 
   <section class="categorias">
-    <!-- Cambia los enlaces por las categorías reales -->
     <a href="../categorias_general/categorias/plata.html">Plata</a>
     <a href="../categorias_general/categorias/catalogos1.html">Catálogos1</a>
     <a href="../categorias_general/categorias/catalogos2.html">Catálogos2</a>
     <a href="../categorias_general/categorias/calzado.html">Calzado mexicano</a>
+  </section>
+
+  <!-- VIDEO ESTILO BANNER -->
+  <section class="video-promocional">
+    <div class="video-wrapper">
+      <video controls autoplay muted loop>
+        <source src="../anuncio1.mp4" type="video/mp4">
+        Tu navegador no soporta la reproducción de video.
+      </video>
+    </div>
   </section>
 
   <main class="grid-productos">
