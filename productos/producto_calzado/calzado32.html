@@ -206,11 +206,11 @@
       <a href="../../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
     </nav>
   </header>
-  
+
   <main class="producto-detalle">
-    <img src="../../imagenes/calzado39.jpg" alt="Calzado Hueso/Lila mexicano Karla Vázquez #39">
+    <img src="../../imagenes/calzado32.jpg" alt="Calzado Negro mexicano Giselle #32">
     <div class="info-producto">
-      <h2>Calzado Hueso/Lila mexicano Karla Vázquez #39</h2> <!-- Cambia aquí el nombre del producto -->
+      <h2>Calzado Negro mexicano Giselle #32</h2> <!-- Cambia aquí el nombre del producto -->
       <p><strong>Precio:</strong> Q150.00</p>
       <p><strong>Descripción:</strong> 100% mexicano elaborado en texiteles de alta calidad y lo mejor en modas.</p>
       
@@ -219,9 +219,7 @@
       <select id="talla">
         <option>36</option>
         <option>37</option>
-        <option>38</option>
-        <option>39</option>
-      </select>
+       </select>
 
       <label for="cantidad">Cantidad:</label>
       <input type="number" id="cantidad" value="1" min="1" />
@@ -246,8 +244,8 @@
 
     function agregarAlCarrito() {
       const cantidad = parseInt(document.getElementById('cantidad').value);
-      const nombre = "Calzado Hueso/Lila mexicano Karla Vázquez #39"; // ← cambia aquí el nombre
-      const precio = 150;
+      const nombre = "Calzado Negro mexicano Giselle #32"; // ← cambia aquí el nombre
+      const precio = 180;
       const talla = document.getElementById('talla').value;
 
       if (isNaN(cantidad) || cantidad < 1) {
@@ -282,6 +280,4 @@
     actualizarContador();
   </script>
 </body>
-</html>
-
 </html>
