@@ -97,7 +97,7 @@
       position: relative;
       width: 100%;
       max-width: 2000px;
-      aspect-ratio: 100 / 25; /* horizontal largo y delgado */
+      aspect-ratio: 100 / 25; /* formato horizontal largo y delgado */
       overflow: hidden;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
@@ -176,6 +176,13 @@
       margin-top: 1em;
       color: #ccc;
     }
+
+    /* Responsive Video */
+    @media (max-width: 600px) {
+      .video-wrapper {
+        aspect-ratio: 16 / 9;
+      }
+    }
   </style>
 </head>
 <body>
@@ -195,10 +202,10 @@
     <a href="../categorias_general/categorias/calzado.html">Calzado mexicano</a>
   </section>
 
-  <!-- VIDEO ESTILO BANNER -->
+  <!-- VIDEO PROMOCIONAL SIN CONTROLES -->
   <section class="video-promocional">
     <div class="video-wrapper">
-      <video controls autoplay muted loop>
+      <video autoplay muted loop playsinline>
         <source src="../anuncio1.mp4" type="video/mp4">
         Tu navegador no soporta la reproducción de video.
       </video>
