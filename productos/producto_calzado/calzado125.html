@@ -69,34 +69,10 @@
       padding: 2em;
     }
 
-    .imagen-con-etiqueta {
-      position: relative;
-      max-width: 400px;
-      width: 100%;
-    }
-
-    .etiqueta-nuevo {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background: #ff007f;
-      color: white;
-      padding: 5px 10px;
-      font-size: 12px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-      font-weight: bold;
-      animation: parpadeo 1.5s infinite;
-    }
-
-    @keyframes parpadeo {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
-
     .producto-detalle img {
-      width: 100%;
-      border-radius: 10px;
+      width: 400px;
+      height: 450px;
+      border-radius: 8px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       cursor: pointer;
@@ -203,16 +179,9 @@
         padding: 1em;
       }
 
-      .info-producto p {
-        font-size: 16px;
-      }
-
-      .info-producto h2 {
-        font-size: 18px;
-      }
-
-      .imagen-con-etiqueta {
+      .producto-detalle img {
         max-width: 90%;
+        height: auto;
       }
     }
   </style>
@@ -227,32 +196,28 @@
       <a href="../../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
     </nav>
   </header>
-
+  
   <main class="producto-detalle">
-    <div class="imagen-con-etiqueta">
-      <div class="etiqueta-nuevo">Nuevo Ingreso</div>
       <img src="../../imagenes/calzado125.jpg" alt="Calzado Negro mexicano Guess #125">
-    </div>
+      <div class="info-producto">
+        <h2>Calzado Negro mexicano Guess #125</h2>
+        <p><strong>Precio:</strong> Q180.00</p>
+        <p><strong>Descripción:</strong> 100% mexicano, elaborado en textiles de alta calidad y lo mejor en modas. Perfecto para lucir auténtico y elegante.</p>
 
-    <div class="info-producto">
-      <h2>Calzado Negro mexicano Guess #125</h2>
-      <p><strong>Precio:</strong> Q180.00</p>
-      <p><strong>Descripción:</strong> 100% mexicano, elaborado en textiles de alta calidad y lo mejor en modas. Perfecto para lucir auténtico y elegante.</p>
+        <label for="talla">Talla disponible:</label>
+        <select id="talla">
+          <option>35</option>
+          <option>36</option>
+          <option>37</option>
+          <option>38</option>
+          <option>39</option>
+        </select>
 
-      <label for="talla">Talla disponible:</label>
-      <select id="talla">
-        <option>35</option>
-        <option>36</option>
-        <option>37</option>
-        <option>38</option>
-        <option>39</option>
-      </select>
+        <label for="cantidad">Cantidad:</label>
+        <input type="number" id="cantidad" value="1" min="1" />
 
-      <label for="cantidad">Cantidad:</label>
-      <input type="number" id="cantidad" value="1" min="1" />
-
-      <button onclick="agregarAlCarrito()">Agregar al carrito</button>
-    </div>
+        <button onclick="agregarAlCarrito()">Agregar al carrito</button>
+      </div>
   </main>
 
   <footer>
@@ -265,10 +230,8 @@
 
     function actualizarContador() {
       const contador = document.getElementById('contadorCarrito');
-      if (contador) {
-        const total = carrito.reduce((acc, prod) => acc + (prod.cantidad || 1), 0);
-        contador.textContent = total;
-      }
+      const total = carrito.reduce((acc, prod) => acc + (prod.cantidad || 1), 0);
+      contador.textContent = total;
     }
 
     function agregarAlCarrito() {
@@ -278,7 +241,7 @@
       const talla = document.getElementById('talla').value;
 
       if (isNaN(cantidad) || cantidad < 1) {
-        alert("Cantidad inválida");
+        Swal.fire('Cantidad inválida', '', 'error');
         return;
       }
 
