@@ -69,34 +69,10 @@
       padding: 2em;
     }
 
-    .imagen-con-etiqueta {
-      position: relative;
-      max-width: 400px;
-      width: 100%;
-    }
-
-    .etiqueta-nuevo {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background: #ff007f;
-      color: white;
-      padding: 5px 10px;
-      font-size: 12px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-      font-weight: bold;
-      animation: parpadeo 1.5s infinite;
-    }
-
-    @keyframes parpadeo {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
-
     .producto-detalle img {
-      width: 100%;
-      border-radius: 10px;
+      width: 400px;
+      height: 450px;
+      border-radius: 8px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       cursor: pointer;
@@ -203,16 +179,9 @@
         padding: 1em;
       }
 
-      .info-producto p {
-        font-size: 16px;
-      }
-
-      .info-producto h2 {
-        font-size: 18px;
-      }
-
-      .imagen-con-etiqueta {
+      .producto-detalle img {
         max-width: 90%;
+        height: auto;
       }
     }
   </style>
@@ -227,13 +196,9 @@
       <a href="../../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
     </nav>
   </header>
-
+  
   <main class="producto-detalle">
-    <div class="imagen-con-etiqueta">
-      <div class="etiqueta-nuevo">Nuevo Ingreso</div>
-      <img src="../../imagenes/calzado138.jpg" alt="Calzado Bicolor mexicano Karla Vázquez #1">
-    </div>
-
+    <img src="../../imagenes/calzado138.jpg" alt="Calzado Bicolor mexicano Karla Vázquez #1">
     <div class="info-producto">
       <h2>Calzado Rosa Nude mexicano Karla Vázquez #138</h2>
       <p><strong>Precio:</strong> Q180.00</p>
