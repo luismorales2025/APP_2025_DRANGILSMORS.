@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DRANGILS MORALES - Tienda</title>
+  <title>DRANGILS MORALES - Productos de Plata</title>
   <style>
     body {
       margin: 0;
@@ -59,30 +59,39 @@
       transform: scale(1.1);
     }
 
-    .categorias {
-      background-color: rgba(2, 117, 216, 0.9);
-      color: white;
-      padding: 0.5em;
+    /* VIDEO ESTILO BANNER ALARGADO */
+    .video-promocional {
       display: flex;
-      gap: 0.5em;
-      overflow-x: auto;
-      white-space: nowrap;
-      scroll-behavior: smooth;
+      justify-content: center;
+      margin-top: 1em;
+      padding: 0 1em;
     }
 
-    .categorias a {
-      color: white;
-      text-decoration: none;
-      background-color: #00c4ff;
-      padding: 0.5em 1em;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: transform 0.3s, background-color 0.3s;
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 2000px;
+      aspect-ratio: 100 / 25; /* formato horizontal largo y delgado */
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
 
-    .categorias a:hover {
-      background-color: #00e1ff;
-      transform: scale(1.1);
+    .video-wrapper video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Título centrado */
+    .titulo-productos {
+      text-align: center;
+      font-size: 2em;
+      color: #ffcc00;
+      margin-top: 1em;
+      text-shadow: 0 0 8px rgba(255, 204, 0, 0.8);
+      animation: flotar 2s ease-in-out infinite alternate;
     }
 
     .grid-productos {
@@ -151,6 +160,12 @@
       margin-top: 1em;
       color: #ccc;
     }
+
+    @media (max-width: 600px) {
+      .video-wrapper {
+        aspect-ratio: 16 / 9;
+      }
+    }
   </style>
 </head>
 <body>
@@ -165,7 +180,17 @@
     </nav>
   </header>
 
-  <h2>Productos de Plata</h2>
+  <!-- VIDEO PROMOCIONAL -->
+  <section class="video-promocional">
+    <div class="video-wrapper">
+      <video autoplay muted loop playsinline>
+        <source src="../../anuncio2.mp4" type="video/mp4">
+        Tu navegador no soporta la reproducción de video.
+      </video>
+    </div>
+  </section>
+
+  <h2 class="titulo-productos">Productos de Plata</h2>
 
   <section class="grid-productos">
     <!-- PRODUCTO1 -->
