@@ -280,6 +280,24 @@
 
     actualizarContador();
   </script>
+  <script>
+  // Bloquear clic derecho
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+  });
+
+  // Bloquear teclas Ctrl+U, Ctrl+S, Ctrl+Shift+I, F12
+  document.onkeydown = function(e) {
+    if (
+      e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'c') ||
+      (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+      e.key === 'F12'
+    ) {
+      e.preventDefault();
+      return false;
+    }
+  };
+</script>
 </body>
 </html>
 
