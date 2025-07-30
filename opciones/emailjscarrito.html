@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confirmar Pedido - DRANGILS MORALES</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: url('../imagenes/plata.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Barra de navegación RESPONSIVE */
+    header {
+      background-color: #232f3e;
+      color: white;
+      padding: 1em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.6em;
+      color: #ffcc00;
+      text-shadow: 0 0 10px #ffcc00;
+      animation: flotar 2s ease-in-out infinite alternate;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5em;
+      margin-top: 1em;
+      width: 100%;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 0.6em 1em;
+      background-color: #f1633f;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 14px;
+      transition: transform 0.2s, background-color 0.3s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    nav a:hover {
+      background-color: #ff3399;
+      transform: scale(1.05);
+    }
+
+    @keyframes flotar {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-5px); }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      nav a {
+        width: 90%;
+        font-size: 15px;
+      }
+    }
+
+    .form-container {
+      background: #fff;
+      color: #333;
+      max-width: 500px;
+      margin: 2em auto;
+      padding: 2em;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    }
+
+    .form-container h2 {
+      text-align: center;
+      color: #ff007f;
+      margin-bottom: 1em;
+      text-shadow: 0 0 8px #ff80bf;
+    }
+
+    .field {
+      margin-bottom: 1em;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.8em;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    #button {
+      background: #ff007f;
+      color: #fff;
+      border: none;
+      padding: 1em 2em;
+      border-radius: 8px;
+      font-weight: bold;
+      width: 100%;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    #button:hover {
+      background: #ff3399;
+    }
+
+    #pedidoNumero {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #ff007f;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra de navegación -->
+  <header>
+    <h1>DRANGILS MORALES</h1>
+    <nav>
+      <a href="../pagina_principal/pagina_principal.html">Inicio</a>
+      <a href="../categorias_general/categoria.html">Categorías</a>
+      <a href="../opciones/contactogeneral10.html">Contacto</a>
+      <a href="../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
+    </nav>
+  </header>
+
+  <!-- Formulario de pedido -->
+  <div class="form-container">
+    <h2>Confirmar Pedido</h2>
+    <p id="pedidoNumero"></p>
+
+    <form id="form">
+      <input type="hidden" name="order_id" id="order_id">
+
+      <div class="field">
+        <label for="carrito_resumen">Resumen de Productos</label>
+        <textarea name="carrito_resumen" id="carrito_resumen" rows="5" readonly></textarea>
+      </div>
+
+      <div class="field">
+        <label for="email">Correo Electrónico</label>
+        <input type="email" name="email" id="email" required>
+      </div>
+
+      <div class="field">
+        <label for="total">Total a Pagar</label>
+        <input type="text" name="total" id="total" readonly>
+      </div>
+
+      <input type="submit" id="button" value="Siguiente">
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    emailjs.init('SnSPvJjoTlE5yDDPI');
+
+    function generarOrderId() {
+      let ultimo = localStorage.getItem('ultimoPedido') || 0;
+      ultimo++;
+      localStorage.setItem('ultimoPedido', ultimo);
+      return String(ultimo).padStart(2, '0');
+    }
+
+    const orderId = generarOrderId();
+    document.getElementById('order_id').value = orderId;
+    document.getElementById('pedidoNumero').textContent = "Número de Pedido: " + orderId;
+
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    let resumen = '';
+    let total = 0;
+
+    carrito.forEach(p => {
+      const subtotal = p.precio * p.cantidad;
+      total += subtotal;
+      resumen += `- ${p.nombre} | Talla: ${p.talla || '-'} | Cantidad: ${p.cantidad} | Subtotal: Q${subtotal.toFixed(2)}\n`;
+    });
+
+    document.getElementById('carrito_resumen').value = resumen;
+    document.getElementById('total').value = `Q${total.toFixed(2)}`;
+
+    const btn = document.getElementById('button');
+
+    document.getElementById('form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      btn.value = 'Enviando...';
+
+      emailjs.sendForm('default_service', 'template_xlxdrtt', this)
+        .then(() => {
+          btn.value = 'Siguiente';
+          alert('¡Pedido enviado exitosamente! Ahora serás redirigido al pago en línea.');
+          localStorage.removeItem('carrito');
+          window.location.href = "../opciones/index.html";
+        }, (err) => {
+          btn.value = 'Siguiente';
+          alert('Error al enviar el pedido: ' + JSON.stringify(err));
+        });
+    });
+
+    // Bloquear clic derecho
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+  });
+
+  // Bloquear teclas Ctrl+U, Ctrl+S, Ctrl+Shift+I, F12
+  document.onkeydown = function(e) {
+    if (
+      e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'c') ||
+      (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+      e.key === 'F12'
+    ) {
+      e.preventDefault();
+      return false;
+    }
+  };
+</script>
+</body>
+</html>

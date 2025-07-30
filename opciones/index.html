@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>DRANGILS MORALES - Tienda</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Estilo DRANGILS -->
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('../imagenes/plata.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Arial', sans-serif;
+      color: #333;
+    }
+
+    .Ccontainer {
+      max-width: 500px;
+      margin: 50px auto;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      backdrop-filter: blur(5px);
+      animation: flotar 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes flotar {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-5px); }
+    }
+
+    .form-label {
+      color: #ff007f;
+      font-weight: bold;
+      font-size: 15px;
+      text-shadow: 0 0 5px rgba(255, 0, 127, 0.4);
+    }
+
+    .form-control {
+      border-radius: 10px;
+      border: 2px solid #00c4ff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: #ff3399;
+      box-shadow: 0 0 10px #ff3399;
+      outline: none;
+    }
+
+    #button {
+      background: linear-gradient(45deg, #ff007f, #00c4ff);
+      border: none;
+      padding: 12px;
+      width: 100%;
+      font-weight: bold;
+      font-size: 15px;
+      border-radius: 12px;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    #button:hover {
+      background: linear-gradient(45deg, #ff3399, #00e1ff);
+      transform: scale(1.05);
+    }
+
+    .mb-3 {
+      margin-bottom: 1.2rem !important;
+    }
+
+    .banco-info {
+      margin-top: 30px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 15px;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+    }
+
+    .banco-info img {
+      height: 50px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .banco-info .cuenta {
+      font-weight: bold;
+      font-size: 18px;
+      color: #000;
+    }
+
+    .banco-info .nombre {
+      font-size: 16px;
+      color: #444;
+    }
+
+    .form-group {
+  margin-top: 15px;
+}
+
+    .form-group label {
+      font-weight: bold;
+      color: #ff3399;
+      display: block;
+      margin-bottom: 8px;
+}
+
+    .form-group input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #00e1ff;
+      border-radius: 10px;
+      box-sizing: border-box;
+      font-size: 14px;
+      outline: none;
+}
+
+    .form-group input[type="text"]:focus {
+      border-color: #d500a3;
+      box-shadow: 0 0 5px rgba(213, 0, 163, 0.3);
+}
+
+    .form-group .info {
+      display: block;
+      margin-top: 5px;
+      font-size: 12px;
+      color: #777;
+}
+
+    .form-container {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+    .form-container h2 {
+      text-align: center;
+      font-size: 22px;
+      color: #d500a3;
+      margin-bottom: 25px;
+}
+
+    .label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #555;
+    }
+
+        /* Barra de navegación */
+    header {
+      background-color: #232f3e;
+      color: white;
+      padding: 1em;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      color: #ffcc00;
+      font-size: 1.5em;
+      animation: flotar 2s ease-in-out infinite alternate;
+      text-shadow: 0 0 10px #ffcc00;
+      flex: 1 1 100%;
+      text-align: center;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 4px;
+      width: 100%;
+      margin-top: 0.5em;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 0.5em 1em;
+      background-color: #f1633f;
+      border-radius: 8px;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      font-size: 14px;
+      transition: transform 0.2s, background-color 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #ff3399;
+      transform: scale(1.05);
+    }
+
+    /* Resto del estilo */
+    h1 {
+      text-align: center;
+      color: #ffcc00;
+      text-shadow: 0 0 10px #ffcc00;
+      animation: flotar 2s ease-in-out infinite alternate;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra de navegación insertada -->
+  <header>
+    <h1>DRANGILS MORALES</h1>
+    <nav>
+      <a href="../pagina_principal/pagina_principal.html">Inicio</a>
+      <a href="../categorias_general/categoria.html">Categorías</a>
+      <a href="../opciones/contactogeneral.html">Contacto</a>
+      <a href="../../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
+    </nav>
+  </header>
+  <!-- CONTENEDOR PRINCIPAL -->
+  <div class="form-container">
+
+    <!-- TÍTULO ENCIMA DEL FORMULARIO -->
+    <h2>LLENA TUS DATOS PARA FINALIZAR TU PEDIDO</h2>
+
+  <div class="Ccontainer">
+    <div class="row">
+      <form id="form">
+        <div class="mb-3">
+          <label class="form-label">Nombre</label>
+          <input type="text" class="form-control" placeholder="Nombre" name="name" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Apellido</label>
+          <input type="text" class="form-control" placeholder="Apellido" name="last" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Teléfono</label>
+          <input type="number" class="form-control" placeholder="Teléfono" name="phone" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Correo Electrónico</label>
+          <input type="email" class="form-control" placeholder="Correo Electrónico" name="email" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Mensaje</label>
+          <input type="text" class="form-control" placeholder="Mensaje" name="message" required>
+        </div>
+        <div class="form-group">
+          <label for="comprobante">Número de comprobante o referencia de pago *</label>
+          <input type="text" id="comprobante" name="voucher" required placeholder="Ej. 12345678 o ABCD1234">
+          <small class="info">Lo encontrarás en el recibo del banco, puede llamarse comprobante, referencia, transacción o folio  (PRIMERO REALIZA EL DEPOSITO CON EL NUMERO DE CUENTA QUE APARECE ABAJO Y LUEGO LLENA EL FORMULARIO PARA CORROBORAR EL DEPOSITO).</small>
+        </div>
+        <button type="submit" id="button" class="btn btn-primary">ENVIAR MENSAJE</button>
+      </form>
+
+      <!-- INFORMACIÓN DEL BANCO (DEBAJO DEL FORMULARIO) -->
+    <div class="banco-info">
+      <img src="../imagenes/banrural.png" alt="Banrural">
+      <div class="cuenta">Cuenta: 4430298409</div>
+      <div class="nombre">A nombre de: Drangil Del Rosario Mateo Morales</div>
+    </div>
+
+      <!-- EmailJS -->
+      <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+      <script>
+        emailjs.init('SnSPvJjoTlE5yDDPI');
+      </script>
+
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+  <!-- Función de envío con SweetAlert -->
+  <script>
+    const btn = document.getElementById('button');
+
+    document.getElementById('form')
+      .addEventListener('submit', function(event) {
+        event.preventDefault();
+        btn.value = 'Enviando...';
+
+        const serviceID = 'default_service';
+        const templateID = 'template_v0en5y9';
+
+        emailjs.sendForm(serviceID, templateID, this)
+          .then(() => {
+            btn.value = 'ENVIAR MENSAJE';
+
+            Swal.fire({
+              title: '¡Mensaje enviado!',
+              text: 'Gracias por contactarnos, te responderemos pronto.',
+              icon: 'success',
+              confirmButtonText: 'Aceptar',
+              confirmButtonColor: '#ff007f',
+              background: '#fff',
+              color: '#333',
+              backdrop: `
+                rgba(0,0,0,0.4)
+                url("https://media.tenor.com/I6kN-6X7nhAAAAAi/loading-loading-forever.gif")
+                left top
+                no-repeat
+              `
+            });
+
+          }, (err) => {
+            btn.value = 'ENVIAR MENSAJE';
+            Swal.fire({
+              title: 'Error',
+              text: 'Hubo un problema al enviar el mensaje.',
+              icon: 'error',
+              confirmButtonText: 'Intentar de nuevo',
+              confirmButtonColor: '#ff007f'
+            });
+          });
+      });
+      // Bloquear clic derecho
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+  });
+
+  // Bloquear teclas Ctrl+U, Ctrl+S, Ctrl+Shift+I, F12
+  document.onkeydown = function(e) {
+    if (
+      e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'c') ||
+      (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+      e.key === 'F12'
+    ) {
+      e.preventDefault();
+      return false;
+    }
+  };
+</script>
+</body>
+</html>
+
