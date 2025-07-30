@@ -14,7 +14,6 @@
       padding: 0;
     }
 
-    /* Barra de navegación RESPONSIVE */
     header {
       background-color: #232f3e;
       color: white;
@@ -141,7 +140,6 @@
 </head>
 <body>
 
-  <!-- Barra de navegación -->
   <header>
     <h1>DRANGILS MORALES</h1>
     <nav>
@@ -152,7 +150,6 @@
     </nav>
   </header>
 
-  <!-- Formulario de pedido -->
   <div class="form-container">
     <h2>Confirmar Pedido</h2>
     <p id="pedidoNumero"></p>
@@ -182,6 +179,9 @@
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>
     emailjs.init('SnSPvJjoTlE5yDDPI');
+
+    // Reinicia el número de pedido a 0 (se hace solo UNA VEZ si dejas esto activado)
+    localStorage.setItem('ultimoPedido', 0); // <--- Aquí se reinicia
 
     function generarOrderId() {
       let ultimo = localStorage.getItem('ultimoPedido') || 0;
@@ -225,22 +225,20 @@
         });
     });
 
-    // Bloquear clic derecho
-  document.addEventListener('contextmenu', function(e) {
-    e.preventDefault();
-  });
-
-  // Bloquear teclas Ctrl+U, Ctrl+S, Ctrl+Shift+I, F12
-  document.onkeydown = function(e) {
-    if (
-      e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'c') ||
-      (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-      e.key === 'F12'
-    ) {
+    document.addEventListener('contextmenu', function(e) {
       e.preventDefault();
-      return false;
-    }
-  };
-</script>
+    });
+
+    document.onkeydown = function(e) {
+      if (
+        e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'c') ||
+        (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+        e.key === 'F12'
+      ) {
+        e.preventDefault();
+        return false;
+      }
+    };
+  </script>
 </body>
 </html>
