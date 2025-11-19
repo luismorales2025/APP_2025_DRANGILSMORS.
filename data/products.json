@@ -6,21 +6,5 @@
     "price": "230",
     "image": "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/images/img_1763523975298.jpg",
     "created_at": "2025-11-19T03:46:31.441Z"
-  },
-  {
-    "id": "p_1763348766647",
-    "title": "holamundo",
-    "description": "este es una prueba gratis",
-    "price": "290",
-    "image": "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/images/img_1763348757692.jpg",
-    "created_at": "2025-11-17T03:06:06.647Z"
-  },
-  {
-    "id": "p_1763348750040",
-    "title": "holamundo",
-    "description": "este es una prueba gratis",
-    "price": "290",
-    "image": "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/images/img_1763348742870.jpg",
-    "created_at": "2025-11-17T03:05:50.040Z"
   }
 ]
