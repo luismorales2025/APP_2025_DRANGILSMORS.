@@ -1,5 +1,11 @@
 [
   {
+    "title": "calzado 2",
+    "description": "hola mundo2",
+    "price": "2003",
+    "image": "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/images/calzado_2_1763563140434.jpg"
+  },
+  {
     "title": "calzado 1",
     "description": "hola mundo",
     "price": "200",
