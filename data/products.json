@@ -1,5 +1,11 @@
 [
   {
+    "title": "Prendas de vestir",
+    "description": "Moda",
+    "price": "123",
+    "image": "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/images/Prendas_de_vestir_1763568661606.jpg"
+  },
+  {
     "title": "HOLA",
     "description": "1233",
     "price": "123",
