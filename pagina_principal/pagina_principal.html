@@ -110,7 +110,7 @@
       display: block;
     }
 
-    /* PRODUCTOS AUTOMÁTICOS DE GITHUB */
+    /* PRODUCTOS AUTOMÁTICOS */
     #listaProductos {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -141,7 +141,7 @@
       margin-bottom: 0.5em;
     }
 
-    .boton-carrito {
+    .boton-carrito, .boton-descripcion {
       background-color: #ff5722;
       border: none;
       padding: 0.7em;
@@ -155,7 +155,7 @@
       transition: transform 0.3s, background-color 0.3s;
     }
 
-    .boton-carrito:hover {
+    .boton-carrito:hover, .boton-descripcion:hover {
       background-color: #ff7043;
       transform: scale(1.05);
     }
@@ -183,38 +183,37 @@
 </head>
 <body>
 
-  <header>
-    <h1>DRANGILS MORALES</h1>
-    <nav>
-      <a href="../categorias_general/categoria.html">Categorías</a>
-      <a href="../opciones/contactogeneral1.html">Contacto</a>
-      <a href="../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
-    </nav>
-  </header>
+<header>
+  <h1>DRANGILS MORALES</h1>
+  <nav>
+    <a href="../categorias_general/categoria.html">Categorías</a>
+    <a href="../opciones/contactogeneral1.html">Contacto</a>
+    <a href="../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
+  </nav>
+</header>
 
-  <section class="categorias">
-    <a href="../categorias_general/categorias/plata.html">Plata</a>
-    <a href="../categorias_general/categorias/calzado.html">Calzado mexicano</a>
-  </section>
+<section class="categorias">
+  <a href="../categorias_general/categorias/plata.html">Plata</a>
+  <a href="../categorias_general/categorias/calzado.html">Calzado mexicano</a>
+</section>
 
-  <section class="video-promocional">
-    <div class="video-wrapper">
-      <video autoplay muted loop playsinline>
-        <source src="../anuncio1.mp4" type="video/mp4">
-        Tu navegador no soporta la reproducción de video.
-      </video>
-    </div>
-  </section>
-
-  <!-- 🔥 PRODUCTOS AUTOMÁTICOS DESDE GITHUB -->
-  <div id="listaProductos">
-    <h3>Cargando productos...</h3>
+<section class="video-promocional">
+  <div class="video-wrapper">
+    <video autoplay muted loop playsinline>
+      <source src="../anuncio1.mp4" type="video/mp4">
+    </video>
   </div>
+</section>
 
-  <footer>
-    <p>Tienda DRANGILS MORALES © 2025</p>
-    <div class="footer-bottom">Todos los derechos reservados.</div>
-  </footer>
+<!-- 🔥 LISTA DE PRODUCTOS -->
+<div id="listaProductos">
+  <h3>Cargando productos...</h3>
+</div>
+
+<footer>
+  <p>Tienda DRANGILS MORALES © 2025</p>
+  <div class="footer-bottom">Todos los derechos reservados.</div>
+</footer>
 
 <script>
 const URL_JSON = "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/data/products.json";
@@ -232,16 +231,26 @@ async function cargarProductos() {
         <div class="producto-card">
           <img src="${prod.image}" alt="${prod.title}">
           <h3>${prod.title}</h3>
-          <p>${prod.description}</p>
-          <strong>Q${prod.price}</strong><br>
-          <button class="boton-carrito" data-nombre="${prod.title}" data-precio="${prod.price}">
+          <p>${prod.description.substring(0, 60)}...</p>
+          <strong>Q${prod.price}</strong>
+
+          <button class="boton-carrito"
+            data-nombre="${prod.title}"
+            data-precio="${prod.price}">
             Agregar al carrito
+          </button>
+
+          <button class="boton-descripcion"
+            data-id="${prod.id}">
+            Ver descripción
           </button>
         </div>
       `;
     });
 
     activarBotonesCarrito();
+    activarBotonesDescripcion();
+
   } catch (error) {
     console.error("Error cargando JSON", error);
     document.getElementById("listaProductos").innerHTML = "<p>Error cargando productos.</p>";
@@ -266,6 +275,22 @@ function activarBotonesCarrito() {
       document.getElementById("contadorCarrito").innerText = carrito.length;
 
       alert("Producto agregado: " + btn.getAttribute("data-nombre"));
+    });
+  });
+}
+
+function activarBotonesDescripcion() {
+  const botones = document.querySelectorAll(".boton-descripcion");
+
+  botones.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.getAttribute("data-id");
+
+      // Guarda ID actual
+      localStorage.setItem("productoSeleccionado", id);
+
+      // Redirige a tu página de descripción
+      window.location.href = "../opciones/descripcion.html";
     });
   });
 }
