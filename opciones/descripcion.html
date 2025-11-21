@@ -97,14 +97,12 @@
     .info-producto h2 {
       font-size: 22px;
       color: #fffb00;
-      text-shadow: 1px 1px #fff;
       margin-bottom: 10px;
     }
 
     .info-producto p {
       font-size: 18px;
       line-height: 1.7;
-      color: #222;
       margin-bottom: 10px;
     }
 
@@ -114,6 +112,29 @@
       padding: 2em;
       text-align: center;
       margin-top: 3em;
+    }
+
+    /* Lista completa */
+    .lista-productos {
+      padding: 2em;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+    }
+
+    .producto-card {
+      background: rgba(255,255,255,0.85);
+      border-radius: 10px;
+      padding: 1em;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .producto-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
     }
 
     @keyframes flotar {
@@ -134,54 +155,91 @@
     </nav>
   </header>
 
-  <main class="producto-detalle">
-    <img id="imgProducto">
-    <div class="info-producto">
-      <h2 id="nombreProducto"></h2>
-      <p><strong>Precio:</strong> Q<span id="precioProducto"></span></p>
-      <p><strong>Descripción:</strong> <span id="descripcionProducto"></span></p>
-    </div>
-  </main>
+  <main id="contenido"></main>
 
   <footer>
     © 2025 DRANGILS MORALES_APPS
   </footer>
 
 <script>
-// =============================
-// CARGAR PRODUCTO AUTOMÁTICO
-// =============================
-async function cargarProducto() {
+let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
-  // Lee ?producto=Nombre del producto
-  const params = new URLSearchParams(window.location.search);
-  const nombreBuscado = params.get("producto");
+// Contador carrito
+function actualizarContador() {
+  const total = carrito.reduce((acc, p) => acc + (p.cantidad || 1), 0);
+  document.getElementById("contadorCarrito").textContent = total;
+}
 
-  if (!nombreBuscado) {
-    alert("Producto no encontrado en la URL");
-    return;
-  }
-
-  // Cargar JSON desde la carpeta real
+// ===============================
+//  SI HAY PRODUCTO SELECCIONADO
+// ===============================
+async function cargarProductoDetalle(nombreProducto) {
   const resp = await fetch("../data/products.json");
   const productos = await resp.json();
 
-  // Buscar por título exacto
-  const producto = productos.find(p => p.title.toLowerCase() === nombreBuscado.toLowerCase());
+  const producto = productos.find(p => p.title.toLowerCase() === nombreProducto.toLowerCase());
 
   if (!producto) {
-    alert("El producto no existe en products.json");
+    mostrarLista(productos);
     return;
   }
 
-  // Mostrar datos en pantalla
-  document.getElementById("nombreProducto").textContent = producto.title;
-  document.getElementById("descripcionProducto").textContent = producto.description;
-  document.getElementById("precioProducto").textContent = producto.price;
-  document.getElementById("imgProducto").src = producto.image;
+  document.getElementById("contenido").innerHTML = `
+    <div class="producto-detalle">
+      <img src="${producto.image}">
+      <div class="info-producto">
+        <h2>${producto.title}</h2>
+        <p><strong>Precio:</strong> Q${producto.price}</p>
+        <p><strong>Descripción:</strong> ${producto.description}</p>
+      </div>
+    </div>
+  `;
 }
 
-cargarProducto();
+// ===============================
+//  SI NO HAY PRODUCTO → LISTA COMPLETA
+// ===============================
+function mostrarLista(productos) {
+  let html = `<div class="lista-productos">`;
+
+  productos.forEach(p => {
+    html += `
+      <div class="producto-card">
+        <img src="${p.image}">
+        <h3>${p.title}</h3>
+        <p>Q${p.price}</p>
+        <button onclick="verProducto('${p.title}')">Ver descripción</button>
+      </div>
+    `;
+  });
+
+  html += `</div>`;
+  document.getElementById("contenido").innerHTML = html;
+}
+
+function verProducto(nombre) {
+  localStorage.setItem("productoSeleccionado", nombre);
+  window.location.reload();
+}
+
+// ===============================
+//  INICIO
+// ===============================
+async function iniciar() {
+  const nombreProducto = localStorage.getItem("productoSeleccionado");
+
+  const resp = await fetch("../data/products.json");
+  const productos = await resp.json();
+
+  if (nombreProducto) {
+    cargarProductoDetalle(nombreProducto);
+  } else {
+    mostrarLista(productos);
+  }
+}
+
+iniciar();
+actualizarContador();
 </script>
 
 </body>
