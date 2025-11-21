@@ -3,73 +3,219 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tienda DRANGILS</title>
+  <title>DRANGILS MORALES - Tienda</title>
 
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f2f2f2;
+      background: url('../imagenes/plata.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
     }
 
     header {
-      background: #232f3e;
+      background-color: rgba(35, 47, 62, 0.9);
       color: white;
       padding: 1em;
-      text-align: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    header h1 {
+      margin: 0;
+      color: #ffcc00;
+      font-size: 1.5em;
+      animation: flotar 2s ease-in-out infinite alternate;
+      text-shadow: 0 0 10px #ffcc00;
+    }
+
+    @keyframes flotar {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-5px); }
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5em;
+      margin-top: 0.5em;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 0.5em 1em;
+      background-color: #ff007f;
+      border-radius: 8px;
+      font-size: 13px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: transform 0.2s, background-color 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #ff3399;
+      transform: scale(1.1);
+    }
+
+    .categorias {
+      background-color: rgba(2, 117, 216, 0.9);
+      color: white;
+      padding: 0.5em;
+      display: flex;
+      gap: 0.5em;
+      overflow-x: auto;
+      white-space: nowrap;
+      scroll-behavior: smooth;
+    }
+
+    .categorias a {
+      color: white;
+      text-decoration: none;
+      background-color: #00c4ff;
+      padding: 0.5em 1em;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: transform 0.3s, background-color 0.3s;
+    }
+
+    .categorias a:hover {
+      background-color: #00e1ff;
+      transform: scale(1.1);
+    }
+
+    .video-promocional {
+      display: flex;
+      justify-content: center;
+      margin-top: 1em;
+      padding: 0 1em;
+    }
+
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 2000px;
+      aspect-ratio: 100 / 25;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .video-wrapper video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     #listaProductos {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 1em;
-      padding: 1em;
+      padding: 2em;
+      backdrop-filter: blur(5px);
     }
 
     .producto-card {
-      background: white;
-      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.85);
       padding: 1em;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
       text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .producto-card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
     }
 
     .producto-card img {
       width: 100%;
-      border-radius: 10px;
-      height: 200px;
+      height: 150px;
       object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 0.5em;
     }
 
-    .boton-carrito {
-      margin-top: 10px;
-      padding: 10px;
-      background: #ff5722;
-      color: white;
+    .boton-carrito, .boton-descripcion {
+      background-color: #ff5722;
       border: none;
-      border-radius: 8px;
+      padding: 0.7em;
       cursor: pointer;
+      border-radius: 8px;
+      font-weight: bold;
       width: 100%;
+      margin-top: 5px;
+      color: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: transform 0.3s, background-color 0.3s;
+    }
+
+    .boton-carrito:hover, .boton-descripcion:hover {
+      background-color: #ff7043;
+      transform: scale(1.05);
+    }
+
+    footer {
+      background-color: rgba(35, 47, 62, 0.9);
+      color: white;
+      padding: 2em;
+      font-size: 14px;
+      margin-top: 2em;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 1em;
+      color: #ccc;
+    }
+
+    @media (max-width: 600px) {
+      .video-wrapper {
+        aspect-ratio: 16 / 9;
+      }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>DRANGILS MORALES - Productos</h1>
-  <p>Carrito (<span id="contadorCarrito">0</span>)</p>
+  <h1>DRANGILS MORALES</h1>
+  <nav>
+    <a href="../categorias_general/categoria.html">Categorías</a>
+    <a href="../opciones/contactogeneral1.html">Contacto</a>
+    <a href="../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
+  </nav>
 </header>
+
+<section class="categorias">
+  <a href="../categorias_general/categorias/plata.html">Plata</a>
+  <a href="../categorias_general/categorias/calzado.html">Calzado mexicano</a>
+</section>
+
+<section class="video-promocional">
+  <div class="video-wrapper">
+    <video autoplay muted loop playsinline>
+      <source src="../anuncio1.mp4" type="video/mp4">
+    </video>
+  </div>
+</section>
 
 <div id="listaProductos">
   <h3>Cargando productos...</h3>
 </div>
 
+<footer>
+  <p>Tienda DRANGILS MORALES © 2025</p>
+  <div class="footer-bottom">Todos los derechos reservados.</div>
+</footer>
+
 <script>
 const URL_JSON = "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/data/products.json";
 
-// -------------------------
-//  CARGAR PRODUCTOS
-// -------------------------
 async function cargarProductos() {
   try {
     const response = await fetch(URL_JSON + "?v=" + Date.now());
@@ -83,16 +229,25 @@ async function cargarProductos() {
         <div class="producto-card">
           <img src="${prod.image}" alt="${prod.title}">
           <h3>${prod.title}</h3>
-          <p>${prod.description}</p>
-          <strong>Q${prod.price}</strong><br>
-          <button class="boton-carrito" data-nombre="${prod.title}" data-precio="${prod.price}">
+          <p>${prod.description.substring(0, 60)}...</p>
+          <strong>Q${prod.price}</strong>
+
+          <button class="boton-carrito"
+            data-nombre="${prod.title}"
+            data-precio="${prod.price}">
             Agregar al carrito
+          </button>
+
+          <button class="boton-descripcion"
+            data-id="${prod.id}">
+            Ver descripción
           </button>
         </div>
       `;
     });
 
     activarBotonesCarrito();
+    activarBotonesDescripcion();
 
   } catch (error) {
     console.error("Error cargando JSON", error);
@@ -100,13 +255,9 @@ async function cargarProductos() {
   }
 }
 
-// -------------------------
-//  FUNCIONES DEL CARRITO
-// -------------------------
 function activarBotonesCarrito() {
   let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-  // Actualizar contador
   document.getElementById("contadorCarrito").innerText = carrito.length;
 
   const botones = document.querySelectorAll(".boton-carrito");
@@ -122,6 +273,20 @@ function activarBotonesCarrito() {
       document.getElementById("contadorCarrito").innerText = carrito.length;
 
       alert("Producto agregado: " + btn.getAttribute("data-nombre"));
+    });
+  });
+}
+
+function activarBotonesDescripcion() {
+  const botones = document.querySelectorAll(".boton-descripcion");
+
+  botones.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.getAttribute("data-id");
+
+      localStorage.setItem("productoSeleccionado", id);
+
+      window.location.href = "../opciones/descripcion.html";
     });
   });
 }
