@@ -1,101 +1,271 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Descripción del Producto</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detalle del Producto</title>
 
   <style>
     body {
+      font-family: 'Poppins', sans-serif;
       margin: 0;
-      font-family: Arial;
-      background: #f5f5f5;
-      padding: 20px;
+      padding: 0;
+      color: #333;
+      background: url('../imagenes/plata.jpeg') no-repeat center center fixed;
+      background-size: cover;
     }
 
     header {
-      background-color: rgba(35,47,62,0.9);
+      background-color: #232f3e;
       color: white;
       padding: 1em;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      color: #ffcc00;
+      font-size: 1.5em;
+      animation: flotar 2s ease-in-out infinite alternate;
+      text-shadow: 0 0 10px #ffcc00;
+      flex: 1 1 100%;
       text-align: center;
-      font-weight: bold;
-      font-size: 22px;
-      margin-bottom: 20px;
     }
 
-    .contenedor {
-      max-width: 600px;
-      margin: auto;
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-
-    img {
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 4px;
       width: 100%;
-      border-radius: 12px;
-      margin-bottom: 15px;
+      margin-top: 0.5em;
     }
 
-    button {
-      width: 100%;
-      background: #ff5722;
+    nav a {
       color: white;
-      padding: 12px;
-      border: none;
-      border-radius: 10px;
-      font-size: 18px;
-      cursor: pointer;
-      margin-top: 15px;
+      text-decoration: none;
+      padding: 0.5em 1em;
+      background-color: #f1633f;
+      border-radius: 8px;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      font-size: 14px;
+      transition: transform 0.2s, background-color 0.3s;
     }
 
-    button:hover {
-      background: #ff7043;
+    nav a:hover {
+      background-color: #ff3399;
+      transform: scale(1.05);
+    }
+
+    .producto-detalle {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 2em;
+      padding: 2em;
+    }
+
+    .producto-detalle img {
+      width: 400px;
+      height: 450px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      object-fit: cover;
+    }
+
+    .producto-detalle img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    .info-producto {
+      max-width: 500px;
+      background-color: rgba(2, 182, 206, 0.95);
+      padding: 1.5em;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      animation: flotar 3s ease-in-out infinite alternate;
+    }
+
+    .info-producto h2 {
+      font-size: 22px;
+      color: #fffb00;
+      text-shadow: 1px 1px #fff;
+      margin-bottom: 10px;
+    }
+
+    .info-producto p {
+      font-size: 18px;
+      line-height: 1.7;
+      color: #222;
+      margin-bottom: 10px;
+    }
+
+    .info-producto label {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .info-producto select,
+    .info-producto input[type="number"] {
+      padding: 0.5em;
+      margin: 0.5em 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      width: 100%;
+    }
+
+    .info-producto button {
+      background-color: #ff5722;
+      border: none;
+      padding: 0.7em;
+      border-radius: 10px;
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+      width: 100%;
+      font-size: 17px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .info-producto button:hover {
+      background-color: #ff7043;
+      transform: scale(1.05);
+    }
+
+    footer {
+      background-color: #232f3e;
+      color: white;
+      padding: 2em;
+      text-align: center;
+      margin-top: 3em;
+    }
+
+    @keyframes flotar {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-5px); }
     }
   </style>
-
 </head>
+
 <body>
+  <header>
+    <h1>DRANGILS MORALES</h1>
+    <nav>
+      <a href="../pagina_principal/pagina_principal.html">Inicio</a>
+      <a href="../categorias_general/categoria.html">Categorías</a>
+      <a href="../opciones/contactogeneral1.html">Contacto</a>
+      <a href="../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
+    </nav>
+  </header>
 
-<header>DRANGILS MORALES</header>
+  <main class="producto-detalle">
+    <img id="imgProducto">
+    <div class="info-producto">
+      <h2 id="nombreProducto"></h2>
+      <p><strong>Precio:</strong> Q<span id="precioProducto"></span></p>
+      <p><strong>Descripción:</strong> <span id="descripcionProducto"></span></p>
 
-<div class="contenedor">
-  <h2 id="titulo">Cargando...</h2>
-  <img id="imagen" src="">
-  <p id="descripcion"></p>
-  <h3 id="precio"></h3>
+      <label>Talla disponible:</label>
+      <select id="talla">
+        <option>35</option>
+        <option>36</option>
+        <option>37</option>
+        <option>38</option>
+        <option>39</option>
+        <option>Libre</option>
+      </select>
 
-  <button id="btnCarrito">Agregar al carrito</button>
-</div>
+      <label>Cantidad:</label>
+      <input type="number" id="cantidad" value="1" min="1">
+
+      <button onclick="agregarAlCarrito()">Agregar al carrito</button>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 DRANGILS MORALES_APPS
+  </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-const URL_JSON = "../data/products.json";
+let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
-async function cargarDescripcion() {
-  const title = localStorage.getItem("productoSeleccionado");
-  if (!title) return;
-
-  const resp = await fetch(URL_JSON);
-  const productos = await resp.json();
-  const prod = productos.find(p => p.title === title);
-
-  if (!prod) return;
-
-  document.getElementById("titulo").innerText = prod.title;
-  document.getElementById("imagen").src = prod.image;
-  document.getElementById("descripcion").innerText = prod.description;
-  document.getElementById("precio").innerText = "Q" + prod.price;
-
-  document.getElementById("btnCarrito").onclick = () => {
-    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-    carrito.push({ nombre: prod.title, precio: prod.price });
-    localStorage.setItem("carrito", JSON.stringify(carrito));
-    alert("Producto agregado.");
-  };
+function actualizarContador() {
+  const total = carrito.reduce((acc, p) => acc + (p.cantidad || 1), 0);
+  document.getElementById("contadorCarrito").textContent = total;
 }
 
-cargarDescripcion();
+// =============================
+// CARGAR PRODUCTO DESDE JSON
+// =============================
+async function cargarProducto() {
+
+  const params = new URLSearchParams(window.location.search);
+  const nombreBuscado = params.get("producto");
+
+  if (!nombreBuscado) {
+    alert("Producto no encontrado");
+    return;
+  }
+
+  const resp = await fetch("../data/products.json");
+  const productos = await resp.json();
+
+  const producto = productos.find(p => p.title.toLowerCase() === nombreBuscado.toLowerCase());
+
+  if (!producto) {
+    alert("El producto no existe en products.json");
+    return;
+  }
+
+  document.getElementById("nombreProducto").textContent = producto.title;
+  document.getElementById("descripcionProducto").textContent = producto.description;
+  document.getElementById("precioProducto").textContent = producto.price;
+  document.getElementById("imgProducto").src = producto.image;
+}
+
+function agregarAlCarrito() {
+  const nombre = document.getElementById("nombreProducto").textContent;
+  const precio = parseFloat(document.getElementById("precioProducto").textContent);
+  const cantidad = parseInt(document.getElementById("cantidad").value);
+  const talla = document.getElementById("talla").value;
+
+  let existente = carrito.find(p => p.nombre === nombre && p.talla === talla);
+
+  if (existente)
+    existente.cantidad += cantidad;
+  else
+    carrito.push({ nombre, precio, cantidad, talla });
+
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  actualizarContador();
+
+  Swal.fire({
+    title: 'Producto agregado',
+    text: `${cantidad} ${nombre} (Talla ${talla}) agregado al carrito`,
+    icon: 'success',
+    showCancelButton: true,
+    confirmButtonText: 'Ver carrito',
+    cancelButtonText: 'Seguir comprando'
+  }).then(res => {
+    if (res.isConfirmed) {
+      window.location.href = '../opciones/vercarrito.html';
+    }
+  });
+}
+
+cargarProducto();
+actualizarContador();
 </script>
 
 </body>
