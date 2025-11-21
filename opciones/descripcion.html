@@ -12,6 +12,9 @@
       padding: 0;
       color: #333;
       background: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     header {
@@ -56,30 +59,30 @@
 
     /* ------- DETALLE PRODUCTO ------- */
     .producto-detalle {
-      padding: 20px;
+      padding: 15px;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      align-items: center;
-      gap: 20px;
-      max-width: 1200px;
+      gap: 15px;
+      max-width: 1000px;
       margin: auto;
     }
 
     .producto-detalle img {
       width: 100%;
-      max-width: 380px;
+      max-width: 340px;
+      height: auto;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      object-fit: cover;
+      object-fit: contain;
     }
 
     .info-producto {
       background: rgba(2, 182, 206, 0.95);
-      padding: 20px;
+      padding: 18px;
       border-radius: 15px;
       width: 100%;
-      max-width: 380px;
+      max-width: 340px;
       text-align: center;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       animation: flotar 3s ease-in-out infinite alternate;
@@ -88,19 +91,20 @@
     .info-producto h2 {
       color: #fffb00;
       margin: 0 0 10px 0;
-      font-size: 22px;
+      font-size: 20px;
     }
 
     .info-producto p {
-      font-size: 16px;
-      line-height: 1.5;
+      font-size: 15px;
+      line-height: 1.4;
+      margin: 6px 0;
     }
 
     .btn-carrito {
-      margin-top: 15px;
+      margin-top: 12px;
       width: 100%;
       padding: 12px;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: bold;
       border: none;
       border-radius: 10px;
@@ -118,11 +122,11 @@
 
     /* ------- LISTA COMPLETA ------- */
     .lista-productos {
-      padding: 20px;
+      padding: 15px;
       max-width: 1200px;
       margin: auto;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 15px;
     }
 
@@ -136,7 +140,7 @@
 
     .producto-card img {
       width: 100%;
-      height: 150px;
+      height: 140px;
       border-radius: 10px;
       object-fit: cover;
     }
@@ -153,11 +157,11 @@
     }
 
     footer {
-      margin-top: 20px;
       background-color: #232f3e;
       color: white;
-      padding: 1.5em;
+      padding: 1.2em;
       text-align: center;
+      margin-top: auto;
     }
 
     @keyframes flotar {
@@ -165,23 +169,16 @@
       100% { transform: translateY(-5px); }
     }
 
-    /* ------- OPTIMIZACIÓN MÓVIL ------- */
+    /* ------- MOBILE OPTIMIZATION ------- */
     @media (max-width: 480px) {
-      header h1 {
-        font-size: 1.3em;
+      .producto-detalle {
+        padding: 10px;
       }
-
-      nav a {
-        font-size: 12px;
-        padding: 6px 10px;
-      }
-
       .producto-detalle img {
-        max-width: 300px;
+        max-width: 280px;
       }
-
       .info-producto {
-        padding: 15px;
+        max-width: 280px;
       }
     }
   </style>
@@ -275,7 +272,7 @@ function mostrarLista(productos) {
   document.getElementById("contenido").innerHTML = html;
 }
 
-// Ver producto → almacena selección
+// Ver producto
 function verProducto(nombre) {
   localStorage.setItem("productoSeleccionado", nombre);
   window.location.reload();
