@@ -10,7 +10,6 @@
       font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 0;
-      color: #333;
       background: #f4f4f4;
       display: flex;
       flex-direction: column;
@@ -27,7 +26,7 @@
     header h1 {
       margin: 0;
       color: #ffcc00;
-      font-size: 1.6em;
+      font-size: 1.7em;
       animation: flotar 2s ease-in-out infinite alternate;
       text-shadow: 0 0 10px #ffcc00;
     }
@@ -57,62 +56,72 @@
       transform: scale(1.05);
     }
 
+    /* ------- CONTENEDOR CENTRADO ------- */
+    .contenedor {
+      width: 100%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
     /* ------- DETALLE PRODUCTO ------- */
     .producto-detalle {
-      padding: 15px;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 15px;
-      max-width: 1000px;
-      margin: auto;
+      gap: 30px;
+      width: 100%;
+      max-width: 900px;
+      padding: 20px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
     .producto-detalle img {
       width: 100%;
-      max-width: 340px;
-      height: auto;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      max-width: 380px;
+      border-radius: 15px;
       object-fit: contain;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
 
     .info-producto {
-      background: rgba(2, 182, 206, 0.95);
-      padding: 18px;
+      background: #00bcd4;
+      padding: 20px;
       border-radius: 15px;
       width: 100%;
-      max-width: 340px;
+      max-width: 380px;
       text-align: center;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      animation: flotar 3s ease-in-out infinite alternate;
     }
 
     .info-producto h2 {
-      color: #fffb00;
       margin: 0 0 10px 0;
-      font-size: 20px;
+      color: yellow;
+      font-size: 22px;
     }
 
     .info-producto p {
-      font-size: 15px;
+      margin: 8px 0;
+      font-size: 16px;
       line-height: 1.4;
-      margin: 6px 0;
     }
 
     .btn-carrito {
-      margin-top: 12px;
+      margin-top: 15px;
       width: 100%;
       padding: 12px;
-      font-size: 15px;
-      font-weight: bold;
-      border: none;
-      border-radius: 10px;
       background: #ff6600;
+      border: none;
       color: white;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+      border-radius: 10px;
+      font-size: 17px;
+      font-weight: bold;
       cursor: pointer;
-      transition: .2s;
+      transition: 0.2s;
     }
 
     .btn-carrito:hover {
@@ -122,11 +131,11 @@
 
     /* ------- LISTA COMPLETA ------- */
     .lista-productos {
-      padding: 15px;
+      padding: 20px;
       max-width: 1200px;
       margin: auto;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
       gap: 15px;
     }
 
@@ -140,28 +149,17 @@
 
     .producto-card img {
       width: 100%;
-      height: 140px;
+      height: 150px;
       border-radius: 10px;
       object-fit: cover;
     }
 
-    .producto-card button {
-      margin-top: 8px;
-      padding: 8px;
-      width: 100%;
-      border: none;
-      background: #ff6600;
-      color: white;
-      border-radius: 8px;
-      font-weight: bold;
-    }
-
     footer {
+      margin-top: auto;
       background-color: #232f3e;
       color: white;
-      padding: 1.2em;
       text-align: center;
-      margin-top: auto;
+      padding: 1.5em;
     }
 
     @keyframes flotar {
@@ -169,16 +167,16 @@
       100% { transform: translateY(-5px); }
     }
 
-    /* ------- MOBILE OPTIMIZATION ------- */
+    /* ------- MOBILE ------- */
     @media (max-width: 480px) {
       .producto-detalle {
         padding: 10px;
       }
       .producto-detalle img {
-        max-width: 280px;
+        max-width: 290px;
       }
       .info-producto {
-        max-width: 280px;
+        max-width: 290px;
       }
     }
   </style>
@@ -196,7 +194,9 @@
   </nav>
 </header>
 
-<main id="contenido"></main>
+<div class="contenedor">
+  <main id="contenido" style="width:100%;"></main>
+</div>
 
 <footer>
   © 2025 DRANGILS MORALES_APPS
@@ -205,13 +205,13 @@
 <script>
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-// Actualizar contador carrito
+// contador
 function actualizarContador() {
   const total = carrito.reduce((acc, p) => acc + (p.cantidad || 1), 0);
   document.getElementById("contadorCarrito").textContent = total;
 }
 
-// Agregar al carrito
+// agregar
 function agregarCarrito(producto) {
   const existe = carrito.find(p => p.title === producto.title);
 
@@ -223,10 +223,10 @@ function agregarCarrito(producto) {
 
   localStorage.setItem("carrito", JSON.stringify(carrito));
   actualizarContador();
-  alert("Producto agregado al carrito");
+  alert("Producto agregado al carrito ✔");
 }
 
-// Cargar detalle
+// cargar detalle
 async function cargarDetalle(nombreProducto) {
   const res = await fetch("../data/products.json");
   const productos = await res.json();
@@ -253,10 +253,9 @@ async function cargarDetalle(nombreProducto) {
   `;
 }
 
-// Mostrar lista completa
+// lista
 function mostrarLista(productos) {
   let html = `<div class="lista-productos">`;
-
   productos.forEach(p => {
     html += `
       <div class="producto-card">
@@ -267,12 +266,11 @@ function mostrarLista(productos) {
       </div>
     `;
   });
-
   html += `</div>`;
   document.getElementById("contenido").innerHTML = html;
 }
 
-// Ver producto
+// ver producto
 function verProducto(nombre) {
   localStorage.setItem("productoSeleccionado", nombre);
   window.location.reload();
