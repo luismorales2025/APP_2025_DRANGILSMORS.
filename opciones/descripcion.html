@@ -1,235 +1,101 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Descripción - DRANGILS MORALES</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Descripción del Producto</title>
+
   <style>
-    body { margin:0; font-family:Arial; background:#f5f5f5; }
-    header {
-      background-color: rgba(35,47,62,0.95);
-      color:#fff; padding:1em; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: #f5f5f5;
+      padding: 20px;
     }
-    header h1 { margin:0; color:#ffcc00; text-shadow:0 0 10px #ffcc00; }
-    nav a { color:#fff; margin-left:10px; text-decoration:none; background:#ff007f; padding:6px 12px; border-radius:8px; }
-    .wrap { max-width:900px; margin:22px auto; padding:0 16px; }
-    .contenedor { background:#fff; padding:20px; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.12); }
-    .detalle-grid { display:grid; grid-template-columns: 1fr 1fr; gap:20px; align-items:start; }
-    .detalle-grid img { width:100%; height:360px; object-fit:cover; border-radius:12px; }
-    .info h2 { margin-top:0; }
-    .btn { display:inline-block; padding:12px 18px; border-radius:10px; color:#fff; text-decoration:none; border:none; cursor:pointer; font-weight:700; }
-    .btn-carrito { background:#ff5722; width:100%; margin-top:12px; }
-    .btn-generar { background:#006eff; margin-right:8px; }
-    .lista-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:14px; margin-top:16px; }
-    .mini { background:#fff; padding:10px; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.06); text-align:center; }
-    .mini img { width:100%; height:130px; object-fit:cover; border-radius:8px; }
-    .nota { color:#666; margin-top:12px; font-size:14px; }
-    @media (max-width:700px){ .detalle-grid{ grid-template-columns:1fr; } .detalle-grid img{ height:240px } }
+
+    header {
+      background-color: rgba(35,47,62,0.9);
+      color: white;
+      padding: 1em;
+      text-align: center;
+      font-weight: bold;
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    .contenedor {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 15px;
+    }
+
+    button {
+      width: 100%;
+      background: #ff5722;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-size: 18px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    button:hover {
+      background: #ff7043;
+    }
   </style>
+
 </head>
 <body>
 
-<header>
-  <h1>DRANGILS MORALES</h1>
-  <nav>
-    <a href="../index.html">Volver</a>
-    <a href="vercarrito.html">Carrito</a>
-  </nav>
-</header>
+<header>DRANGILS MORALES</header>
 
-<div class="wrap">
-  <div class="contenedor" id="mainCont">
-    <h2 id="titulo">Cargando...</h2>
+<div class="contenedor">
+  <h2 id="titulo">Cargando...</h2>
+  <img id="imagen" src="">
+  <p id="descripcion"></p>
+  <h3 id="precio"></h3>
 
-    <!-- Si hay producto seleccionado, mostramos detalle; si no, mostramos lista -->
-    <div id="detalle"></div>
-
-    <div id="listaTodos" style="display:none;">
-      <h3>Todos los productos (admin)</h3>
-      <div class="lista-grid" id="listaGrid"></div>
-      <p class="nota">Desde aquí puedes generar / descargar una página HTML estática por producto si deseas subirla manualmente a otra carpeta.</p>
-    </div>
-  </div>
+  <button id="btnCarrito">Agregar al carrito</button>
 </div>
 
 <script>
-/* RUTA relativa desde opciones/  -> ../data/products.json */
 const URL_JSON = "../data/products.json";
 
-/* fallback image local (subida por ti) */
-const FALLBACK = "/mnt/data/01f059b0-d0f2-4f55-916a-372465a0fcd4.png";
+async function cargarDescripcion() {
+  const title = localStorage.getItem("productoSeleccionado");
+  if (!title) return;
 
-function imageSrc(prod){
-  const img = prod.image || prod.imagen || prod.img;
-  if (!img) return FALLBACK;
-  if (img.startsWith("http://") || img.startsWith("https://")) return img;
-  // aquí asumimos que las imágenes están en /images/ en la raíz del sitio
-  return "../images/" + img;
-}
+  const resp = await fetch(URL_JSON);
+  const productos = await resp.json();
+  const prod = productos.find(p => p.title === title);
 
-function escapeHtml(s){ if (!s) return ""; return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+  if (!prod) return;
 
-async function init() {
-  try {
-    const resp = await fetch(URL_JSON + "?v=" + Date.now());
-    if (!resp.ok) throw new Error("No se pudo cargar products.json");
-    const productos = await resp.json();
+  document.getElementById("titulo").innerText = prod.title;
+  document.getElementById("imagen").src = prod.image;
+  document.getElementById("descripcion").innerText = prod.description;
+  document.getElementById("precio").innerText = "Q" + prod.price;
 
-    const seleccionado = localStorage.getItem("productoSeleccionado");
-    if (seleccionado) {
-      // Mostrar detalle del producto que seleccionó el usuario
-      const prod = productos.find(p => (p.title === seleccionado) || (p.nombre === seleccionado));
-      if (!prod) {
-        document.getElementById("titulo").innerText = "Producto no encontrado";
-        showLista(productos); // fallback: mostrar lista
-        return;
-      }
-      mostrarDetalle(prod);
-    } else {
-      // No hay producto seleccionado -> modo admin/lista
-      document.getElementById("titulo").innerText = "Lista de productos";
-      showLista(productos);
-    }
-  } catch (err) {
-    console.error(err);
-    document.getElementById("titulo").innerText = "Error cargando productos";
-  }
-}
-
-function mostrarDetalle(prod){
-  document.getElementById("titulo").innerText = prod.title || prod.nombre || "Sin título";
-
-  const detalle = document.getElementById("detalle");
-  detalle.innerHTML = `
-    <div class="detalle-grid">
-      <div><img src="${imageSrc(prod)}" alt="${escapeHtml(prod.title||prod.nombre)}" onerror="this.src='${FALLBACK}'"></div>
-      <div class="info">
-        <h2>${escapeHtml(prod.title||prod.nombre)}</h2>
-        <p><strong>Precio:</strong> Q${escapeHtml(String(prod.price ?? prod.precio ?? "0.00"))}</p>
-        <p id="descText">${escapeHtml(prod.description || prod.descripcion || "Sin descripción")}</p>
-
-        <button class="btn btn-carrito" id="btnCarrito">Agregar al carrito</button>
-        <div style="display:flex; gap:8px; margin-top:12px;">
-          <button class="btn btn-generar" id="btnGenerar">Generar HTML</button>
-          <button class="btn" id="btnVolver" style="background:#666;">Volver</button>
-        </div>
-      </div>
-    </div>
-  `;
-
-  document.getElementById("btnCarrito").addEventListener("click", ()=>{
-    const carrito = JSON.parse(localStorage.getItem("carrito")||"[]");
-    carrito.push({ nombre: prod.title || prod.nombre, precio: prod.price ?? prod.precio });
+  document.getElementById("btnCarrito").onclick = () => {
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    carrito.push({ nombre: prod.title, precio: prod.price });
     localStorage.setItem("carrito", JSON.stringify(carrito));
-    alert("Producto agregado al carrito");
-  });
-
-  document.getElementById("btnVolver").addEventListener("click", ()=>{
-    // limpiar selección y volver a la lista principal
-    localStorage.removeItem("productoSeleccionado");
-    window.location.href = "../index.html";
-  });
-
-  document.getElementById("btnGenerar").addEventListener("click", ()=>{
-    generarHtmlProducto(prod);
-  });
+    alert("Producto agregado.");
+  };
 }
 
-function showLista(productos){
-  document.getElementById("listaTodos").style.display = "block";
-  const grid = document.getElementById("listaGrid");
-  grid.innerHTML = "";
-  productos.forEach(p=>{
-    const titulo = p.title || p.nombre || "Sin título";
-    grid.innerHTML += `
-      <div class="mini">
-        <img src="${imageSrc(p)}" alt="${escapeHtml(titulo)}" onerror="this.src='${FALLBACK}'">
-        <h4 style="margin:8px 0 6px;">${escapeHtml(titulo)}</h4>
-        <p style="margin:0;"><strong>Q${escapeHtml(String(p.price ?? p.precio ?? "0.00"))}</strong></p>
-        <div style="margin-top:8px;">
-          <button class="btn" onclick='ver("${escapeForJs(titulo)}")' style="background:#006eff;">Ver</button>
-          <button class="btn" onclick='descargar("${escapeForJs(titulo)}")' style="background:#00aa44;">Descargar HTML</button>
-        </div>
-      </div>
-    `;
-  });
-}
-
-function escapeForJs(s){ return (s||"").replace(/\\/g,"\\\\").replace(/'/g,"\\'").replace(/"/g,'\\"'); }
-
-// abre detalle del producto desde la lista (modo admin)
-function ver(titulo){
-  localStorage.setItem("productoSeleccionado", titulo);
-  // recargar la misma página para mostrar el detalle
-  window.location.reload();
-}
-
-// descargar HTML estático del producto (actúa como "copiar/pegar")
-async function descargar(titulo){
-  try {
-    const resp = await fetch(URL_JSON + "?v=" + Date.now());
-    const productos = await resp.json();
-    const prod = productos.find(p => (p.title === titulo) || (p.nombre === titulo));
-    if (!prod) return alert("Producto no encontrado");
-
-    generarHtmlProducto(prod, true); // true = fuerza descarga
-  } catch(e){
-    console.error(e);
-    alert("Error generando HTML");
-  }
-}
-
-// Genera un HTML estático básico para el producto y abre descarga
-function generarHtmlProducto(prod, forzarDescarga = true){
-  const nombre = prod.title || prod.nombre || "producto";
-  const imagen = imageSrc(prod).replace(/\.\.\//g, ''); // ajustar ruta si hace falta
-  const descripcion = prod.description || prod.descripcion || "";
-  const precio = prod.price ?? prod.precio ?? "0.00";
-
-  const html = `<!doctype html>
-<html lang="es">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>${escapeHtml(nombre)}</title>
-<style>
-body{font-family:Arial;margin:0;background:#f5f5f5;padding:20px}
-.container{max-width:700px;margin:20px auto;background:#fff;padding:18px;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.12)}
-img{width:100%;border-radius:8px}
-h1{color:#222}
-.price{font-weight:700;margin-top:8px}
-.btn{display:block;width:100%;padding:12px;background:#ff5722;color:#fff;border:none;border-radius:8px;margin-top:12px;font-weight:700}
-</style>
-</head>
-<body>
-<div class="container">
-  <h1>${escapeHtml(nombre)}</h1>
-  <img src="${escapeHtml(imagen)}" alt="${escapeHtml(nombre)}" onerror="this.src='${FALLBACK}'">
-  <p class="price">Q${escapeHtml(String(precio))}</p>
-  <p>${escapeHtml(descripcion)}</p>
-  <button class="btn" onclick="alert('Agregado al carrito (estático)')">Agregar al carrito</button>
-</div>
-</body>
-</html>`;
-
-  const blob = new Blob([html], { type: "text/html" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  // nombre de archivo seguro
-  const safe = (nombre||"producto").replace(/[^a-z0-9\-_\.]/gi, '_').toLowerCase();
-  a.download = `${safe}.html`;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
-  if (!forzarDescarga){
-    // si no forzar, abrir en nueva ventana
-    window.open(url, "_blank");
-  }
-}
-
-init();
+cargarDescripcion();
 </script>
 
 </body>
