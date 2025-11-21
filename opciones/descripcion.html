@@ -108,39 +108,6 @@
       margin-bottom: 10px;
     }
 
-    .info-producto label {
-      font-weight: bold;
-      color: #333;
-    }
-
-    .info-producto select,
-    .info-producto input[type="number"] {
-      padding: 0.5em;
-      margin: 0.5em 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      width: 100%;
-    }
-
-    .info-producto button {
-      background-color: #ff5722;
-      border: none;
-      padding: 0.7em;
-      border-radius: 10px;
-      cursor: pointer;
-      color: white;
-      font-weight: bold;
-      width: 100%;
-      font-size: 17px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease, background-color 0.3s ease;
-    }
-
-    .info-producto button:hover {
-      background-color: #ff7043;
-      transform: scale(1.05);
-    }
-
     footer {
       background-color: #232f3e;
       color: white;
@@ -162,8 +129,8 @@
     <nav>
       <a href="../pagina_principal/pagina_principal.html">Inicio</a>
       <a href="../categorias_general/categoria.html">Categorías</a>
-      <a href="../opciones/contactogeneral1.html">Contacto</a>
-      <a href="../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
+      <a href="contactogeneral1.html">Contacto</a>
+      <a href="vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
     </nav>
   </header>
 
@@ -173,21 +140,6 @@
       <h2 id="nombreProducto"></h2>
       <p><strong>Precio:</strong> Q<span id="precioProducto"></span></p>
       <p><strong>Descripción:</strong> <span id="descripcionProducto"></span></p>
-
-      <label>Talla disponible:</label>
-      <select id="talla">
-        <option>35</option>
-        <option>36</option>
-        <option>37</option>
-        <option>38</option>
-        <option>39</option>
-        <option>Libre</option>
-      </select>
-
-      <label>Cantidad:</label>
-      <input type="number" id="cantidad" value="1" min="1">
-
-      <button onclick="agregarAlCarrito()">Agregar al carrito</button>
     </div>
   </main>
 
@@ -195,32 +147,26 @@
     © 2025 DRANGILS MORALES_APPS
   </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <script>
-let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-
-function actualizarContador() {
-  const total = carrito.reduce((acc, p) => acc + (p.cantidad || 1), 0);
-  document.getElementById("contadorCarrito").textContent = total;
-}
-
 // =============================
-// CARGAR PRODUCTO DESDE JSON
+// CARGAR PRODUCTO AUTOMÁTICO
 // =============================
 async function cargarProducto() {
 
+  // Lee ?producto=Nombre del producto
   const params = new URLSearchParams(window.location.search);
   const nombreBuscado = params.get("producto");
 
   if (!nombreBuscado) {
-    alert("Producto no encontrado");
+    alert("Producto no encontrado en la URL");
     return;
   }
 
+  // Cargar JSON desde la carpeta real
   const resp = await fetch("../data/products.json");
   const productos = await resp.json();
 
+  // Buscar por título exacto
   const producto = productos.find(p => p.title.toLowerCase() === nombreBuscado.toLowerCase());
 
   if (!producto) {
@@ -228,44 +174,14 @@ async function cargarProducto() {
     return;
   }
 
+  // Mostrar datos en pantalla
   document.getElementById("nombreProducto").textContent = producto.title;
   document.getElementById("descripcionProducto").textContent = producto.description;
   document.getElementById("precioProducto").textContent = producto.price;
   document.getElementById("imgProducto").src = producto.image;
 }
 
-function agregarAlCarrito() {
-  const nombre = document.getElementById("nombreProducto").textContent;
-  const precio = parseFloat(document.getElementById("precioProducto").textContent);
-  const cantidad = parseInt(document.getElementById("cantidad").value);
-  const talla = document.getElementById("talla").value;
-
-  let existente = carrito.find(p => p.nombre === nombre && p.talla === talla);
-
-  if (existente)
-    existente.cantidad += cantidad;
-  else
-    carrito.push({ nombre, precio, cantidad, talla });
-
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-  actualizarContador();
-
-  Swal.fire({
-    title: 'Producto agregado',
-    text: `${cantidad} ${nombre} (Talla ${talla}) agregado al carrito`,
-    icon: 'success',
-    showCancelButton: true,
-    confirmButtonText: 'Ver carrito',
-    cancelButtonText: 'Seguir comprando'
-  }).then(res => {
-    if (res.isConfirmed) {
-      window.location.href = '../opciones/vercarrito.html';
-    }
-  });
-}
-
 cargarProducto();
-actualizarContador();
 </script>
 
 </body>
