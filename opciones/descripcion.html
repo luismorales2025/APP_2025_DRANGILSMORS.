@@ -4,39 +4,43 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Detalle del Producto</title>
-
   <style>
     body {
       font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 0;
-      background: #f4f4f4;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+      color: #333;
+      background: url('../../imagenes/plata.jpeg') no-repeat center center fixed;
+      background-size: cover;
     }
 
     header {
       background-color: #232f3e;
       color: white;
       padding: 1em;
-      text-align: center;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
     }
 
     header h1 {
       margin: 0;
       color: #ffcc00;
-      font-size: 1.7em;
+      font-size: 1.5em;
       animation: flotar 2s ease-in-out infinite alternate;
       text-shadow: 0 0 10px #ffcc00;
+      flex: 1 1 100%;
+      text-align: center;
     }
 
     nav {
-      margin-top: 10px;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 6px;
+      gap: 4px;
+      width: 100%;
+      margin-top: 0.5em;
     }
 
     nav a {
@@ -46,9 +50,9 @@
       background-color: #f1633f;
       border-radius: 8px;
       font-weight: bold;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
       font-size: 14px;
-      transition: 0.2s;
+      transition: transform 0.2s, background-color 0.3s;
     }
 
     nav a:hover {
@@ -56,110 +60,95 @@
       transform: scale(1.05);
     }
 
-    /* ------- CONTENEDOR CENTRADO ------- */
-    .contenedor {
-      width: 100%;
-      max-width: 1200px;
-      margin: auto;
-      padding: 20px;
-      display: flex;
-      justify-content: center;
-    }
-
-    /* ------- DETALLE PRODUCTO ------- */
     .producto-detalle {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 30px;
-      width: 100%;
-      max-width: 900px;
-      padding: 20px;
-      background: white;
-      border-radius: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      align-items: center;
+      gap: 2em;
+      padding: 2em;
     }
 
     .producto-detalle img {
-      width: 100%;
-      max-width: 380px;
-      border-radius: 15px;
-      object-fit: contain;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      width: 400px;
+      height: 450px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .producto-detalle img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
     }
 
     .info-producto {
-      background: #00bcd4;
-      padding: 20px;
+      max-width: 500px;
+      background-color: rgba(2, 182, 206, 0.95);
+      padding: 1.5em;
       border-radius: 15px;
-      width: 100%;
-      max-width: 380px;
-      text-align: center;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      animation: flotar 3s ease-in-out infinite alternate;
     }
 
     .info-producto h2 {
-      margin: 0 0 10px 0;
-      color: yellow;
       font-size: 22px;
+      color: #fffb00;
+      text-shadow: 1px 1px #fff;
+      margin-bottom: 10px;
     }
 
     .info-producto p {
-      margin: 8px 0;
-      font-size: 16px;
-      line-height: 1.4;
+      font-size: 20px;
+      line-height: 2;
+      color: #555;
+      margin-bottom: 10px;
     }
 
-    .btn-carrito {
-      margin-top: 15px;
-      width: 100%;
-      padding: 12px;
-      background: #ff6600;
-      border: none;
-      color: white;
-      border-radius: 10px;
-      font-size: 17px;
+    .info-producto label {
       font-weight: bold;
-      cursor: pointer;
-      transition: 0.2s;
+      color: #333;
     }
 
-    .btn-carrito:hover {
-      background: #ff3399;
-      transform: scale(1.03);
-    }
-
-    /* ------- LISTA COMPLETA ------- */
-    .lista-productos {
-      padding: 20px;
-      max-width: 1200px;
-      margin: auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      gap: 15px;
-    }
-
-    .producto-card {
-      background: white;
-      border-radius: 12px;
-      padding: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-
-    .producto-card img {
+    .info-producto select,
+    .info-producto input[type="number"] {
+      padding: 0.5em;
+      margin: 0.5em 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
       width: 100%;
-      height: 150px;
+    }
+
+    .info-producto button {
+      background-color: #ff5722;
+      border: none;
+      padding: 0.7em;
       border-radius: 10px;
-      object-fit: cover;
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+      width: 100%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .info-producto button:hover {
+      background-color: #ff7043;
+      transform: scale(1.05);
     }
 
     footer {
-      margin-top: auto;
       background-color: #232f3e;
       color: white;
+      padding: 2em;
       text-align: center;
-      padding: 1.5em;
+      margin-top: 3em;
+    }
+
+    footer p {
+      font-size: 13px;
+      color: #ccc;
     }
 
     @keyframes flotar {
@@ -167,16 +156,32 @@
       100% { transform: translateY(-5px); }
     }
 
-    /* ------- MOBILE ------- */
-    @media (max-width: 480px) {
-      .producto-detalle {
-        padding: 10px;
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        align-items: center;
       }
-      .producto-detalle img {
-        max-width: 290px;
+
+      nav a {
+        width: 90%;
+        margin: 2px 0;
+        font-size: 13px;
+        text-align: center;
+        padding: 0.6em;
       }
+
+      header h1 {
+        font-size: 1.2em;
+      }
+
       .info-producto {
-        max-width: 290px;
+        width: 90%;
+        padding: 1em;
+      }
+
+      .producto-detalle img {
+        max-width: 90%;
+        height: auto;
       }
     }
   </style>
@@ -294,3 +299,4 @@ actualizarContador();
 
 </body>
 </html>
+
