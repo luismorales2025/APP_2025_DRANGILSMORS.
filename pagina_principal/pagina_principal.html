@@ -1,153 +1,274 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DRANGILS MORALES - Tienda</title>
+
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: url('imagenes/plata.jpeg') no-repeat center center fixed;
+      background: url('../imagenes/plata.jpeg') no-repeat center center fixed;
       background-size: cover;
       color: #333;
     }
+
     header {
-      background-color: rgba(35,47,62,0.95);
+      background-color: rgba(35, 47, 62, 0.9);
       color: white;
       padding: 1em;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      flex-wrap:wrap;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
     }
-    header h1 { margin:0; color:#ffcc00; font-size:1.4rem; animation:flotar 2s ease-in-out infinite alternate; text-shadow:0 0 10px #ffcc00; }
-    @keyframes flotar { 0%{transform:translateY(0)} 100%{transform:translateY(-5px)} }
-    nav a { color:#fff; text-decoration:none; padding:0.4em 0.8em; background:#ff007f; border-radius:8px; margin-left:8px; }
-    .categorias { background: rgba(2,117,216,0.9); padding:0.5em; display:flex; gap:0.5em; overflow-x:auto; }
-    .categorias a { background:#00c4ff; padding:0.4em 0.8em; border-radius:8px; color:#fff; font-weight:700; text-decoration:none; }
-    .video-wrapper { max-width:2000px; margin:1em auto; padding:0 1em; aspect-ratio:100/25; overflow:hidden; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.3); }
-    .video-wrapper video { width:100%; height:100%; object-fit:cover; display:block; }
-    #listaProductos { display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:1em; padding:2em; backdrop-filter: blur(4px); max-width:1200px; margin:0 auto; }
-    .producto-card { background: rgba(255,255,255,0.9); padding:1em; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.12); text-align:center; }
-    .producto-card img { width:100%; height:160px; object-fit:cover; border-radius:8px; margin-bottom:8px; }
-    .boton { width:100%; padding:10px; border:none; border-radius:8px; cursor:pointer; font-weight:700; margin-top:8px; }
-    .boton-carrito { background:#ff5722; color:#fff; }
-    .boton-ver { background:#006eff; color:#fff; margin-top:6px; }
-    footer { background: rgba(35,47,62,0.95); color:#fff; padding:2em; margin-top:2em; text-align:center; }
-    @media (max-width:600px) { .video-wrapper { aspect-ratio:16/9 } }
+
+    header h1 {
+      margin: 0;
+      color: #ffcc00;
+      font-size: 1.5em;
+      animation: flotar 2s ease-in-out infinite alternate;
+      text-shadow: 0 0 10px #ffcc00;
+    }
+
+    @keyframes flotar {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-5px); }
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5em;
+      margin-top: 0.5em;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 0.5em 1em;
+      background-color: #ff007f;
+      border-radius: 8px;
+      font-size: 13px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: transform 0.2s, background-color 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #ff3399;
+      transform: scale(1.1);
+    }
+
+    .categorias {
+      background-color: rgba(2, 117, 216, 0.9);
+      color: white;
+      padding: 0.5em;
+      display: flex;
+      gap: 0.5em;
+      overflow-x: auto;
+      white-space: nowrap;
+      scroll-behavior: smooth;
+    }
+
+    .categorias a {
+      color: white;
+      text-decoration: none;
+      background-color: #00c4ff;
+      padding: 0.5em 1em;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: transform 0.3s, background-color 0.3s;
+    }
+
+    .categorias a:hover {
+      background-color: #00e1ff;
+      transform: scale(1.1);
+    }
+
+    .video-promocional {
+      display: flex;
+      justify-content: center;
+      margin-top: 1em;
+      padding: 0 1em;
+    }
+
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 2000px;
+      aspect-ratio: 100 / 25;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .video-wrapper video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    #listaProductos {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1em;
+      padding: 2em;
+      backdrop-filter: blur(5px);
+    }
+
+    .producto-card {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 1em;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .producto-card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    .producto-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 0.5em;
+    }
+
+    .boton-carrito, .boton-descripcion {
+      background-color: #ff5722;
+      border: none;
+      padding: 0.7em;
+      cursor: pointer;
+      border-radius: 8px;
+      font-weight: bold;
+      width: 100%;
+      margin-top: 5px;
+      color: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: transform 0.3s, background-color 0.3s;
+    }
+
+    .boton-carrito:hover, .boton-descripcion:hover {
+      background-color: #ff7043;
+      transform: scale(1.05);
+    }
+
+    footer {
+      background-color: rgba(35, 47, 62, 0.9);
+      color: white;
+      padding: 2em;
+      font-size: 14px;
+      margin-top: 2em;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 1em;
+      color: #ccc;
+    }
   </style>
 </head>
+
 <body>
 
 <header>
   <h1>DRANGILS MORALES</h1>
   <nav>
-    <a href="categorias_general/categoria.html">Categorías</a>
-    <a href="opciones/contactogeneral1.html">Contacto</a>
-    <a href="opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
+    <a href="../categorias_general/categoria.html">Categorías</a>
+    <a href="../opciones/contactogeneral1.html">Contacto</a>
+    <a href="../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
   </nav>
 </header>
 
 <section class="categorias">
-  <a href="categorias_general/categorias/plata.html">Plata</a>
-  <a href="categorias_general/categorias/calzado.html">Calzado mexicano</a>
+  <a href="../categorias_general/categorias/plata.html">Plata</a>
+  <a href="../categorias_general/categorias/calzado.html">Calzado mexicano</a>
 </section>
 
-<section class="video-wrapper">
-  <video autoplay muted loop playsinline>
-    <source src="anuncio1.mp4" type="video/mp4">
-    Tu navegador no soporta video.
-  </video>
+<section class="video-promocional">
+  <div class="video-wrapper">
+    <video autoplay muted loop playsinline>
+      <source src="../anuncio1.mp4" type="video/mp4">
+    </video>
+  </div>
 </section>
 
 <div id="listaProductos">
-  <p style="grid-column:1/-1; text-align:center;">Cargando productos...</p>
+  <h3>Cargando productos...</h3>
 </div>
 
 <footer>
-  <p>Tienda DRANGILS MORALES © <span id="anio"></span></p>
+  <p>Tienda DRANGILS MORALES © 2025</p>
+  <div class="footer-bottom">Todos los derechos reservados.</div>
 </footer>
 
 <script>
-document.getElementById('anio').innerText = new Date().getFullYear();
-
-// RUTA RELATIVA a la carpeta data (desde index = data/products.json)
-const URL_JSON = "data/products.json";
-
-// Util: devuelve ruta de imagen (si product.image es URL la usa; si es sólo nombre, busca en images/)
-function imageSrc(prod) {
-  if (!prod.image && !prod.imagen) return "/mnt/data/01f059b0-d0f2-4f55-916a-372465a0fcd4.png";
-  const img = prod.image || prod.imagen;
-  if (img.startsWith("http://") || img.startsWith("https://")) return img;
-  // espera que las imágenes estén en la carpeta images/ en la raíz del sitio
-  return "images/" + img;
-}
+const URL_JSON = "../data/products.json";
 
 async function cargarProductos() {
-  try {
-    const res = await fetch(URL_JSON + "?v=" + Date.now());
-    if (!res.ok) throw new Error("No se pudo cargar products.json");
-    const productos = await res.json();
+  const response = await fetch(URL_JSON + "?v=" + Date.now());
+  const productos = await response.json();
 
-    const cont = document.getElementById("listaProductos");
-    cont.innerHTML = "";
+  const contenedor = document.getElementById("listaProductos");
+  contenedor.innerHTML = "";
 
-    productos.forEach(prod => {
-      const titulo = prod.title || prod.nombre || prod.name || "Sin título";
-      const precio = prod.price ?? prod.precio ?? "0.00";
-      const imagen = imageSrc(prod);
+  productos.forEach(prod => {
+    contenedor.innerHTML += `
+      <div class="producto-card">
+        <img src="${prod.image}" alt="${prod.title}">
+        <h3>${prod.title}</h3>
+        <p>${prod.description.substring(0, 60)}...</p>
+        <strong>Q${prod.price}</strong>
 
-      cont.innerHTML += `
-        <div class="producto-card">
-          <img src="${imagen}" alt="${escapeHtml(titulo)}" onerror="this.src='/mnt/data/01f059b0-d0f2-4f55-916a-372465a0fcd4.png'">
-          <h3>${escapeHtml(titulo)}</h3>
-          <p style="min-height:40px;">${escapeHtml((prod.description || prod.descripcion || "").substring(0,80))}...</p>
-          <strong>Q${escapeHtml(String(precio))}</strong>
+        <button class="boton-carrito" 
+                data-nombre="${prod.title}" 
+                data-precio="${prod.price}">
+          Agregar al carrito
+        </button>
 
-          <button class="boton boton-ver" data-nombre="${escapeHtml(titulo)}">Ver descripción</button>
-          <button class="boton boton-carrito" data-nombre="${escapeHtml(titulo)}" data-precio="${escapeHtml(String(precio))}">Agregar al carrito</button>
-        </div>
-      `;
-    });
-
-    // actualizar contador si hay carrito
-    const carrito = JSON.parse(localStorage.getItem("carrito")||"[]");
-    document.getElementById("contadorCarrito").innerText = carrito.length;
-
-    activarEventos();
-  } catch (err) {
-    console.error(err);
-    document.getElementById("listaProductos").innerHTML = "<p style='grid-column:1/-1; text-align:center;color:#900;'>Error cargando productos.</p>";
-  }
-}
-
-function escapeHtml(s){
-  if (!s) return "";
-  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
-}
-
-function activarEventos(){
-  // Ver descripción
-  document.querySelectorAll(".boton-ver").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      const nombre = btn.getAttribute("data-nombre");
-      localStorage.setItem("productoSeleccionado", nombre);
-      // ir a opciones/descripcion.html (ruta relativa desde index)
-      window.location.href = "opciones/descripcion.html";
-    });
+        <button class="boton-descripcion"
+                data-title="${prod.title}">
+          Ver descripción
+        </button>
+      </div>
+    `;
   });
 
-  // Agregar al carrito
-  document.querySelectorAll(".boton-carrito").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      const nombre = btn.getAttribute("data-nombre");
-      const precio = btn.getAttribute("data-precio");
-      const carrito = JSON.parse(localStorage.getItem("carrito")||"[]");
-      carrito.push({nombre, precio});
+  activarBotonesCarrito();
+  activarBotonesDescripcion();
+}
+
+function activarBotonesCarrito() {
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  document.getElementById("contadorCarrito").innerText = carrito.length;
+
+  document.querySelectorAll(".boton-carrito").forEach(btn => {
+    btn.addEventListener("click", () => {
+      carrito.push({
+        nombre: btn.getAttribute("data-nombre"),
+        precio: btn.getAttribute("data-precio")
+      });
+
       localStorage.setItem("carrito", JSON.stringify(carrito));
       document.getElementById("contadorCarrito").innerText = carrito.length;
-      alert("Producto agregado: " + nombre);
+
+      alert("Producto agregado: " + btn.getAttribute("data-nombre"));
+    });
+  });
+}
+
+function activarBotonesDescripcion() {
+  document.querySelectorAll(".boton-descripcion").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const titulo = btn.getAttribute("data-title");
+      localStorage.setItem("productoSeleccionado", titulo);
+      window.location.href = "../opciones/descripcion.html";
     });
   });
 }
