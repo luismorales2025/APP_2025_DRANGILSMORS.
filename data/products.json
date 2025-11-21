@@ -1,5 +1,11 @@
 [
   {
+    "title": "Jose",
+    "description": "Hola",
+    "price": "123",
+    "image": "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/images/Jose_1763689180535.jpg"
+  },
+  {
     "title": "Prendas de vestir",
     "description": "Moda",
     "price": "123",
