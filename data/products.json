@@ -1,23 +1,5 @@
 [
   {
-    "title": "Jose",
-    "description": "Hola",
-    "price": "123",
-    "image": "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/images/Jose_1763689180535.jpg"
-  },
-  {
-    "title": "Prendas de vestir",
-    "description": "Moda",
-    "price": "123",
-    "image": "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/images/Prendas_de_vestir_1763568661606.jpg"
-  },
-  {
-    "title": "HOLA",
-    "description": "1233",
-    "price": "123",
-    "image": "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/images/HOLA_1763564335905.jpg"
-  },
-  {
     "id": "p_1764129663840",
     "title": "hola esto es una recuperacion de datos",
     "description": "hbjkbjk",
