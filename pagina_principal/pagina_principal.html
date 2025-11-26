@@ -13,7 +13,7 @@
             padding: 0;
         }
 
-        h1 {
+        h1, h2 {
             text-align: center;
             margin-top: 20px;
         }
@@ -56,37 +56,49 @@
 <body>
     <h1>DRANGILS MORALES - Productos</h1>
 
-    <div class="contenedor-productos" id="lista-productos">
-        <!-- Aquí se cargan los productos automáticamente -->
-    </div>
-
+    <div id="categorias"></div>
 
 <script>
-// URL DEL JSON EN TU REPOSITORIO
-const URL_JSON = "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/data/productos.json";
+const URL_JSON = "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/data/products.json";
 
 async function cargarProductos() {
     try {
         const resp = await fetch(URL_JSON);
         const productos = await resp.json();
 
-        const contenedor = document.getElementById("lista-productos");
-        contenedor.innerHTML = "";
+        const contenedorCategorias = document.getElementById("categorias");
+        contenedorCategorias.innerHTML = "";
+
+        const categorias = {};
 
         productos.forEach(p => {
-            contenedor.innerHTML += `
+            if (!categorias[p.category]) categorias[p.category] = [];
+            categorias[p.category].push(p);
+        });
+
+        for (const categoria in categorias) {
+            contenedorCategorias.innerHTML += `<h2>${categoria.toUpperCase()}</h2>`;
+
+            let html = `<div class='contenedor-productos'>`;
+
+            categorias[categoria].forEach(p => {
+                html += `
                 <div class="producto">
                     <img src="${p.image}" alt="${p.title}">
                     <h3>${p.title}</h3>
                     <p class="descripcion">${p.description}</p>
                     <p class="precio">Q ${p.price}</p>
                 </div>
-            `;
-        });
+                `;
+            });
+
+            html += `</div>`;
+            contenedorCategorias.innerHTML += html;
+        }
 
     } catch (e) {
         console.error("Error cargando productos:", e);
-        document.getElementById("lista-productos").innerHTML =
+        document.getElementById("categorias").innerHTML =
             "<p>Error al cargar productos.</p>";
     }
 }
