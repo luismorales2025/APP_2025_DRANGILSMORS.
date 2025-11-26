@@ -1,108 +1,292 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DRANGILS MORALES - Tienda</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DRANGILS MORALES - Tienda</title>
 
-    <style>
-        body {
-            font-family: Arial;
-            background: #f2f2f2;
-            margin: 0;
-            padding: 0;
-        }
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('../imagenes/plata.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+    }
 
-        h1, h2 {
-            text-align: center;
-            margin-top: 20px;
-        }
+    header {
+      background-color: rgba(35, 47, 62, 0.9);
+      color: white;
+      padding: 1em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
 
-        .contenedor-productos {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            padding: 20px;
-        }
+    header h1 {
+      margin: 0;
+      color: #ffcc00;
+      font-size: 1.5em;
+      animation: flotar 2s ease-in-out infinite alternate;
+      text-shadow: 0 0 10px #ffcc00;
+    }
 
-        .producto {
-            background: white;
-            padding: 10px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px #0002;
-            text-align: center;
-        }
+    @keyframes flotar {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-5px); }
+    }
 
-        .producto img {
-            width: 100%;
-            height: 230px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5em;
+      margin-top: 0.5em;
+    }
 
-        .precio {
-            font-size: 20px;
-            color: green;
-            font-weight: bold;
-        }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 0.5em 1em;
+      background-color: #ff007f;
+      border-radius: 8px;
+      font-size: 13px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: transform 0.2s, background-color 0.3s;
+    }
 
-        .descripcion {
-            font-size: 14px;
-            color: #444;
-        }
-    </style>
+    nav a:hover {
+      background-color: #ff3399;
+      transform: scale(1.1);
+    }
+
+    .categorias-bar {
+      background-color: rgba(2, 117, 216, 0.9);
+      color: white;
+      padding: 0.5em;
+      display: flex;
+      gap: 0.5em;
+      overflow-x: auto;
+      white-space: nowrap;
+      scroll-behavior: smooth;
+    }
+
+    .categorias-bar a {
+      color: white;
+      text-decoration: none;
+      background-color: #00c4ff;
+      padding: 0.5em 1em;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: transform 0.3s, background-color 0.3s;
+    }
+
+    .categorias-bar a:hover {
+      background-color: #00e1ff;
+      transform: scale(1.1);
+    }
+
+    .video-promocional {
+      display: flex;
+      justify-content: center;
+      margin-top: 1em;
+      padding: 0 1em;
+    }
+
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 2000px;
+      aspect-ratio: 100 / 25;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .video-wrapper video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .contenedor-productos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1em;
+      padding: 2em;
+      backdrop-filter: blur(5px);
+    }
+
+    .producto {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 1em;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .producto:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    .producto img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 0.5em;
+    }
+
+    .boton-carrito, .boton-descripcion {
+      background-color: #ff5722;
+      border: none;
+      padding: 0.7em;
+      cursor: pointer;
+      border-radius: 8px;
+      font-weight: bold;
+      display: block;
+      width: 100%;
+      margin-top: 5px;
+      text-align: center;
+      text-decoration: none;
+      color: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: transform 0.3s, background-color 0.3s;
+    }
+
+    .boton-carrito:hover, .boton-descripcion:hover {
+      background-color: #ff7043;
+      transform: scale(1.05);
+    }
+
+    footer {
+      background-color: rgba(35, 47, 62, 0.9);
+      color: white;
+      padding: 2em;
+      font-size: 14px;
+      margin-top: 2em;
+      text-align: center;
+    }
+  </style>
 </head>
 
 <body>
-    <h1>DRANGILS MORALES - Productos</h1>
 
-    <div id="categorias"></div>
+<header>
+  <h1>DRANGILS MORALES</h1>
+  <nav>
+    <a href="../categorias_general/categoria.html">Categorías</a>
+    <a href="../opciones/contactogeneral1.html">Contacto</a>
+    <a href="../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
+  </nav>
+</header>
+
+<section class="categorias-bar">
+  <a href="../categorias_general/categorias/plata.html">Plata</a>
+  <a href="../categorias_general/categorias/calzado.html">Calzado mexicano</a>
+</section>
+
+<section class="video-promocional">
+  <div class="video-wrapper">
+    <video autoplay muted loop playsinline>
+      <source src="../anuncio1.mp4" type="video/mp4">
+    </video>
+  </div>
+</section>
+
+<h2 style="text-align:center;color:white;text-shadow:0 0 5px black;">PRODUCTOS</h2>
+
+<div id="contenedor" class="contenedor-productos"></div>
+
+<footer>
+  © 2025 DRANGILS MORALES. Todos los derechos reservados.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-const URL_JSON = "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/data/products.json";
+const URL_JSON =
+ "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/data/products.json";
 
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+// ------------------------
+//      CARGAR PRODUCTOS
+// ------------------------
 async function cargarProductos() {
-    try {
-        const resp = await fetch(URL_JSON);
-        const productos = await resp.json();
+  try {
+    const resp = await fetch(URL_JSON);
+    const productos = await resp.json();
 
-        const contenedorCategorias = document.getElementById("categorias");
-        contenedorCategorias.innerHTML = "";
+    const contenedor = document.getElementById("contenedor");
+    contenedor.innerHTML = "";
 
-        const categorias = {};
+    productos.forEach(p => {
+      contenedor.innerHTML += `
+        <div class="producto">
+          <img src="${p.image}">
+          <h3>${p.title}</h3>
+          <p><b>Q${p.price}</b></p>
 
-        productos.forEach(p => {
-            if (!categorias[p.category]) categorias[p.category] = [];
-            categorias[p.category].push(p);
-        });
+          <button class="boton-carrito" data-nombre="${p.title}" data-precio="${p.price}">
+            Agregar al carrito
+          </button>
 
-        for (const categoria in categorias) {
-            contenedorCategorias.innerHTML += `<h2>${categoria.toUpperCase()}</h2>`;
+          <a href="${p.link}" class="boton-descripcion">Ver descripción</a>
+        </div>
+      `;
+    });
 
-            let html = `<div class='contenedor-productos'>`;
-
-            categorias[categoria].forEach(p => {
-                html += `
-                <div class="producto">
-                    <img src="${p.image}" alt="${p.title}">
-                    <h3>${p.title}</h3>
-                    <p class="descripcion">${p.description}</p>
-                    <p class="precio">Q ${p.price}</p>
-                </div>
-                `;
-            });
-
-            html += `</div>`;
-            contenedorCategorias.innerHTML += html;
-        }
-
-    } catch (e) {
-        console.error("Error cargando productos:", e);
-        document.getElementById("categorias").innerHTML =
-            "<p>Error al cargar productos.</p>";
-    }
+    activarBotones();
+  } catch (e) {
+    console.log(e);
+    document.getElementById("contenedor").innerHTML =
+      "<p>Error al cargar productos.</p>";
+  }
 }
 
+// ------------------------
+//        CARRITO
+// ------------------------
+function activarBotones() {
+  document.querySelectorAll('.boton-carrito').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const nombre = btn.dataset.nombre;
+      const precio = parseFloat(btn.dataset.precio);
+
+      let existe = carrito.find(p => p.nombre === nombre);
+      if (existe) {
+        existe.cantidad++;
+      } else {
+        carrito.push({ nombre, precio, cantidad: 1 });
+      }
+
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+      actualizarContador();
+
+      Swal.fire({
+        title: 'Producto agregado',
+        text: `${nombre} se agregó al carrito.`,
+        icon: 'success',
+        showCancelButton: true,
+        confirmButtonText: 'Ver carrito',
+        cancelButtonText: 'Seguir comprando'
+      }).then(r => {
+        if (r.isConfirmed) window.location.href = "../opciones/vercarrito.html";
+      });
+    });
+  });
+}
+
+function actualizarContador() {
+  document.getElementById("contadorCarrito").textContent =
+    carrito.reduce((acc,p)=>acc + p.cantidad,0);
+}
+
+actualizarContador();
 cargarProductos();
 </script>
 
