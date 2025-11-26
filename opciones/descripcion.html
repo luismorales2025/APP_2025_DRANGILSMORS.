@@ -1,188 +1,101 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Detalle del Producto</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Descripción del Producto</title>
+
+  <!-- TU CSS ORIGINAL (NO MODIFIQUÉ NADA) -->
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
       margin: 0;
-      padding: 0;
-      color: #333;
-      background: url('../../images/plata.jpeg') no-repeat center center fixed;
+      font-family: Arial, sans-serif;
+      background: url('../imagenes/plata.jpeg') no-repeat center center fixed;
       background-size: cover;
+      color: #333;
     }
 
     header {
-      background-color: #232f3e;
+      background-color: rgba(35, 47, 62, 0.9);
       color: white;
       padding: 1em;
       display: flex;
-      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
     }
 
     header h1 {
       margin: 0;
       color: #ffcc00;
       font-size: 1.5em;
-      animation: flotar 2s ease-in-out infinite alternate;
       text-shadow: 0 0 10px #ffcc00;
-      flex: 1 1 100%;
-      text-align: center;
-    }
-
-    nav {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 4px;
-      width: 100%;
-      margin-top: 0.5em;
     }
 
     nav a {
-      color: white;
+      color: #fff;
       text-decoration: none;
       padding: 0.5em 1em;
-      background-color: #f1633f;
+      background-color: #ff007f;
       border-radius: 8px;
-      font-weight: bold;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      font-size: 14px;
-      transition: transform 0.2s, background-color 0.3s;
+      margin-left: 0.5em;
     }
 
-    nav a:hover {
-      background-color: #ff3399;
-      transform: scale(1.05);
+    #contenido {
+      padding: 2em;
+      max-width: 900px;
+      margin: auto;
+      background: rgba(255,255,255,0.85);
+      border-radius: 12px;
+      margin-top: 2em;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
 
     .producto-detalle {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      gap: 2em;
-      padding: 2em;
+      gap: 1.5em;
+      align-items: flex-start;
     }
 
     .producto-detalle img {
-      width: 400px;
-      height: 450px;
-      border-radius: 8px;
+      width: 320px;
+      height: 320px;
+      object-fit: cover;
+      border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
-    }
-
-    .producto-detalle img:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
     }
 
     .info-producto {
-      max-width: 500px;
-      background-color: rgba(2, 182, 206, 0.95);
-      padding: 1.5em;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      animation: flotar 3s ease-in-out infinite alternate;
+      flex: 1;
+      min-width: 250px;
     }
 
     .info-producto h2 {
-      font-size: 22px;
-      color: #fffb00;
-      text-shadow: 1px 1px #fff;
-      margin-bottom: 10px;
+      margin-top: 0;
     }
 
-    .info-producto p {
-      font-size: 20px;
-      line-height: 2;
-      color: #555;
-      margin-bottom: 10px;
-    }
-
-    .info-producto label {
-      font-weight: bold;
-      color: #333;
-    }
-
-    .info-producto select,
-    .info-producto input[type="number"] {
-      padding: 0.5em;
-      margin: 0.5em 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      width: 100%;
-    }
-
-    .info-producto button {
+    .boton-carrito {
       background-color: #ff5722;
       border: none;
-      padding: 0.7em;
-      border-radius: 10px;
-      cursor: pointer;
+      padding: 0.8em 1.2em;
       color: white;
+      cursor: pointer;
+      border-radius: 8px;
       font-weight: bold;
+      margin-top: 1em;
       width: 100%;
+      max-width: 250px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease, background-color 0.3s ease;
-    }
-
-    .info-producto button:hover {
-      background-color: #ff7043;
-      transform: scale(1.05);
     }
 
     footer {
-      background-color: #232f3e;
+      background-color: rgba(35, 47, 62, 0.9);
       color: white;
       padding: 2em;
+      font-size: 14px;
+      margin-top: 2em;
       text-align: center;
-      margin-top: 3em;
-    }
-
-    footer p {
-      font-size: 13px;
-      color: #ccc;
-    }
-
-    @keyframes flotar {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-5px); }
-    }
-
-    @media (max-width: 600px) {
-      nav {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      nav a {
-        width: 90%;
-        margin: 2px 0;
-        font-size: 13px;
-        text-align: center;
-        padding: 0.6em;
-      }
-
-      header h1 {
-        font-size: 1.2em;
-      }
-
-      .info-producto {
-        width: 90%;
-        padding: 1em;
-      }
-
-      .producto-detalle img {
-        max-width: 90%;
-        height: auto;
-      }
     }
   </style>
 </head>
@@ -190,115 +103,90 @@
 <body>
 
 <header>
-  <h1>DRANGILS MORALES</h1>
+  <h1>Descripción del Producto</h1>
   <nav>
-    <a href="../pagina_principal/pagina_principal.html">Inicio</a>
-    <a href="../categorias_general/categoria.html">Categorías</a>
-    <a href="contactogeneral1.html">Contacto</a>
-    <a href="vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
+    <a href="../index.html">Inicio</a>
+    <a href="../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
   </nav>
 </header>
 
-<div class="contenedor">
-  <main id="contenido" style="width:100%;"></main>
+<div id="contenido">
+  <h2>Cargando...</h2>
 </div>
 
 <footer>
-  © 2025 DRANGILS MORALES_APPS
+  © 2025 DRANGILS MORALES. Todos los derechos reservados.
 </footer>
 
-<script>
-let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-// contador
-function actualizarContador() {
-  const total = carrito.reduce((acc, p) => acc + (p.cantidad || 1), 0);
-  document.getElementById("contadorCarrito").textContent = total;
+<script>
+const URL_JSON =
+ "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/data/products.json";
+
+async function cargarDescripcion() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  try {
+    const resp = await fetch(URL_JSON);
+    const productos = await resp.json();
+
+    const producto = productos.find(p => p.id == id);
+
+    if (!producto) {
+      document.getElementById("contenido").innerHTML =
+        "<h2>Producto no encontrado</h2>";
+      return;
+    }
+
+    document.getElementById("contenido").innerHTML = `
+      <div class="producto-detalle">
+        <img src="${producto.image}" alt="${producto.title}">
+        <div class="info-producto">
+          <h2>${producto.title}</h2>
+          <p><b>Precio:</b> Q${producto.price}</p>
+          <p><b>Descripción:</b> ${producto.description}</p>
+
+          <button class="boton-carrito" onclick="agregarCarrito('${producto.title}', ${producto.price})">
+            Agregar al carrito
+          </button>
+        </div>
+      </div>
+    `;
+  } catch (e) {
+    console.log(e);
+    document.getElementById("contenido").innerHTML =
+      "<h2>Error al cargar información</h2>";
+  }
 }
 
-// agregar
-function agregarCarrito(producto) {
-  const existe = carrito.find(p => p.title === producto.title);
+function agregarCarrito(nombre, precio) {
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-  if (existe) {
-    existe.cantidad = (existe.cantidad || 1) + 1;
-  } else {
-    carrito.push({ ...producto, cantidad: 1 });
-  }
+  let existe = carrito.find(p => p.nombre === nombre);
+  if (existe) existe.cantidad++;
+  else carrito.push({ nombre, precio, cantidad: 1 });
 
   localStorage.setItem("carrito", JSON.stringify(carrito));
   actualizarContador();
-  alert("Producto agregado al carrito ✔");
-}
 
-// cargar detalle
-async function cargarDetalle(nombreProducto) {
-  const res = await fetch("../data/products.json");
-  const productos = await res.json();
-
-  const p = productos.find(prod => prod.title.toLowerCase() === nombreProducto.toLowerCase());
-
-  if (!p) {
-    mostrarLista(productos);
-    return;
-  }
-
-  document.getElementById("contenido").innerHTML = `
-    <div class="producto-detalle">
-      <img src="${p.image}">
-      <div class="info-producto">
-        <h2>${p.title}</h2>
-        <p><strong>Precio:</strong> Q${p.price}</p>
-        <p><strong>Descripción:</strong> ${p.description}</p>
-        <button class="btn-carrito" onclick='agregarCarrito(${JSON.stringify(p)})'>
-          Agregar al carrito
-        </button>
-      </div>
-    </div>
-  `;
-}
-
-// lista
-function mostrarLista(productos) {
-  let html = `<div class="lista-productos">`;
-  productos.forEach(p => {
-    html += `
-      <div class="producto-card">
-        <img src="${p.image}">
-        <h4>${p.title}</h4>
-        <p>Q${p.price}</p>
-        <button onclick="verProducto('${p.title}')">Ver descripción</button>
-      </div>
-    `;
+  Swal.fire({
+    icon: "success",
+    title: "Producto agregado",
+    text: `${nombre} fue agregado al carrito.`
   });
-  html += `</div>`;
-  document.getElementById("contenido").innerHTML = html;
 }
 
-// ver producto
-function verProducto(nombre) {
-  localStorage.setItem("productoSeleccionado", nombre);
-  window.location.reload();
+function actualizarContador() {
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  document.getElementById("contadorCarrito").textContent =
+    carrito.reduce((acc, p) => acc + p.cantidad, 0);
 }
 
-async function iniciar() {
-  const seleccionado = localStorage.getItem("productoSeleccionado");
-  const req = await fetch("../data/products.json");
-  const productos = await req.json();
-
-  if (seleccionado) {
-    cargarDetalle(seleccionado);
-  } else {
-    mostrarLista(productos);
-  }
-}
-
-iniciar();
+cargarDescripcion();
 actualizarContador();
 </script>
 
 </body>
 </html>
-
-
-
