@@ -25,5 +25,14 @@
     "category": "accesorios",
     "image": "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/images/img_1764129653474.jpg",
     "created_at": "2025-11-26T04:01:03.840Z"
+  },
+  {
+    "id": "p_1764195062986",
+    "title": "producto 34",
+    "description": "hola esto es una preuba xd",
+    "price": "324",
+    "category": "accesorios",
+    "image": "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/images/img_1764195061028.jpeg",
+    "created_at": "2025-11-26T22:11:02.986Z"
   }
 ]
