@@ -17,14 +17,5 @@
     "category": "accesorios",
     "image": "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/images/img_1764195061028.jpeg",
     "created_at": "2025-11-26T22:11:02.986Z"
-  },
-  {
-    "id": "p_1764200673446",
-    "title": "producto1",
-    "description": "prueba t",
-    "price": "342",
-    "category": "plata",
-    "image": "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/images/img_1764200643953.jpg",
-    "created_at": "2025-11-26T23:44:33.446Z"
   }
 ]
