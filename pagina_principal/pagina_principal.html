@@ -184,10 +184,8 @@
   </nav>
 </header>
 
-<section class="categorias-bar">
-  <a href="../categorias_general/categorias/plata.html">Plata</a>
-  <a href="../categorias_general/categorias/calzado.html">Calzado mexicano</a>
-</section>
+<!-- CATEGORÍAS AUTOMÁTICAS -->
+<section id="barraCategorias" class="categorias-bar"></section>
 
 <section class="video-promocional">
   <div class="video-wrapper">
@@ -213,9 +211,32 @@ const URL_JSON =
 
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-// ------------------------
-//      CARGAR PRODUCTOS
-// ------------------------
+// ---------------------------------------------------
+//   CARGAR CATEGORÍAS DESDE JSON AUTOMÁTICAMENTE
+// ---------------------------------------------------
+async function cargarCategorias() {
+  try {
+    const resp = await fetch(URL_JSON);
+    const data = await resp.json();
+
+    // obtener categorías únicas
+    const categorias = [...new Set(data.map(p => p.category))];
+
+    const barra = document.getElementById("barraCategorias");
+    barra.innerHTML = "";
+
+    categorias.forEach(cat => {
+      barra.innerHTML += `
+        <a href="../categorias_general/categorias/${cat}.html">${cat}</a>
+      `;
+    });
+
+  } catch (e) { console.log("Error al cargar categorías:", e); }
+}
+
+// ---------------------------------------------------
+//      CARGAR PRODUCTOS + AUTODESCRIPCIÓN
+// ---------------------------------------------------
 async function cargarProductos() {
   try {
     const resp = await fetch(URL_JSON);
@@ -235,7 +256,10 @@ async function cargarProductos() {
             Agregar al carrito
           </button>
 
-          <a href="${p.link}" class="boton-descripcion">Ver descripción</a>
+          <!-- DESCRIPCIÓN AUTOMÁTICA -->
+          <a href="../opciones/descripcion.html?id=${p.id}" class="boton-descripcion">
+            Ver descripción
+          </a>
         </div>
       `;
     });
@@ -248,9 +272,9 @@ async function cargarProductos() {
   }
 }
 
-// ------------------------
+// ---------------------------------------------------
 //        CARRITO
-// ------------------------
+// ---------------------------------------------------
 function activarBotones() {
   document.querySelectorAll('.boton-carrito').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -287,6 +311,7 @@ function actualizarContador() {
 }
 
 actualizarContador();
+cargarCategorias();
 cargarProductos();
 </script>
 
