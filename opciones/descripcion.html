@@ -1,163 +1,141 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Descripción del Producto</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Producto</title>
 
-<style>
-	body {
-		font-family: Arial, sans-serif;
-		padding: 20px;
-		background: #f4f4f4;
-	}
+    <link rel="stylesheet" href="../css/estilos.css">
 
-	.product-container {
-		max-width: 500px;
-		margin: auto;
-		background: white;
-		padding: 20px;
-		border-radius: 10px;
-		box-shadow: 0 0 10px #0002;
-	}
+    <style>
+        /* Solo agrego estilos mínimos para tallas */
+        #sizeContainer {
+            margin-top: 10px;
+        }
 
-	.product-image {
-		width: 100%;
-		border-radius: 10px;
-	}
+        #sizeContainer label {
+            font-weight: bold;
+            color: #013f49;
+            font-size: 18px;
+        }
 
-	.product-title {
-		font-size: 22px;
-		font-weight: bold;
-		margin-top: 15px;
-	}
-
-	.product-price {
-		font-size: 20px;
-		color: #007bff;
-		margin: 10px 0;
-	}
-
-	.product-description {
-		margin: 10px 0;
-		color: #555;
-	}
-
-	/* --- BLOQUE DE TALLAS --- */
-	.sizes-container {
-		margin-top: 15px;
-	}
-
-	.size-title {
-		font-weight: bold;
-		margin-bottom: 5px;
-	}
-
-	.sizes-list {
-		display: flex;
-		gap: 8px;
-		flex-wrap: wrap;
-	}
-
-	.size-btn {
-		padding: 6px 12px;
-		border: 1px solid #888;
-		border-radius: 8px;
-		cursor: pointer;
-		background: #fff;
-		transition: 0.2s;
-	}
-
-	.size-btn:hover {
-		background: #ddd;
-	}
-
-	.size-btn.active {
-		background: #000;
-		color: #fff;
-		border-color: #000;
-	}
-
-	.add-cart-btn {
-		width: 100%;
-		margin-top: 20px;
-		padding: 12px;
-		background: #28a745;
-		border: none;
-		color: white;
-		font-size: 18px;
-		border-radius: 8px;
-		cursor: pointer;
-	}
-
-	.add-cart-btn:hover {
-		background: #218838;
-	}
-</style>
+        #sizeContainer select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 6px;
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="product-container">
+    <header>
+        <h1>Detalle del Producto</h1>
+    </header>
 
-	<img id="productImg" class="product-image">
+    <main class="product-container">
 
-	<div id="productTitle" class="product-title"></div>
-	<div id="productPrice" class="product-price"></div>
-	<div id="productDescription" class="product-description"></div>
+        <div class="product-image">
+            <img id="productImage" src="" alt="Imagen del producto">
+        </div>
 
-	<!-- SECCIÓN DE TALLAS -->
-	<div id="sizesSection" class="sizes-container" style="display:none;">
-		<div class="size-title">Tallas Disponibles:</div>
-		<div id="sizesList" class="sizes-list"></div>
-	</div>
+        <div class="product-info">
 
-	<button class="add-cart-btn">Agregar al Carrito</button>
-</div>
+            <h2 id="productTitle"></h2>
 
-<script>
-	// Obtener ID desde la URL
-	const urlParams = new URLSearchParams(window.location.search);
-	const productId = urlParams.get("id");
+            <p><strong>Precio:</strong> Q<span id="productPrice"></span></p>
 
-	// Cargar JSON
-	fetch("/data/products.json")
-		.then(res => res.json())
-		.then(data => {
-			const product = data.find(p => p.id === productId);
-			if (!product) {
-				alert("Producto no encontrado");
-				return;
-			}
+            <p><strong>Descripción:</strong> <span id="productDescription"></span></p>
 
-			// Rellenar datos
-			document.getElementById("productImg").src = product.image;
-			document.getElementById("productTitle").textContent = product.title;
-			document.getElementById("productPrice").textContent = "Q " + product.price;
-			document.getElementById("productDescription").textContent = product.description;
+            <!-- ⭐⭐⭐ TALLAS (solo si el producto trae sizes) ⭐⭐⭐ -->
+            <div id="sizeContainer" style="display:none;">
+                <label for="sizes">Talla disponible:</label>
+                <select id="sizes"></select>
+            </div>
 
-			// Mostrar tallas si existen
-			if (product.sizes && product.sizes.length > 0) {
-				const sizesSection = document.getElementById("sizesSection");
-				const sizesList = document.getElementById("sizesList");
+            <!-- Cantidad -->
+            <label for="quantity"><strong>Cantidad:</strong></label>
+            <input id="quantity" type="number" value="1" min="1">
 
-				sizesSection.style.display = "block"; // mostrar bloque
+            <button id="addToCartBtn">Agregar al carrito</button>
 
-				product.sizes.forEach(size => {
-					const btn = document.createElement("button");
-					btn.classList.add("size-btn");
-					btn.textContent = size;
+        </div>
 
-					btn.addEventListener("click", () => {
-						document.querySelectorAll(".size-btn").forEach(b => b.classList.remove("active"));
-						btn.classList.add("active");
-					});
+    </main>
 
-					sizesList.appendChild(btn);
-				});
-			}
-		});
-</script>
+    <footer>
+        <p>© 2025 DRANGILS MORALES_APPS</p>
+    </footer>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get("id");
+
+        const DATA_URL = "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/data/products.json";
+
+        async function loadProduct() {
+            try {
+                const res = await fetch(DATA_URL);
+                const products = await res.json();
+
+                const product = products.find(p => p.id === productId);
+
+                if (!product) {
+                    alert("Producto no encontrado");
+                    return;
+                }
+
+                // Rellenar datos
+                document.getElementById("productTitle").textContent = product.title;
+                document.getElementById("productPrice").textContent = product.price;
+                document.getElementById("productDescription").textContent = product.description;
+                document.getElementById("productImage").src = product.image;
+
+                // ⭐⭐⭐ Mostrar tallas si existen ⭐⭐⭐
+                if (product.sizes && product.sizes.length > 0) {
+                    const sizeContainer = document.getElementById("sizeContainer");
+                    const sizeSelect = document.getElementById("sizes");
+
+                    sizeContainer.style.display = "block";
+
+                    product.sizes.forEach(size => {
+                        let option = document.createElement("option");
+                        option.value = size;
+                        option.textContent = size;
+                        sizeSelect.appendChild(option);
+                    });
+                }
+
+                // Agregar al carrito
+                document.getElementById("addToCartBtn").addEventListener("click", () => {
+                    const qty = parseInt(document.getElementById("quantity").value);
+
+                    const cartItem = {
+                        id: product.id,
+                        title: product.title,
+                        price: product.price,
+                        image: product.image,
+                        quantity: qty,
+                        size: (product.sizes && product.sizes.length > 0) 
+                                ? document.getElementById("sizes").value 
+                                : null
+                    };
+
+                    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+                    cart.push(cartItem);
+                    localStorage.setItem("cart", JSON.stringify(cart));
+
+                    alert("Producto agregado al carrito");
+                });
+
+            } catch (error) {
+                console.error(error);
+                alert("Error al cargar producto");
+            }
+        }
+
+        loadProduct();
+    </script>
 
 </body>
 </html>
