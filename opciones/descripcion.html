@@ -1,232 +1,162 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Detalle del Producto</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Descripción del Producto</title>
 
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 0;
-      color: #333;
-      background: url('../../images/plata.jpeg') no-repeat center center fixed;
-      background-size: cover;
-    }
+<style>
+	body {
+		font-family: Arial, sans-serif;
+		padding: 20px;
+		background: #f4f4f4;
+	}
 
-    header {
-      background-color: #232f3e;
-      color: white;
-      padding: 1em;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-    }
+	.product-container {
+		max-width: 500px;
+		margin: auto;
+		background: white;
+		padding: 20px;
+		border-radius: 10px;
+		box-shadow: 0 0 10px #0002;
+	}
 
-    header h1 {
-      margin: 0;
-      color: #ffcc00;
-      font-size: 1.5em;
-      animation: flotar 2s ease-in-out infinite alternate;
-      text-shadow: 0 0 10px #ffcc00;
-      flex: 1 1 100%;
-      text-align: center;
-    }
+	.product-image {
+		width: 100%;
+		border-radius: 10px;
+	}
 
-    nav {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 4px;
-      width: 100%;
-      margin-top: 0.5em;
-    }
+	.product-title {
+		font-size: 22px;
+		font-weight: bold;
+		margin-top: 15px;
+	}
 
-    nav a {
-      color: white;
-      text-decoration: none;
-      padding: 0.5em 1em;
-      background-color: #f1633f;
-      border-radius: 8px;
-      font-weight: bold;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      font-size: 14px;
-      transition: transform 0.2s, background-color 0.3s;
-    }
+	.product-price {
+		font-size: 20px;
+		color: #007bff;
+		margin: 10px 0;
+	}
 
-    nav a:hover {
-      background-color: #ff3399;
-      transform: scale(1.05);
-    }
+	.product-description {
+		margin: 10px 0;
+		color: #555;
+	}
 
-    .producto-detalle {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      gap: 2em;
-      padding: 2em;
-    }
+	/* --- BLOQUE DE TALLAS --- */
+	.sizes-container {
+		margin-top: 15px;
+	}
 
-    .producto-detalle img {
-      width: 400px;
-      height: 450px;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
-    }
+	.size-title {
+		font-weight: bold;
+		margin-bottom: 5px;
+	}
 
-    .producto-detalle img:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-    }
+	.sizes-list {
+		display: flex;
+		gap: 8px;
+		flex-wrap: wrap;
+	}
 
-    .info-producto {
-      max-width: 500px;
-      background-color: rgba(2, 182, 206, 0.95);
-      padding: 1.5em;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      animation: flotar 3s ease-in-out infinite alternate;
-    }
+	.size-btn {
+		padding: 6px 12px;
+		border: 1px solid #888;
+		border-radius: 8px;
+		cursor: pointer;
+		background: #fff;
+		transition: 0.2s;
+	}
 
-    .info-producto h2 {
-      font-size: 22px;
-      color: #fffb00;
-      text-shadow: 1px 1px #fff;
-      margin-bottom: 10px;
-    }
+	.size-btn:hover {
+		background: #ddd;
+	}
 
-    .info-producto p {
-      font-size: 20px;
-      line-height: 2;
-      color: #555;
-      margin-bottom: 10px;
-    }
+	.size-btn.active {
+		background: #000;
+		color: #fff;
+		border-color: #000;
+	}
 
-    .info-producto button {
-      background-color: #ff5722;
-      border: none;
-      padding: 0.7em;
-      border-radius: 10px;
-      cursor: pointer;
-      color: white;
-      font-weight: bold;
-      width: 100%;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease, background-color 0.3s ease;
-    }
+	.add-cart-btn {
+		width: 100%;
+		margin-top: 20px;
+		padding: 12px;
+		background: #28a745;
+		border: none;
+		color: white;
+		font-size: 18px;
+		border-radius: 8px;
+		cursor: pointer;
+	}
 
-    .info-producto button:hover {
-      background-color: #ff7043;
-      transform: scale(1.05);
-    }
-
-    footer {
-      background-color: #232f3e;
-      color: white;
-      padding: 2em;
-      text-align: center;
-      margin-top: 3em;
-    }
-
-    footer p {
-      font-size: 13px;
-      color: #ccc;
-    }
-
-    @keyframes flotar {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-5px); }
-    }
-  </style>
+	.add-cart-btn:hover {
+		background: #218838;
+	}
+</style>
 </head>
 
 <body>
 
-<header>
-  <h1>DRANGILS MORALES</h1>
-  <nav>
-    <a href="../pagina_principal/pagina_principal.html">Inicio</a>
-    <a href="../categorias_general/categoria.html">Categorías</a>
-    <a href="contactogeneral1.html">Contacto</a>
-    <a href="vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
-  </nav>
-</header>
+<div class="product-container">
 
-<main id="contenido" style="padding: 20px;"></main>
+	<img id="productImg" class="product-image">
 
-<footer>
-  © 2025 DRANGILS MORALES_APPS
-</footer>
+	<div id="productTitle" class="product-title"></div>
+	<div id="productPrice" class="product-price"></div>
+	<div id="productDescription" class="product-description"></div>
+
+	<!-- SECCIÓN DE TALLAS -->
+	<div id="sizesSection" class="sizes-container" style="display:none;">
+		<div class="size-title">Tallas Disponibles:</div>
+		<div id="sizesList" class="sizes-list"></div>
+	</div>
+
+	<button class="add-cart-btn">Agregar al Carrito</button>
+</div>
 
 <script>
-const URL_JSON = "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/data/products.json";
+	// Obtener ID desde la URL
+	const urlParams = new URLSearchParams(window.location.search);
+	const productId = urlParams.get("id");
 
-// contador carrito
-function actualizarContador() {
-  const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-  const total = carrito.reduce((acc, p) => acc + (p.cantidad || 1), 0);
-  document.getElementById("contadorCarrito").textContent = total;
-}
+	// Cargar JSON
+	fetch("/data/products.json")
+		.then(res => res.json())
+		.then(data => {
+			const product = data.find(p => p.id === productId);
+			if (!product) {
+				alert("Producto no encontrado");
+				return;
+			}
 
-// agregar al carrito
-function agregarCarrito(producto) {
-  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-  const existe = carrito.find(p => p.id === producto.id);
+			// Rellenar datos
+			document.getElementById("productImg").src = product.image;
+			document.getElementById("productTitle").textContent = product.title;
+			document.getElementById("productPrice").textContent = "Q " + product.price;
+			document.getElementById("productDescription").textContent = product.description;
 
-  if (existe) existe.cantidad++;
-  else carrito.push({ ...producto, cantidad: 1 });
+			// Mostrar tallas si existen
+			if (product.sizes && product.sizes.length > 0) {
+				const sizesSection = document.getElementById("sizesSection");
+				const sizesList = document.getElementById("sizesList");
 
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-  actualizarContador();
-  alert("Producto agregado al carrito ✔");
-}
+				sizesSection.style.display = "block"; // mostrar bloque
 
-// Cargar detalle por ID exacto del JSON
-async function cargarDetallePorId() {
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get("id");
+				product.sizes.forEach(size => {
+					const btn = document.createElement("button");
+					btn.classList.add("size-btn");
+					btn.textContent = size;
 
-  if (!id) {
-    document.getElementById("contenido").innerHTML = "<h2>ID no recibido ❌</h2>";
-    return;
-  }
+					btn.addEventListener("click", () => {
+						document.querySelectorAll(".size-btn").forEach(b => b.classList.remove("active"));
+						btn.classList.add("active");
+					});
 
-  try {
-    const res = await fetch(URL_JSON);
-    const productos = await res.json();
-
-    const p = productos.find(prod => prod.id === id);
-
-    if (!p) {
-      document.getElementById("contenido").innerHTML = "<h2>Producto no encontrado ❌</h2>";
-      return;
-    }
-
-    document.getElementById("contenido").innerHTML = `
-      <div class="producto-detalle">
-        <img src="${p.image}" alt="${p.title}">
-        <div class="info-producto">
-          <h2>${p.title}</h2>
-          <p><strong>Precio:</strong> Q${p.price}</p>
-          <p><strong>Descripción:</strong> ${p.description}</p>
-          <button onclick='agregarCarrito(${JSON.stringify(p)})'>
-            Agregar al carrito
-          </button>
-        </div>
-      </div>
-    `;
-  } catch (err) {
-    document.getElementById("contenido").innerHTML = "<h2>Error al cargar datos ❌</h2>";
-  }
-}
-
-cargarDetallePorId();
-actualizarContador();
+					sizesList.appendChild(btn);
+				});
+			}
+		});
 </script>
 
 </body>
