@@ -1,141 +1,306 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle del Producto</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detalle del Producto</title>
+  <style>
+    /* === TU CSS ORIGINAL SIN TOCAR NADA === */
 
-    <link rel="stylesheet" href="../css/estilos.css">
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      background: url('../../imagenes/plata.jpeg') no-repeat center center fixed;
+      background-size: cover;
+    }
 
-    <style>
-        /* Solo agrego estilos mínimos para tallas */
-        #sizeContainer {
-            margin-top: 10px;
-        }
+    header {
+      background-color: #232f3e;
+      color: white;
+      padding: 1em;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        #sizeContainer label {
-            font-weight: bold;
-            color: #013f49;
-            font-size: 18px;
-        }
+    header h1 {
+      margin: 0;
+      color: #ffcc00;
+      font-size: 1.5em;
+      animation: flotar 2s ease-in-out infinite alternate;
+      text-shadow: 0 0 10px #ffcc00;
+      flex: 1 1 100%;
+      text-align: center;
+    }
 
-        #sizeContainer select {
-            width: 100%;
-            padding: 8px;
-            border-radius: 6px;
-        }
-    </style>
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 4px;
+      width: 100%;
+      margin-top: 0.5em;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 0.5em 1em;
+      background-color: #f1633f;
+      border-radius: 8px;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      font-size: 14px;
+      transition: transform 0.2s, background-color 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #ff3399;
+      transform: scale(1.05);
+    }
+
+    .producto-detalle {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 2em;
+      padding: 2em;
+    }
+
+    .producto-detalle img {
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .producto-detalle img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    .info-producto {
+      max-width: 500px;
+      background-color: rgba(2, 182, 206, 0.95);
+      padding: 1.5em;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      animation: flotar 3s ease-in-out infinite alternate;
+    }
+
+    .info-producto h2 {
+      font-size: 22px;
+      color: #fffb00;
+      text-shadow: 1px 1px #fff;
+      margin-bottom: 10px;
+    }
+
+    .info-producto p {
+      font-size: 20px;
+      line-height: 2;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .info-producto label {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .info-producto select,
+    .info-producto input[type="number"] {
+      padding: 0.5em;
+      margin: 0.5em 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      width: 100%;
+    }
+
+    .info-producto button {
+      background-color: #ff5722;
+      border: none;
+      padding: 0.7em;
+      border-radius: 10px;
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+      width: 100%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .info-producto button:hover {
+      background-color: #ff7043;
+      transform: scale(1.05);
+    }
+
+    footer {
+      background-color: #232f3e;
+      color: white;
+      padding: 2em;
+      text-align: center;
+      margin-top: 3em;
+    }
+
+    footer p {
+      font-size: 13px;
+      color: #ccc;
+    }
+
+    @keyframes flotar {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-5px); }
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      nav a {
+        width: 90%;
+        margin: 2px 0;
+        font-size: 13px;
+        text-align: center;
+        padding: 0.6em;
+      }
+
+      header h1 {
+        font-size: 1.2em;
+      }
+
+      .info-producto {
+        width: 90%;
+        padding: 1em;
+      }
+
+      .info-producto p {
+        font-size: 16px;
+      }
+
+      .info-producto h2 {
+        font-size: 18px;
+      }
+
+      .producto-detalle img {
+        max-width: 90%;
+        height: auto;
+      }
+    }
+
+  </style>
 </head>
 
 <body>
+  <header>
+    <h1>DRANGILS MORALES</h1>
+    <nav>
+      <a href="../../pagina_principal/pagina_principal.html">Inicio</a>
+      <a href="../../categorias_general/categoria.html">Categorías</a>
+      <a href="../../opciones/contactogeneral6.html">Contacto</a>
+      <a href="../../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
+    </nav>
+  </header>
 
-    <header>
-        <h1>Detalle del Producto</h1>
-    </header>
+  <main class="producto-detalle">
+    <img id="imgProducto" src="" alt="Producto">
 
-    <main class="product-container">
+    <div class="info-producto">
+      <h2 id="nombreProducto">Cargando...</h2>
+      <p><strong>Precio:</strong> Q<span id="precioProducto">--</span></p>
+      <p><strong>Descripción:</strong> <span id="descripcionProducto">--</span></p>
 
-        <div class="product-image">
-            <img id="productImage" src="" alt="Imagen del producto">
-        </div>
+      <!-- BLOQUE DE TALLAS (se oculta si NO hay) -->
+      <div id="bloqueTallas" style="display:none;">
+        <label for="talla">Talla disponible:</label>
+        <select id="talla"></select>
+      </div>
 
-        <div class="product-info">
+      <label for="cantidad">Cantidad:</label>
+      <input type="number" id="cantidad" value="1" min="1" />
 
-            <h2 id="productTitle"></h2>
+      <button onclick="agregarAlCarrito()">Agregar al carrito</button>
+    </div>
+  </main>
 
-            <p><strong>Precio:</strong> Q<span id="productPrice"></span></p>
+  <footer>
+    <p>© 2025 DRANGILS MORALES_APPS</p>
+  </footer>
 
-            <p><strong>Descripción:</strong> <span id="productDescription"></span></p>
+  <script>
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
-            <!-- ⭐⭐⭐ TALLAS (solo si el producto trae sizes) ⭐⭐⭐ -->
-            <div id="sizeContainer" style="display:none;">
-                <label for="sizes">Talla disponible:</label>
-                <select id="sizes"></select>
-            </div>
+    function actualizarContador() {
+      const contador = document.getElementById('contadorCarrito');
+      const total = carrito.reduce((acc, prod) => acc + (prod.cantidad || 1), 0);
+      contador.textContent = total;
+    }
 
-            <!-- Cantidad -->
-            <label for="quantity"><strong>Cantidad:</strong></label>
-            <input id="quantity" type="number" value="1" min="1">
+    // ========= CARGAR EL PRODUCTO DESDE JSON =========
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get("id");
 
-            <button id="addToCartBtn">Agregar al carrito</button>
+    fetch("https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/data/products.json")
+      .then(res => res.json())
+      .then(lista => {
+        const prod = lista.find(p => p.id === productId);
 
-        </div>
-
-    </main>
-
-    <footer>
-        <p>© 2025 DRANGILS MORALES_APPS</p>
-    </footer>
-
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const productId = urlParams.get("id");
-
-        const DATA_URL = "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/data/products.json";
-
-        async function loadProduct() {
-            try {
-                const res = await fetch(DATA_URL);
-                const products = await res.json();
-
-                const product = products.find(p => p.id === productId);
-
-                if (!product) {
-                    alert("Producto no encontrado");
-                    return;
-                }
-
-                // Rellenar datos
-                document.getElementById("productTitle").textContent = product.title;
-                document.getElementById("productPrice").textContent = product.price;
-                document.getElementById("productDescription").textContent = product.description;
-                document.getElementById("productImage").src = product.image;
-
-                // ⭐⭐⭐ Mostrar tallas si existen ⭐⭐⭐
-                if (product.sizes && product.sizes.length > 0) {
-                    const sizeContainer = document.getElementById("sizeContainer");
-                    const sizeSelect = document.getElementById("sizes");
-
-                    sizeContainer.style.display = "block";
-
-                    product.sizes.forEach(size => {
-                        let option = document.createElement("option");
-                        option.value = size;
-                        option.textContent = size;
-                        sizeSelect.appendChild(option);
-                    });
-                }
-
-                // Agregar al carrito
-                document.getElementById("addToCartBtn").addEventListener("click", () => {
-                    const qty = parseInt(document.getElementById("quantity").value);
-
-                    const cartItem = {
-                        id: product.id,
-                        title: product.title,
-                        price: product.price,
-                        image: product.image,
-                        quantity: qty,
-                        size: (product.sizes && product.sizes.length > 0) 
-                                ? document.getElementById("sizes").value 
-                                : null
-                    };
-
-                    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-                    cart.push(cartItem);
-                    localStorage.setItem("cart", JSON.stringify(cart));
-
-                    alert("Producto agregado al carrito");
-                });
-
-            } catch (error) {
-                console.error(error);
-                alert("Error al cargar producto");
-            }
+        if (!prod) {
+          alert("Producto no encontrado");
+          return;
         }
 
-        loadProduct();
-    </script>
+        document.getElementById("imgProducto").src = prod.image;
+        document.getElementById("nombreProducto").textContent = prod.title;
+        document.getElementById("precioProducto").textContent = prod.price;
+        document.getElementById("descripcionProducto").textContent = prod.description;
+
+        // === MOSTRAR TALLAS SI EXISTEN ===
+        if (prod.sizes && prod.sizes.length > 0) {
+          const select = document.getElementById("talla");
+          prod.sizes.forEach(t => {
+            const op = document.createElement("option");
+            op.textContent = t;
+            select.appendChild(op);
+          });
+
+          document.getElementById("bloqueTallas").style.display = "block";
+        }
+      });
+
+    // ========= AGREGAR AL CARRITO =========
+    function agregarAlCarrito() {
+      const nombre = document.getElementById("nombreProducto").textContent;
+      const precio = parseFloat(document.getElementById("precioProducto").textContent);
+      const cantidad = parseInt(document.getElementById("cantidad").value);
+      const talla = document.getElementById("talla") ? document.getElementById("talla").value : null;
+
+      if (cantidad < 1) return alert("Cantidad inválida");
+
+      let item = carrito.find(p => p.nombre === nombre && p.talla === talla);
+
+      if (item) {
+        item.cantidad += cantidad;
+      } else {
+        carrito.push({ nombre, precio, cantidad, talla });
+      }
+
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+      alert("Producto agregado correctamente");
+
+      actualizarContador();
+    }
+
+    actualizarContador();
+  </script>
 
 </body>
 </html>
