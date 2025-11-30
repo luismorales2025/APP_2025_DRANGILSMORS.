@@ -1,91 +1,166 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Categorías de Productos</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Categorías de Productos</title>
 
-<style>
+  <style>
     body {
-        margin: 0;
-        background: #0f1624;
-        color: white;
-        font-family: Arial, sans-serif;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('../../images/plata.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
     }
 
     header {
-        background: #1a2433;
-        padding: 15px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        box-shadow: 0 0 20px #00ffff55;
+      background-color: rgba(35, 47, 62, 0.9);
+      color: white;
+      padding: 1em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
     }
 
     header h1 {
-        color: #ffea00;
-        text-shadow: 0 0 10px yellow;
+      margin: 0;
+      color: #ffcc00;
+      font-size: 1.5em;
+      animation: flotar 2s ease-in-out infinite alternate;
+      text-shadow: 0 0 10px #ffcc00;
     }
 
+    @keyframes flotar {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-5px); }
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5em;
+      margin-top: 0.5em;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 0.5em 1em;
+      background-color: #ff007f;
+      border-radius: 8px;
+      font-size: 13px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: transform 0.2s, background-color 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #ff3399;
+      transform: scale(1.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 1.5em;
+      text-shadow: 0 0 8px #000;
+    }
+
+    /* Botones de categoría */
     .categoria-btn {
-        padding: 12px 20px;
-        margin: 10px;
-        border: none;
-        border-radius: 12px;
-        background: #ff007f;
-        color: white;
-        font-size: 18px;
-        cursor: pointer;
-        box-shadow: 0 0 10px #ff007f;
-        transition: .3s;
+      background: #ff007f;
+      color: white;
+      padding: 0.7em 1.4em;
+      border-radius: 12px;
+      margin: 10px;
+      font-size: 16px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: 0.3s;
     }
 
     .categoria-btn:hover {
-        transform: scale(1.1);
-        box-shadow: 0 0 20px #ff4da6;
+      transform: scale(1.1);
+      background: #ff3399;
     }
 
-    .contenedor {
-        width: 90%;
-        margin: auto;
-        padding-top: 40px;
-        text-align: center;
+    .contenedor-categorias {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 2em;
     }
-</style>
 
+    footer {
+      background-color: rgba(35, 47, 62, 0.9);
+      color: white;
+      padding: 2em;
+      font-size: 14px;
+      margin-top: 2em;
+      text-align: center;
+    }
+  </style>
 </head>
+
 <body>
 
 <header>
-    <h1>DRANGILS MORALES</h1>
+  <h1>DRANGILS MORALES</h1>
+  <nav>
+    <a href="../../index.html">Inicio</a>
+    <a href="../../contacto.html">Contacto</a>
+    <a href="../../carrito.html">Carrito (0)</a>
+  </nav>
 </header>
 
-<h2 style="text-align:center; margin-top:30px;">Categorías de Productos</h2>
+<h2>Categorías de Productos</h2>
 
-<div id="categoria-container" class="contenedor"></div>
+<div class="contenedor-categorias" id="categoria-container">
+  <!-- Aquí se generan automáticamente los botones -->
+</div>
+
+<footer>
+  © 2025 DRANGILS MORALES. Todos los derechos reservados.
+</footer>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
-    // 🔥 Ruta CORRECTA para Netlify
+    // RUTA CORRECTA DESDE ESTA CARPETA
     fetch("../../data/products.json")
         .then(res => res.json())
         .then(productos => {
 
-            // Obtener todas las categorías sin repetir
+            console.log("JSON cargado:", productos);
+
+            // Detectar categorías sin repetir
             const categorias = [...new Set(productos.map(p => p.categoria))];
+
+            console.log("Categorías:", categorias);
 
             const cont = document.getElementById("categoria-container");
 
+            if (categorias.length === 0) {
+                cont.innerHTML = "<p>No hay categorías registradas.</p>";
+                return;
+            }
+
+            // Crear botones
             cont.innerHTML = categorias.map(cat => `
                 <button class="categoria-btn"
-                    onclick="window.location.href='categoria.html?cat=${cat}'">
+                    onclick="window.location.href='categoria.html?cat=${encodeURIComponent(cat)}'">
                     ${cat}
                 </button>
             `).join("");
 
         })
-        .catch(err => console.error("Error:", err));
+        .catch(err => {
+            console.error("Error cargando JSON:", err);
+            document.getElementById("categoria-container").innerHTML =
+                "<p style='color:red;'>Error cargando categorías.</p>";
+        });
 
 });
 </script>
