@@ -4,9 +4,8 @@
   <meta charset="UTF-8" />
   <title>Categorías de Productos</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    /* TU MISMO CSS – NO SE TOCÓ NADA */
 
+  <style>
     body {
       font-family: 'Poppins', sans-serif;
       margin: 0;
@@ -141,8 +140,8 @@
     }
   </style>
 </head>
-<body>
 
+<body>
   <header>
     <h1>DRANGILS MORALES</h1>
     <nav>
@@ -154,31 +153,24 @@
 
   <h2>Categorías de Productos</h2>
 
-  <main class="contenedor" id="contenedorCategorias">
-    <!-- Aquí se generarán automáticas -->
-  </main>
+  <main class="contenedor" id="contenedorCategorias"></main>
 
   <footer>
-    <div class="footer-bottom">
-      © 2025 DRANGILS MORALES. Todos los derechos reservados.
-    </div>
+    <div class="footer-bottom">© 2025 DRANGILS MORALES. Todos los derechos reservados.</div>
   </footer>
 
 <script>
-  let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-
-  function actualizarContador() {
-    const contador = document.getElementById('contadorCarrito');
-    if (contador) {
-      const total = carrito.reduce((acc, p) => acc + (p.cantidad || 1), 0);
-      contador.textContent = total;
-    }
+let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+function actualizarContador() {
+  const contador = document.getElementById('contadorCarrito');
+  if (contador) {
+    const total = carrito.reduce((acc, p) => acc + (p.cantidad || 1), 0);
+    contador.textContent = total;
   }
-
-  actualizarContador();
+}
+actualizarContador();
 </script>
 
-<!-- 🔥 SCRIPT PARA GENERAR CATEGORÍAS AUTOMÁTICAMENTE -->
 <script>
 async function cargarCategorias() {
   const contenedor = document.getElementById("contenedorCategorias");
@@ -187,14 +179,12 @@ async function cargarCategorias() {
     const response = await fetch("../data/products.json");
     const productos = await response.json();
 
-    // obtener categorías sin repetir
     const categorias = [...new Set(productos.map(p => p.category))];
 
     categorias.forEach(cat => {
       const div = document.createElement("div");
       div.className = "categoria";
 
-      // ruta dinámica hacia /categorias_general/categorias/nombre.html
       const ruta = `../categorias_general/categorias/${cat}.html`;
 
       div.innerHTML = `
@@ -214,11 +204,8 @@ async function cargarCategorias() {
 cargarCategorias();
 </script>
 
-
-<!-- BLOQUEO DE HERRAMIENTAS (NO TOCADO) -->
 <script>
 document.addEventListener('contextmenu', e => e.preventDefault());
-
 document.onkeydown = function(e) {
   if (
     e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'c') ||
