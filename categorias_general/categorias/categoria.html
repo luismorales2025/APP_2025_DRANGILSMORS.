@@ -1,221 +1,174 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Categorías de Productos</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categoría de Productos</title>
 
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 0;
-      color: #333;
-      background: url('../imagenes/plata.jpeg') no-repeat center center fixed;
-      background-size: cover;
-    }
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0f1624;
+            color: white;
+        }
 
-    header {
-      background-color: #232f3e;
-      color: white;
-      padding: 1em;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-    }
+        header {
+            background: #1a2433;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 20px #00ffff55;
+        }
 
-    header h1 {
-      margin: 0;
-      font-size: 22px;
-      color: #ffcc00;
-      text-shadow: 0 0 10px #ffcc00;
-      animation: flotar 2s ease-in-out infinite alternate;
-    }
+        header h1 {
+            font-size: 26px;
+            font-weight: bold;
+            color: #ffea00;
+            text-shadow: 0 0 10px #ffd500;
+        }
 
-    @keyframes flotar {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-5px); }
-    }
+        nav button {
+            padding: 10px 18px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 20px;
+            background: #ff007f;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 0 15px #ff007f;
+        }
 
-    nav {
-      display: flex;
-      gap: 0.5em;
-      flex-wrap: wrap;
-    }
+        nav button:hover {
+            background: #ff4da6;
+            box-shadow: 0 0 25px #ff4da6;
+        }
 
-    nav a {
-      color: white;
-      text-decoration: none;
-      padding: 0.5em 1em;
-      background-color: #ff007f;
-      border-radius: 8px;
-      font-size: 13px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      transition: transform 0.2s, background-color 0.3s;
-    }
+        h2 {
+            text-align: center;
+            margin: 30px 0;
+            font-size: 28px;
+            text-shadow: 0 0 10px #00fff2;
+        }
 
-    nav a:hover {
-      background-color: #ff3399;
-      transform: scale(1.1);
-    }
+        /* Contenedor de productos */
+        .productos-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            width: 90%;
+            margin: auto;
+        }
 
-    h2 {
-      text-align: center;
-      margin: 1em 0 0.5em;
-      font-size: 24px;
-      color: #232f3e;
-    }
+        /* Tarjetas flotantes */
+        .product-card {
+            background: #1a2433;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px #00eaff77;
+            text-align: center;
+            transition: 0.3s;
+        }
 
-    .contenedor {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 1em;
-    }
+        .product-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px #00eaff;
+        }
 
-    .categoria {
-      width: 90%;
-      max-width: 600px;
-      margin: 1em 0;
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
-      animation: aparecer 0.6s ease forwards;
-      opacity: 0;
-    }
+        .product-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 0 10px #ffffff44;
+        }
 
-    @keyframes aparecer {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+        .product-card h3 {
+            margin-top: 12px;
+            font-size: 18px;
+            text-shadow: 0 0 8px #ff00c8;
+        }
 
-    .categoria:hover {
-      transform: scale(1.04);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-    }
-
-    .categoria a {
-      display: block;
-      text-align: center;
-      padding: 2em 0.5em;
-      text-decoration: none;
-      font-size: 25px;
-      font-weight: bold;
-      color: white;
-      background-size: cover;
-      background-position: center;
-      background-blend-mode: overlay;
-      background-color: rgb(255, 115, 0);
-      transition: background-color 0.4s, color 0.3s;
-    }
-
-    .categoria a:hover {
-      background-color: rgba(255, 51, 51, 0.6);
-      color: #ffffff;
-    }
-
-    footer {
-      background-color: #232f3e;
-      color: white;
-      text-align: center;
-      padding: 1.5em 1em;
-      font-size: 14px;
-      margin-top: auto;
-    }
-
-    .footer-bottom {
-      margin-top: 1em;
-      font-size: 13px;
-      color: #ccc;
-    }
-
-    @media screen and (max-width: 600px) {
-      .categoria a {
-        font-size: 18px;
-        padding: 2.5em 1em;
-      }
-    }
-  </style>
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            background: #1a2433;
+            text-align: center;
+            font-size: 14px;
+            color: #bbb;
+            box-shadow: 0 0 15px #00eeff33;
+        }
+    </style>
 </head>
-
 <body>
-  <header>
-    <h1>DRANGILS MORALES</h1>
-    <nav>
-      <a href="../pagina_principal/pagina_principal.html">Inicio</a>
-      <a href="../opciones/contactogeneral2.html">Contacto</a>
-      <a href="../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
-    </nav>
-  </header>
 
-  <h2>Categorías de Productos</h2>
+    <header>
+        <h1>DRANGILS MORALES</h1>
 
-  <main class="contenedor" id="contenedorCategorias"></main>
+        <nav>
+            <button onclick="window.location.href='../../index.html'">Inicio</button>
+            <button onclick="window.location.href='../../contacto.html'">Contacto</button>
+            <button onclick="window.location.href='../../carrito.html'">Carrito</button>
+        </nav>
+    </header>
 
-  <footer>
-    <div class="footer-bottom">© 2025 DRANGILS MORALES. Todos los derechos reservados.</div>
-  </footer>
+    <h2 id="titulo-categoria">Categoría</h2>
 
-<script>
-let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-function actualizarContador() {
-  const contador = document.getElementById('contadorCarrito');
-  if (contador) {
-    const total = carrito.reduce((acc, p) => acc + (p.cantidad || 1), 0);
-    contador.textContent = total;
-  }
-}
-actualizarContador();
-</script>
+    <div id="categorias-container" class="productos-container"></div>
+
+    <footer>
+        © 2025 DRANGILS MORALES. Todos los derechos reservados.
+    </footer>
 
 <script>
-async function cargarCategorias() {
-  const contenedor = document.getElementById("contenedorCategorias");
+document.addEventListener("DOMContentLoaded", () => {
 
-  try {
-    const response = await fetch("../data/products.json");
-    const productos = await response.json();
+    const params = new URLSearchParams(window.location.search);
+    const categoria = params.get("cat");
 
-    const categorias = [...new Set(productos.map(p => p.category))];
+    document.getElementById("titulo-categoria").textContent =
+        categoria ? categoria.toUpperCase() : "Categoría";
 
-    categorias.forEach(cat => {
-      const div = document.createElement("div");
-      div.className = "categoria";
+    if (!categoria) {
+        document.getElementById("categorias-container").innerHTML =
+            "<p style='grid-column: 1/-1; text-align:center;'>No se especificó ninguna categoría.</p>";
+        return;
+    }
 
-      const ruta = `../categorias_general/categorias/${cat}.html`;
+    // 🔥 Ruta correcta en Netlify desde /categorias_general/categorias/
+    fetch("../../data/products.json")
+        .then(res => res.json())
+        .then(productos => {
 
-      div.innerHTML = `
-        <a href="${ruta}">
-          ${cat.toUpperCase()}
-        </a>
-      `;
+            const filtrados = productos.filter(
+                p => p.categoria.toLowerCase() === categoria.toLowerCase()
+            );
 
-      contenedor.appendChild(div);
-    });
+            const contenedor = document.getElementById("categorias-container");
 
-  } catch (error) {
-    console.log("Error cargando categorías:", error);
-  }
-}
+            if (filtrados.length === 0) {
+                contenedor.innerHTML =
+                    `<p style='grid-column:1/-1; text-align:center;'>No hay productos en la categoría <b>${categoria}</b>.</p>`;
+                return;
+            }
 
-cargarCategorias();
-</script>
+            contenedor.innerHTML = filtrados.map(p => `
+                <div class="product-card">
+                    <img src="${p.imagen}" alt="${p.nombre}">
+                    <h3>${p.nombre}</h3>
+                </div>
+            `).join("");
 
-<script>
-document.addEventListener('contextmenu', e => e.preventDefault());
-document.onkeydown = function(e) {
-  if (
-    e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'c') ||
-    (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-    e.key === 'F12'
-  ) {
-    e.preventDefault();
-    return false;
-  }
-};
+        })
+        .catch(err => {
+            console.error("Error al cargar JSON:", err);
+        });
+
+});
 </script>
 
 </body>
