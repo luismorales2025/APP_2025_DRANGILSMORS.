@@ -1,172 +1,91 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Categoría de Productos</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Categorías de Productos</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #0f1624;
-            color: white;
-        }
+<style>
+    body {
+        margin: 0;
+        background: #0f1624;
+        color: white;
+        font-family: Arial, sans-serif;
+    }
 
-        header {
-            background: #1a2433;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 0 20px #00ffff55;
-        }
+    header {
+        background: #1a2433;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 0 20px #00ffff55;
+    }
 
-        header h1 {
-            font-size: 26px;
-            font-weight: bold;
-            color: #ffea00;
-            text-shadow: 0 0 10px #ffd500;
-        }
+    header h1 {
+        color: #ffea00;
+        text-shadow: 0 0 10px yellow;
+    }
 
-        nav button {
-            padding: 10px 18px;
-            margin-left: 10px;
-            border: none;
-            border-radius: 20px;
-            background: #ff007f;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 0 15px #ff007f;
-        }
+    .categoria-btn {
+        padding: 12px 20px;
+        margin: 10px;
+        border: none;
+        border-radius: 12px;
+        background: #ff007f;
+        color: white;
+        font-size: 18px;
+        cursor: pointer;
+        box-shadow: 0 0 10px #ff007f;
+        transition: .3s;
+    }
 
-        nav button:hover {
-            background: #ff4da6;
-            box-shadow: 0 0 25px #ff4da6;
-        }
+    .categoria-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 20px #ff4da6;
+    }
 
-        h2 {
-            text-align: center;
-            margin: 30px 0;
-            font-size: 28px;
-            text-shadow: 0 0 10px #00fff2;
-        }
+    .contenedor {
+        width: 90%;
+        margin: auto;
+        padding-top: 40px;
+        text-align: center;
+    }
+</style>
 
-        /* Contenedor de productos */
-        .productos-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-            gap: 20px;
-            padding: 20px;
-            width: 90%;
-            margin: auto;
-        }
-
-        /* Tarjetas flotantes */
-        .product-card {
-            background: #1a2433;
-            padding: 15px;
-            border-radius: 15px;
-            box-shadow: 0 0 15px #00eaff77;
-            text-align: center;
-            transition: 0.3s;
-        }
-
-        .product-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px #00eaff;
-        }
-
-        .product-card img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 12px;
-            box-shadow: 0 0 10px #ffffff44;
-        }
-
-        .product-card h3 {
-            margin-top: 12px;
-            font-size: 18px;
-            text-shadow: 0 0 8px #ff00c8;
-        }
-
-        footer {
-            margin-top: 50px;
-            padding: 20px;
-            background: #1a2433;
-            text-align: center;
-            font-size: 14px;
-            color: #bbb;
-            box-shadow: 0 0 15px #00eeff33;
-        }
-    </style>
 </head>
 <body>
 
-    <header>
-        <h1>DRANGILS MORALES</h1>
+<header>
+    <h1>DRANGILS MORALES</h1>
+</header>
 
-        <nav>
-            <button onclick="window.location.href='../../index.html'">Inicio</button>
-            <button onclick="window.location.href='../../contacto.html'">Contacto</button>
-            <button onclick="window.location.href='../../carrito.html'">Carrito</button>
-        </nav>
-    </header>
+<h2 style="text-align:center; margin-top:30px;">Categorías de Productos</h2>
 
-    <h2 id="titulo-categoria">Categoría</h2>
-
-    <div id="categorias-container" class="productos-container"></div>
-
-    <footer>
-        © 2025 DRANGILS MORALES. Todos los derechos reservados.
-    </footer>
+<div id="categoria-container" class="contenedor"></div>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
-    const params = new URLSearchParams(window.location.search);
-    const categoria = params.get("cat");
-
-    document.getElementById("titulo-categoria").textContent =
-        categoria ? categoria.toUpperCase() : "Categoría";
-
-    if (!categoria) {
-        document.getElementById("categorias-container").innerHTML =
-            "<p style='grid-column: 1/-1; text-align:center;'>No se especificó ninguna categoría.</p>";
-        return;
-    }
-
-    // 🔥 Ruta correcta en Netlify desde /categorias_general/categorias/
+    // 🔥 Ruta CORRECTA para Netlify
     fetch("../../data/products.json")
         .then(res => res.json())
         .then(productos => {
 
-            const filtrados = productos.filter(
-                p => p.categoria.toLowerCase() === categoria.toLowerCase()
-            );
+            // Obtener todas las categorías sin repetir
+            const categorias = [...new Set(productos.map(p => p.categoria))];
 
-            const contenedor = document.getElementById("categorias-container");
+            const cont = document.getElementById("categoria-container");
 
-            if (filtrados.length === 0) {
-                contenedor.innerHTML =
-                    `<p style='grid-column:1/-1; text-align:center;'>No hay productos en la categoría <b>${categoria}</b>.</p>`;
-                return;
-            }
-
-            contenedor.innerHTML = filtrados.map(p => `
-                <div class="product-card">
-                    <img src="${p.imagen}" alt="${p.nombre}">
-                    <h3>${p.nombre}</h3>
-                </div>
+            cont.innerHTML = categorias.map(cat => `
+                <button class="categoria-btn"
+                    onclick="window.location.href='categoria.html?cat=${cat}'">
+                    ${cat}
+                </button>
             `).join("");
 
         })
-        .catch(err => {
-            console.error("Error al cargar JSON:", err);
-        });
+        .catch(err => console.error("Error:", err));
 
 });
 </script>
