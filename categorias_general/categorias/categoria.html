@@ -135,8 +135,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             console.log("JSON cargado:", productos);
 
-            // Detectar categorías sin repetir
-            const categorias = [...new Set(productos.map(p => p.categoria))];
+            // Detectar categorías usando "category"
+            const categorias = [...new Set(productos.map(p => p.category))];
 
             console.log("Categorías:", categorias);
 
@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            // Crear botones
+            // Crear botones automáticamente
             cont.innerHTML = categorias.map(cat => `
                 <button class="categoria-btn"
                     onclick="window.location.href='categoria.html?cat=${encodeURIComponent(cat)}'">
