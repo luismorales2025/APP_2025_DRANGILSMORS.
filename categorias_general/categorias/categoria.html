@@ -37,9 +37,9 @@
       text-shadow: 0 0 10px #ffcc00;
     }
 
-    @keyframes flotar { 
-      0% { transform: translateY(0); } 
-      100% { transform: translateY(-6px); } 
+    @keyframes flotar {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-6px); }
     }
 
     nav a {
@@ -66,7 +66,7 @@
       font-size: 1.8em;
     }
 
-    /* BOTONES RESPONSIVOS */
+    /* BOTONES DE CATEGORÍAS */
     .categoria-btn {
       background: #ff007f;
       color: white;
@@ -94,14 +94,43 @@
       padding-bottom: 20px;
     }
 
-    /* GRID DE PRODUCTOS */
+    /* GRID DE PRODUCTOS RESPONSIVE EXACTO */
     #productos-lista {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 1.3em;
       padding: 1.5em;
       width: 100%;
-      margin-bottom: 100px;
+      margin-bottom: 120px;
+    }
+
+    /* 6 por fila */
+    @media (min-width: 1400px) {
+      #productos-lista { grid-template-columns: repeat(6, 1fr); }
+    }
+
+    /* 5 por fila */
+    @media (min-width: 1200px) and (max-width: 1399px) {
+      #productos-lista { grid-template-columns: repeat(5, 1fr); }
+    }
+
+    /* 4 por fila */
+    @media (min-width: 900px) and (max-width: 1199px) {
+      #productos-lista { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    /* 3 por fila */
+    @media (min-width: 700px) and (max-width: 899px) {
+      #productos-lista { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* 2 por fila */
+    @media (min-width: 500px) and (max-width: 699px) {
+      #productos-lista { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* 1 por fila */
+    @media (max-width: 499px) {
+      #productos-lista { grid-template-columns: repeat(1, 1fr); }
     }
 
     .producto {
@@ -142,15 +171,14 @@
       transform: scale(1.05);
     }
 
+    /* FOOTER PEGADO AL FINAL */
     footer {
       background-color: rgba(35, 47, 62, 0.9);
       color: white;
       padding: 1em;
       text-align: center;
-      margin-top: auto;
       width: 100%;
-      position: sticky;
-      bottom: 0;
+      margin-top: auto;
     }
   </style>
 </head>
@@ -179,7 +207,7 @@
 </footer>
 
 <script>
-const URL_JSON = 
+const URL_JSON =
  "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/data/products.json";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -191,7 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const categorias = [...new Set(productos.map(p => p.category))];
 
       const cont = document.getElementById("categoria-container");
-      cont.innerHTML = categorias.map(cat => 
+      cont.innerHTML = categorias.map(cat =>
         `<button class="categoria-btn" onclick="mostrarProductos('${cat}')">${cat}</button>`
       ).join("");
 
@@ -202,7 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-/* MOSTRAR PRODUCTOS FILTRADOS POR CATEGORÍA */
+/* MOSTRAR PRODUCTOS FILTRADOS */
 function mostrarProductos(cat) {
   const titulo = document.getElementById("titulo-cat");
   const lista = document.getElementById("productos-lista");
