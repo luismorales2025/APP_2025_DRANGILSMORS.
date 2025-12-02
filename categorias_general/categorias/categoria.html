@@ -8,6 +8,9 @@
   <style>
     body {
       margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
       font-family: Arial, sans-serif;
       background: url('../../images/plata.jpeg') no-repeat center center fixed;
       background-size: cover;
@@ -54,7 +57,6 @@
       box-shadow: 0 4px 8px rgba(0,0,0,0.3);
       transition: transform 0.2s, background-color 0.3s;
     }
-
     nav a:hover {
       background-color: #ff3399;
       transform: scale(1.1);
@@ -66,14 +68,14 @@
       text-shadow: 0 0 8px #000;
     }
 
-    /* Botones de categoría */
+    /* Botones responsivos tamaño grande */
     .categoria-btn {
       background: #ff007f;
       color: white;
-      padding: 0.7em 1.4em;
-      border-radius: 12px;
+      padding: 1em 2em;
+      border-radius: 16px;
       margin: 10px;
-      font-size: 16px;
+      font-size: clamp(14px, 3vw, 20px);
       border: none;
       font-weight: bold;
       cursor: pointer;
@@ -90,15 +92,48 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      margin-top: 2em;
+      margin: 1.5em;
+    }
+
+    /* Contenedor de productos */
+    #productos-lista {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1em;
+      padding: 2em;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .producto {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 1em;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      color: black;
+    }
+
+    .producto:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    .producto img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 0.5em;
     }
 
     footer {
       background-color: rgba(35, 47, 62, 0.9);
       color: white;
-      padding: 2em;
+      padding: 1em;
       font-size: 14px;
-      margin-top: 2em;
+      margin-top: auto;
       text-align: center;
     }
   </style>
@@ -118,51 +153,55 @@
 <h2>Categorías de Productos</h2>
 
 <div class="contenedor-categorias" id="categoria-container">
-  <!-- Aquí se generan automáticamente los botones -->
+  <!-- Botones de categorías -->
 </div>
 
+<h2 id="titulo-cat" style="display:none;">Productos</h2>
+
+<div id="productos-lista"></div>
+
 <footer>
-  © 2025 DRANGILS MORALES. Todos los derechos reservados.
+  © 2025 DRANGILS MORALES — Todos los derechos reservados.
 </footer>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
-    // RUTA CORRECTA DESDE ESTA CARPETA
     fetch("../../data/products.json")
         .then(res => res.json())
         .then(productos => {
 
-            console.log("JSON cargado:", productos);
-
-            // Detectar categorías usando "category"
+            // Extraer categorías
             const categorias = [...new Set(productos.map(p => p.category))];
-
-            console.log("Categorías:", categorias);
 
             const cont = document.getElementById("categoria-container");
 
-            if (categorias.length === 0) {
-                cont.innerHTML = "<p>No hay categorías registradas.</p>";
-                return;
-            }
-
-            // Crear botones automáticamente
             cont.innerHTML = categorias.map(cat => `
-                <button class="categoria-btn"
-                    onclick="window.location.href='categoria.html?cat=${encodeURIComponent(cat)}'">
-                    ${cat}
-                </button>
+                <button class="categoria-btn" onclick="mostrarProductos('${cat}')">${cat}</button>
             `).join("");
 
-        })
-        .catch(err => {
-            console.error("Error cargando JSON:", err);
-            document.getElementById("categoria-container").innerHTML =
-                "<p style='color:red;'>Error cargando categorías.</p>";
+            window.todosProductos = productos; // guardar global
         });
-
 });
+
+// Mostrar productos filtrados sin cambiar de página
+function mostrarProductos(cat) {
+    const lista = document.getElementById("productos-lista");
+    const titulo = document.getElementById("titulo-cat");
+
+    titulo.style.display = "block";
+    titulo.innerText = "Categoría: " + cat;
+
+    const filtrados = window.todosProductos.filter(p => p.category === cat);
+
+    lista.innerHTML = filtrados.map(p => `
+        <div class="producto">
+          <img src="${p.image}">
+          <h3>${p.title}</h3>
+          <p>${p.price} Q</p>
+        </div>
+    `).join("");
+}
 </script>
 
 </body>
