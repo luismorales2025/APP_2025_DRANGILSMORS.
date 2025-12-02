@@ -15,6 +15,7 @@
       background: url('../../images/plata.jpeg') no-repeat center center fixed;
       background-size: cover;
       color: #fff;
+      overflow-x: hidden;
     }
 
     header {
@@ -25,17 +26,21 @@
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
+      width: 100%;
     }
 
     header h1 {
       margin: 0;
       color: #ffcc00;
-      font-size: 1.6em;
+      font-size: 1.8em;
       animation: flotar 2s ease-in-out infinite alternate;
       text-shadow: 0 0 10px #ffcc00;
     }
 
-    @keyframes flotar { 0%{transform:translateY(0);} 100%{transform:translateY(-5px);} }
+    @keyframes flotar { 
+      0% { transform: translateY(0); } 
+      100% { transform: translateY(-6px); } 
+    }
 
     nav a {
       color: #fff;
@@ -46,11 +51,20 @@
       margin-left: 8px;
       font-size: 14px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      transition: transform 0.2s, background-color 0.3s;
+      transition: transform 0.3s, background-color 0.3s;
     }
-    nav a:hover { background-color:#ff3399; transform:scale(1.1); }
 
-    h2 { text-align:center; margin-top:20px; text-shadow:0 0 8px #000; }
+    nav a:hover {
+      background-color: #ff3399;
+      transform: scale(1.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 20px;
+      text-shadow: 0 0 8px #000;
+      font-size: 1.8em;
+    }
 
     /* BOTONES RESPONSIVOS */
     .categoria-btn {
@@ -66,23 +80,28 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       transition: 0.3s;
     }
-    .categoria-btn:hover { transform: scale(1.1); background:#ff3399; }
+
+    .categoria-btn:hover {
+      transform: scale(1.1);
+      background: #ff3399;
+    }
 
     .contenedor-categorias {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       margin: 1.5em;
-      padding-bottom: 10px;
+      padding-bottom: 20px;
     }
 
     /* GRID DE PRODUCTOS */
     #productos-lista {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 1em;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.3em;
       padding: 1.5em;
       width: 100%;
+      margin-bottom: 100px;
     }
 
     .producto {
@@ -95,7 +114,9 @@
       transition: 0.3s;
     }
 
-    .producto:hover { transform:translateY(-8px) scale(1.03); }
+    .producto:hover {
+      transform: translateY(-8px) scale(1.03);
+    }
 
     .producto img {
       width: 100%;
@@ -105,24 +126,31 @@
     }
 
     .boton-descripcion {
-      display:block;
-      margin-top:10px;
-      padding:0.6em;
-      background:#ff5722;
-      border-radius:8px;
-      color:white;
-      font-weight:bold;
-      text-decoration:none;
-      transition:0.3s;
+      display: block;
+      margin-top: 10px;
+      padding: 0.6em;
+      background: #ff5722;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      transition: 0.3s;
     }
-    .boton-descripcion:hover { background:#ff7043; transform:scale(1.05); }
+
+    .boton-descripcion:hover {
+      background: #ff7043;
+      transform: scale(1.05);
+    }
 
     footer {
       background-color: rgba(35, 47, 62, 0.9);
-      color:white;
-      padding:1em;
-      text-align:center;
-      margin-top:auto;
+      color: white;
+      padding: 1em;
+      text-align: center;
+      margin-top: auto;
+      width: 100%;
+      position: sticky;
+      bottom: 0;
     }
   </style>
 </head>
@@ -151,27 +179,30 @@
 </footer>
 
 <script>
-const URL_JSON =
+const URL_JSON = 
  "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/data/products.json";
 
 document.addEventListener("DOMContentLoaded", () => {
   fetch(URL_JSON)
-  .then(r => r.json())
-  .then(productos => {
+    .then(res => res.json())
+    .then(productos => {
 
       // obtener categorias únicas
       const categorias = [...new Set(productos.map(p => p.category))];
 
       const cont = document.getElementById("categoria-container");
       cont.innerHTML = categorias.map(cat => 
-          `<button class="categoria-btn" onclick="mostrarProductos('${cat}')">${cat}</button>`
+        `<button class="categoria-btn" onclick="mostrarProductos('${cat}')">${cat}</button>`
       ).join("");
 
       window.todosProductos = productos;
-  });
+    })
+    .catch(() => {
+      alert("Error cargando datos desde GitHub.");
+    });
 });
 
-/* MOSTRAR PRODUCTOS FILTRADOS */
+/* MOSTRAR PRODUCTOS FILTRADOS POR CATEGORÍA */
 function mostrarProductos(cat) {
   const titulo = document.getElementById("titulo-cat");
   const lista = document.getElementById("productos-lista");
