@@ -4,9 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Detalle del Producto</title>
-
   <style>
-    /* ———— TU CSS ORIGINAL SIN CAMBIOS ———— */
     body {
       font-family: 'Poppins', sans-serif;
       margin: 0;
@@ -188,9 +186,7 @@
     }
   </style>
 </head>
-
 <body>
-
   <header>
     <h1>DRANGILS MORALES</h1>
     <nav>
@@ -201,8 +197,27 @@
     </nav>
   </header>
 
-  <main id="contenido" class="producto-detalle">
-      <!-- Aquí se cargará dinámicamente -->
+  <main class="producto-detalle">
+    <img id="imagenProducto" src="../../imagenes/calzado1.jpg" alt="Imagen del producto">
+    <div class="info-producto">
+      <h2 id="nombreProducto">Producto</h2>
+      <p><strong>Precio:</strong> Q<span id="precioProducto">0.00</span></p>
+      <p><strong>Descripción:</strong> <span id="descripcionProducto">Descripción aquí...</span></p>
+
+      <label for="talla">Talla disponible:</label>
+      <select id="talla">
+        <option>35</option>
+        <option>36</option>
+        <option>37</option>
+        <option>38</option>
+        <option>39</option>
+      </select>
+
+      <label for="cantidad">Cantidad:</label>
+      <input type="number" id="cantidad" value="1" min="1" />
+
+      <button onclick="agregarAlCarrito()">Agregar al carrito</button>
+    </div>
   </main>
 
   <footer>
@@ -212,9 +227,15 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script>
+    // Cargar datos dinámicos desde localStorage
+    const producto = JSON.parse(localStorage.getItem("productoSeleccionado"));
 
-    const URL_JSON =
-      "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/data/products.json";
+    if (producto) {
+      document.getElementById("imagenProducto").src = producto.image;
+      document.getElementById("nombreProducto").textContent = producto.title;
+      document.getElementById("precioProducto").textContent = producto.price;
+      document.getElementById("descripcionProducto").textContent = producto.description;
+    }
 
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
@@ -224,55 +245,32 @@
       contador.textContent = total;
     }
 
-    async function cargarProducto() {
-      const params = new URLSearchParams(window.location.search);
-      const id = params.get("id");
-
-      const resp = await fetch(URL_JSON);
-      const productos = await resp.json();
-      const producto = productos.find(p => p.id === id);
-
-      if (!producto) {
-        document.getElementById("contenido").innerHTML = "<h2>Producto no encontrado</h2>";
-        return;
-      }
-
-      document.getElementById("contenido").innerHTML = `
-        <img src="${producto.image}" alt="${producto.title}">
-        <div class="info-producto">
-          <h2>${producto.title}</h2>
-          <p><strong>Precio:</strong> Q${producto.price}</p>
-          <p><strong>Descripción:</strong> ${producto.description}</p>
-
-          <label for="talla">Talla disponible:</label>
-          <select id="talla">
-            <option>35</option>
-            <option>36</option>
-            <option>37</option>
-            <option>38</option>
-            <option>39</option>
-          </select>
-
-          <label for="cantidad">Cantidad:</label>
-          <input type="number" id="cantidad" value="1" min="1">
-
-          <button onclick="agregarAlCarrito('${producto.title}', ${producto.price})">
-            Agregar al carrito
-          </button>
-        </div>
-      `;
-    }
-
-    function agregarAlCarrito(nombre, precio) {
+    function agregarAlCarrito() {
       const cantidad = parseInt(document.getElementById('cantidad').value);
       const talla = document.getElementById('talla').value;
 
-      let existente = carrito.find(p => p.nombre === nombre && p.talla === talla);
+      if (!producto) return;
+
+      if (isNaN(cantidad) || cantidad < 1) {
+        Swal.fire('Cantidad inválida', '', 'error');
+        return;
+      }
+
+      let existente = carrito.find(
+        p => p.id === producto.id && p.talla === talla
+      );
 
       if (existente) {
         existente.cantidad += cantidad;
       } else {
-        carrito.push({ nombre, precio, cantidad, talla });
+        carrito.push({
+          id: producto.id,
+          nombre: producto.title,
+          precio: Number(producto.price),
+          cantidad,
+          talla,
+          imagen: producto.image
+        });
       }
 
       localStorage.setItem('carrito', JSON.stringify(carrito));
@@ -280,14 +278,39 @@
 
       Swal.fire({
         title: 'Producto agregado',
-        text: `${cantidad} ${nombre} Talla ${talla} agregado al carrito`,
-        icon: 'success'
+        text: `${cantidad} ${producto.title} Talla ${talla} agregado al carrito`,
+        icon: 'success',
+        showCancelButton: true,
+        confirmButtonText: 'Ver carrito',
+        cancelButtonText: 'Seguir comprando',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = '../../opciones/vercarrito.html';
+        }
       });
     }
 
-    cargarProducto();
     actualizarContador();
+  </script>
 
+  <script>
+    // Bloquear clic derecho
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+    });
+
+    // Bloquear teclas
+    document.onkeydown = function(e) {
+      if (
+        e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'c') ||
+        (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+        e.key === 'F12'
+      ) {
+        e.preventDefault();
+        return false;
+      }
+    };
   </script>
 
 </body>
