@@ -6,6 +6,7 @@
   <title>Detalle del Producto</title>
 
   <style>
+    /* ———— TU CSS ORIGINAL SIN CAMBIOS ———— */
     body {
       font-family: 'Poppins', sans-serif;
       margin: 0;
@@ -100,6 +101,45 @@
       margin-bottom: 10px;
     }
 
+    .info-producto p {
+      font-size: 20px;
+      line-height: 2;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .info-producto label {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .info-producto select,
+    .info-producto input[type="number"] {
+      padding: 0.5em;
+      margin: 0.5em 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      width: 100%;
+    }
+
+    .info-producto button {
+      background-color: #ff5722;
+      border: none;
+      padding: 0.7em;
+      border-radius: 10px;
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+      width: 100%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .info-producto button:hover {
+      background-color: #ff7043;
+      transform: scale(1.05);
+    }
+
     footer {
       background-color: #232f3e;
       color: white;
@@ -117,11 +157,36 @@
       0% { transform: translateY(0); }
       100% { transform: translateY(-5px); }
     }
+
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      nav a {
+        width: 90%;
+        margin: 2px 0;
+        font-size: 13px;
+        text-align: center;
+        padding: 0.6em;
+      }
+
+      header h1 {
+        font-size: 1.2em;
+      }
+
+      .info-producto {
+        width: 90%;
+        padding: 1em;
+      }
+
+      .producto-detalle img {
+        max-width: 90%;
+        height: auto;
+      }
+    }
   </style>
-
-  <!-- SweetAlert -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 </head>
 
 <body>
@@ -136,114 +201,94 @@
     </nav>
   </header>
 
-  <main class="producto-detalle">
-    <img id="imgProducto" src="" alt="Producto">
-
-    <div class="info-producto">
-      <h2 id="nombreProducto">Cargando...</h2>
-      <p><strong>Precio:</strong> Q<span id="precioProducto">--</span></p>
-      <p><strong>Descripción:</strong> <span id="descripcionProducto">--</span></p>
-
-      <!-- Tallas -->
-      <div id="bloqueTallas" style="display:none;">
-        <label for="talla">Talla disponible:</label>
-        <select id="talla"></select>
-      </div>
-
-      <label for="cantidad">Cantidad:</label>
-      <input type="number" id="cantidad" value="1" min="1" />
-
-      <button onclick="agregarAlCarrito()">Agregar al carrito</button>
-    </div>
+  <main id="contenido" class="producto-detalle">
+      <!-- Aquí se cargará dinámicamente -->
   </main>
 
   <footer>
     <p>© 2025 DRANGILS MORALES_APPS</p>
   </footer>
 
-<script>
-  let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  function actualizarContador() {
-    const contador = document.getElementById('contadorCarrito');
-    const total = carrito.reduce((acc, prod) => acc + (prod.cantidad || 1), 0);
-    contador.textContent = total;
-  }
+  <script>
 
-  const params = new URLSearchParams(window.location.search);
-  const productId = params.get("id");
-  let productoActual = null;
+    const URL_JSON =
+      "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/data/products.json";
 
-  // Cargar producto desde products.json
-  fetch("https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/data/products.json")
-    .then(res => res.json())
-    .then(lista => {
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
-      const prod = lista.find(p => p.id === productId);
-      if (!prod) {
-        Swal.fire("Error", "Producto no encontrado", "error");
+    function actualizarContador() {
+      const contador = document.getElementById('contadorCarrito');
+      const total = carrito.reduce((acc, prod) => acc + (prod.cantidad || 1), 0);
+      contador.textContent = total;
+    }
+
+    async function cargarProducto() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+
+      const resp = await fetch(URL_JSON);
+      const productos = await resp.json();
+      const producto = productos.find(p => p.id === id);
+
+      if (!producto) {
+        document.getElementById("contenido").innerHTML = "<h2>Producto no encontrado</h2>";
         return;
       }
 
-      productoActual = prod;
+      document.getElementById("contenido").innerHTML = `
+        <img src="${producto.image}" alt="${producto.title}">
+        <div class="info-producto">
+          <h2>${producto.title}</h2>
+          <p><strong>Precio:</strong> Q${producto.price}</p>
+          <p><strong>Descripción:</strong> ${producto.description}</p>
 
-      document.getElementById("imgProducto").src = prod.image;
-      document.getElementById("nombreProducto").textContent = prod.title;
-      document.getElementById("precioProducto").textContent = prod.price;
-      document.getElementById("descripcionProducto").textContent = prod.description;
+          <label for="talla">Talla disponible:</label>
+          <select id="talla">
+            <option>35</option>
+            <option>36</option>
+            <option>37</option>
+            <option>38</option>
+            <option>39</option>
+          </select>
 
-      if (prod.sizes && prod.sizes.length > 0) {
-        const select = document.getElementById("talla");
-        prod.sizes.forEach(t => {
-          let op = document.createElement("option");
-          op.textContent = t;
-          select.appendChild(op);
-        });
-        document.getElementById("bloqueTallas").style.display = "block";
+          <label for="cantidad">Cantidad:</label>
+          <input type="number" id="cantidad" value="1" min="1">
+
+          <button onclick="agregarAlCarrito('${producto.title}', ${producto.price})">
+            Agregar al carrito
+          </button>
+        </div>
+      `;
+    }
+
+    function agregarAlCarrito(nombre, precio) {
+      const cantidad = parseInt(document.getElementById('cantidad').value);
+      const talla = document.getElementById('talla').value;
+
+      let existente = carrito.find(p => p.nombre === nombre && p.talla === talla);
+
+      if (existente) {
+        existente.cantidad += cantidad;
+      } else {
+        carrito.push({ nombre, precio, cantidad, talla });
       }
 
-    });
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+      actualizarContador();
 
-  function agregarAlCarrito() {
-    if (!productoActual) return;
-
-    const cantidad = parseInt(document.getElementById('cantidad').value);
-    const talla = document.getElementById("talla") ? document.getElementById('talla').value : "-";
-    const nombre = productoActual.title;
-    const precio = parseFloat(productoActual.price);
-
-    if (isNaN(cantidad) || cantidad < 1) {
-      Swal.fire("Cantidad inválida", "", "error");
-      return;
+      Swal.fire({
+        title: 'Producto agregado',
+        text: `${cantidad} ${nombre} Talla ${talla} agregado al carrito`,
+        icon: 'success'
+      });
     }
 
-    let item = carrito.find(p => p.nombre === nombre && p.talla === talla);
-
-    if (item) {
-      item.cantidad += cantidad;
-    } else {
-      carrito.push({ nombre, precio, cantidad, talla });
-    }
-
-    localStorage.setItem("carrito", JSON.stringify(carrito));
+    cargarProducto();
     actualizarContador();
 
-    Swal.fire({
-      title: 'Producto agregado',
-      text: `${cantidad} ${nombre} Talla ${talla} fue agregado al carrito`,
-      icon: 'success',
-      showCancelButton: true,
-      confirmButtonText: 'Ver carrito',
-      cancelButtonText: 'Seguir comprando'
-    }).then(res => {
-      if (res.isConfirmed) {
-        window.location.href = '../../opciones/vercarrito.html';
-      }
-    });
-  }
-
-  actualizarContador();
-</script>
+  </script>
 
 </body>
 </html>
