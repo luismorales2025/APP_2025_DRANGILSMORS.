@@ -4,15 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Detalle del Producto</title>
+
   <style>
-    /* === TU CSS ORIGINAL SIN TOCAR NADA === */
+    /* === CSS AJUSTADO PARA QUE SE MIRE EXACTAMENTE COMO EN TU FOTO === */
 
     body {
       font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 0;
       color: #333;
-      background: url('../../images/plata.jpeg') no-repeat center center fixed;
+      background: url('../../imagenes/plata.jpeg') no-repeat center center fixed;
       background-size: cover;
     }
 
@@ -29,7 +30,7 @@
     header h1 {
       margin: 0;
       color: #ffcc00;
-      font-size: 1.5em;
+      font-size: 1.8em;
       animation: flotar 2s ease-in-out infinite alternate;
       text-shadow: 0 0 10px #ffcc00;
       flex: 1 1 100%;
@@ -40,7 +41,7 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 4px;
+      gap: 8px;
       width: 100%;
       margin-top: 0.5em;
     }
@@ -48,12 +49,12 @@
     nav a {
       color: white;
       text-decoration: none;
-      padding: 0.5em 1em;
+      padding: 0.5em 1.2em;
       background-color: #f1633f;
       border-radius: 8px;
       font-weight: bold;
       box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      font-size: 14px;
+      font-size: 15px;
       transition: transform 0.2s, background-color 0.3s;
     }
 
@@ -72,68 +73,69 @@
     }
 
     .producto-detalle img {
-      width: 100%;
-      max-width: 400px;
-      height: auto;
+      width: 400px;
+      height: 450px;
+      object-fit: cover;
       border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
       cursor: pointer;
+      transition: transform 0.3s ease;
     }
 
     .producto-detalle img:hover {
       transform: scale(1.05);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
     }
 
     .info-producto {
       max-width: 500px;
-      background-color: rgba(2, 182, 206, 0.95);
-      padding: 1.5em;
+      background-color: rgba(2, 182, 206, 0.93);
+      padding: 1.7em;
       border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       animation: flotar 3s ease-in-out infinite alternate;
     }
 
     .info-producto h2 {
-      font-size: 22px;
+      font-size: 24px;
       color: #fffb00;
       text-shadow: 1px 1px #fff;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .info-producto p {
       font-size: 20px;
-      line-height: 2;
-      color: #555;
-      margin-bottom: 10px;
+      line-height: 1.7;
+      color: #444;
+      margin-bottom: 12px;
     }
 
     .info-producto label {
       font-weight: bold;
-      color: #333;
+      color: #222;
     }
 
     .info-producto select,
     .info-producto input[type="number"] {
-      padding: 0.5em;
+      padding: 0.6em;
       margin: 0.5em 0;
       border: 1px solid #ccc;
-      border-radius: 8px;
+      border-radius: 10px;
       width: 100%;
+      font-size: 16px;
     }
 
     .info-producto button {
       background-color: #ff5722;
       border: none;
-      padding: 0.7em;
+      padding: 0.8em;
       border-radius: 10px;
       cursor: pointer;
       color: white;
       font-weight: bold;
       width: 100%;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease, background-color 0.3s ease;
+      font-size: 17px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: 0.3s ease;
     }
 
     .info-producto button:hover {
@@ -165,34 +167,13 @@
         align-items: center;
       }
 
-      nav a {
-        width: 90%;
-        margin: 2px 0;
-        font-size: 13px;
-        text-align: center;
-        padding: 0.6em;
-      }
-
-      header h1 {
-        font-size: 1.2em;
+      .producto-detalle img {
+        max-width: 90%;
+        height: auto;
       }
 
       .info-producto {
         width: 90%;
-        padding: 1em;
-      }
-
-      .info-producto p {
-        font-size: 16px;
-      }
-
-      .info-producto h2 {
-        font-size: 18px;
-      }
-
-      .producto-detalle img {
-        max-width: 90%;
-        height: auto;
       }
     }
 
@@ -218,7 +199,7 @@
       <p><strong>Precio:</strong> Q<span id="precioProducto">--</span></p>
       <p><strong>Descripción:</strong> <span id="descripcionProducto">--</span></p>
 
-      <!-- BLOQUE DE TALLAS (se oculta si NO hay) -->
+      <!-- TALLAS -->
       <div id="bloqueTallas" style="display:none;">
         <label for="talla">Talla disponible:</label>
         <select id="talla"></select>
@@ -244,7 +225,7 @@
       contador.textContent = total;
     }
 
-    // ========= CARGAR EL PRODUCTO DESDE JSON =========
+    // CARGAR PRODUCTO DESDE JSON
     const params = new URLSearchParams(window.location.search);
     const productId = params.get("id");
 
@@ -263,7 +244,7 @@
         document.getElementById("precioProducto").textContent = prod.price;
         document.getElementById("descripcionProducto").textContent = prod.description;
 
-        // === MOSTRAR TALLAS SI EXISTEN ===
+        // TALLAS
         if (prod.sizes && prod.sizes.length > 0) {
           const select = document.getElementById("talla");
           prod.sizes.forEach(t => {
@@ -276,7 +257,7 @@
         }
       });
 
-    // ========= AGREGAR AL CARRITO =========
+    // AGREGAR AL CARRITO
     function agregarAlCarrito() {
       const nombre = document.getElementById("nombreProducto").textContent;
       const precio = parseFloat(document.getElementById("precioProducto").textContent);
@@ -304,4 +285,3 @@
 
 </body>
 </html>
-
