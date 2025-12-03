@@ -4,10 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Detalle del Producto</title>
-
   <style>
-    /* === CSS AJUSTADO PARA QUE SE MIRE EXACTAMENTE COMO EN TU FOTO === */
-
     body {
       font-family: 'Poppins', sans-serif;
       margin: 0;
@@ -30,7 +27,7 @@
     header h1 {
       margin: 0;
       color: #ffcc00;
-      font-size: 1.8em;
+      font-size: 1.5em;
       animation: flotar 2s ease-in-out infinite alternate;
       text-shadow: 0 0 10px #ffcc00;
       flex: 1 1 100%;
@@ -41,7 +38,7 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 8px;
+      gap: 4px;
       width: 100%;
       margin-top: 0.5em;
     }
@@ -49,12 +46,12 @@
     nav a {
       color: white;
       text-decoration: none;
-      padding: 0.5em 1.2em;
+      padding: 0.5em 1em;
       background-color: #f1633f;
       border-radius: 8px;
       font-weight: bold;
       box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      font-size: 15px;
+      font-size: 14px;
       transition: transform 0.2s, background-color 0.3s;
     }
 
@@ -75,67 +72,65 @@
     .producto-detalle img {
       width: 400px;
       height: 450px;
-      object-fit: cover;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       cursor: pointer;
-      transition: transform 0.3s ease;
     }
 
     .producto-detalle img:hover {
       transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
     }
 
     .info-producto {
       max-width: 500px;
-      background-color: rgba(2, 182, 206, 0.93);
-      padding: 1.7em;
+      background-color: rgba(2, 182, 206, 0.95);
+      padding: 1.5em;
       border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       animation: flotar 3s ease-in-out infinite alternate;
     }
 
     .info-producto h2 {
-      font-size: 24px;
+      font-size: 22px;
       color: #fffb00;
       text-shadow: 1px 1px #fff;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .info-producto p {
       font-size: 20px;
-      line-height: 1.7;
-      color: #444;
-      margin-bottom: 12px;
+      line-height: 2;
+      color: #555;
+      margin-bottom: 10px;
     }
 
     .info-producto label {
       font-weight: bold;
-      color: #222;
+      color: #333;
     }
 
     .info-producto select,
     .info-producto input[type="number"] {
-      padding: 0.6em;
+      padding: 0.5em;
       margin: 0.5em 0;
       border: 1px solid #ccc;
-      border-radius: 10px;
+      border-radius: 8px;
       width: 100%;
-      font-size: 16px;
     }
 
     .info-producto button {
       background-color: #ff5722;
       border: none;
-      padding: 0.8em;
+      padding: 0.7em;
       border-radius: 10px;
       cursor: pointer;
       color: white;
       font-weight: bold;
       width: 100%;
-      font-size: 17px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      transition: 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, background-color 0.3s ease;
     }
 
     .info-producto button:hover {
@@ -167,16 +162,28 @@
         align-items: center;
       }
 
-      .producto-detalle img {
-        max-width: 90%;
-        height: auto;
+      nav a {
+        width: 90%;
+        margin: 2px 0;
+        font-size: 13px;
+        text-align: center;
+        padding: 0.6em;
+      }
+
+      header h1 {
+        font-size: 1.2em;
       }
 
       .info-producto {
         width: 90%;
+        padding: 1em;
+      }
+
+      .producto-detalle img {
+        max-width: 90%;
+        height: auto;
       }
     }
-
   </style>
 </head>
 
@@ -285,3 +292,4 @@
 
 </body>
 </html>
+
