@@ -64,28 +64,34 @@
       transform: scale(1.05);
     }
 
+    /* CONTENEDOR PRINCIPAL */
     .producto-detalle {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      align-items: center;
-      gap: 2em;
+      align-items: flex-start;
+      gap: 3em;
       padding: 2em;
+      max-width: 1200px;
+      margin: auto;
     }
 
+    /* ✔ IMAGEN EXACTA COMO LA FOTO QUE MOSTRASTE */
     .producto-detalle img {
-      width: 400px;
-      height: 450px;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
+      width: 430px;
+      height: 520px;
+      border-radius: 15px;
       object-fit: cover;
+      object-position: center;
+      background: white;
+      padding: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .producto-detalle img:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      transform: scale(1.04);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.45);
     }
 
     .info-producto {
@@ -106,7 +112,7 @@
 
     .info-producto p {
       font-size: 20px;
-      line-height: 2;
+      line-height: 1.8;
       color: #555;
       margin-bottom: 10px;
     }
@@ -144,7 +150,7 @@
 
     @media (max-width: 600px) {
       .producto-detalle img {
-        width: 90%;
+        width: 95%;
         height: auto;
       }
     }
@@ -201,7 +207,7 @@
     const params = new URLSearchParams(window.location.search);
     const productId = params.get("id");
 
-    // 🔥 CARGA DE PRODUCTO DESDE GITHUB
+    // CARGA DE PRODUCTO
     fetch("https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/data/products.json")
       .then(res => res.json())
       .then(lista => {
@@ -217,7 +223,7 @@
         document.getElementById("precioProducto").textContent = prod.price;
         document.getElementById("descripcionProducto").textContent = prod.description;
 
-        // ✔️ Mostrar tallas solo si EXISTEN
+        // Mostrar tallas solo si EXISTEN
         if (prod.sizes && Array.isArray(prod.sizes) && prod.sizes.length > 0) {
           const select = document.getElementById("talla");
           prod.sizes.forEach(t => {
@@ -230,7 +236,7 @@
         }
       });
 
-    // ✔️ Sistema de carrito con alerta bonita
+    // SISTEMA DE CARRITO
     function agregarAlCarrito() {
       const nombre = document.getElementById("nombreProducto").textContent;
       const precio = parseFloat(document.getElementById("precioProducto").textContent);
