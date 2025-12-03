@@ -80,6 +80,7 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       cursor: pointer;
+      object-fit: cover;
     }
 
     .producto-detalle img:hover {
@@ -110,6 +111,24 @@
       margin-bottom: 10px;
     }
 
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #ff8800;
+      color: white;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #ff5500;
+      transform: scale(1.05);
+    }
+
     footer {
       background-color: #232f3e;
       color: white;
@@ -118,32 +137,22 @@
       margin-top: 3em;
     }
 
-    footer p {
-      font-size: 13px;
-      color: #ccc;
-    }
-
     @keyframes flotar {
       0% { transform: translateY(0); }
       100% { transform: translateY(-5px); }
     }
 
     @media (max-width: 600px) {
-      nav {
-        flex-direction: column;
-        align-items: center;
-      }
-      nav a {
-        width: 90%;
-      }
       .producto-detalle img {
-        max-width: 90%;
+        width: 90%;
+        height: auto;
       }
     }
   </style>
 </head>
 
 <body>
+
   <header>
     <h1>DRANGILS MORALES</h1>
     <nav>
@@ -159,17 +168,18 @@
 
     <div class="info-producto">
       <h2 id="nombreProducto">Cargando...</h2>
+
       <p><strong>Precio:</strong> Q<span id="precioProducto">--</span></p>
       <p><strong>Descripción:</strong> <span id="descripcionProducto">--</span></p>
 
-      <!-- BLOQUE DE TALLAS (SE OCULTA AUTOMÁTICAMENTE) -->
-      <div id="bloqueTallas" style="display:none;">
-        <label for="talla">Talla disponible:</label>
+      <!-- TALLAS SI EXISTEN -->
+      <div id="bloqueTallas" style="display:none; margin-bottom:15px;">
+        <label for="talla"><strong>Tallas disponibles:</strong></label>
         <select id="talla"></select>
       </div>
 
-      <label for="cantidad">Cantidad:</label>
-      <input type="number" id="cantidad" value="1" min="1" />
+      <label for="cantidad"><strong>Cantidad:</strong></label>
+      <input type="number" id="cantidad" value="1" min="1" style="width:100%; padding:10px; border-radius:8px;">
 
       <button onclick="agregarAlCarrito()">Agregar al carrito</button>
     </div>
@@ -188,15 +198,14 @@
       contador.textContent = total;
     }
 
-    // OBTENER ID DEL PRODUCTO
     const params = new URLSearchParams(window.location.search);
     const productId = params.get("id");
 
-    // CARGAR PRODUCTO DESDE JSON GITHUB
+    // 🔥 CARGA DE PRODUCTO DESDE GITHUB
     fetch("https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/data/products.json")
       .then(res => res.json())
       .then(lista => {
-        const prod = lista.find(p => p.id === productId);
+        const prod = lista.find(p => p.id == productId);
 
         if (!prod) {
           Swal.fire("Producto no encontrado", "", "error");
@@ -208,56 +217,44 @@
         document.getElementById("precioProducto").textContent = prod.price;
         document.getElementById("descripcionProducto").textContent = prod.description;
 
-        // ---------- MOSTRAR TALLAS SOLO SI EXISTEN ----------
-        if (prod.sizes && prod.sizes.length > 0) {
+        // ✔️ Mostrar tallas solo si EXISTEN
+        if (prod.sizes && Array.isArray(prod.sizes) && prod.sizes.length > 0) {
           const select = document.getElementById("talla");
           prod.sizes.forEach(t => {
-            const op = document.createElement("option");
-            op.textContent = t;
-            op.value = t;
-            select.appendChild(op);
+            const option = document.createElement("option");
+            option.value = t;
+            option.textContent = t;
+            select.appendChild(option);
           });
           document.getElementById("bloqueTallas").style.display = "block";
-        } else {
-          document.getElementById("bloqueTallas").style.display = "none";
         }
       });
 
-    // ---------- AGREGAR AL CARRITO ----------
+    // ✔️ Sistema de carrito con alerta bonita
     function agregarAlCarrito() {
       const nombre = document.getElementById("nombreProducto").textContent;
       const precio = parseFloat(document.getElementById("precioProducto").textContent);
       const cantidad = parseInt(document.getElementById("cantidad").value);
+
       const tieneTallas = document.getElementById("bloqueTallas").style.display !== "none";
       const talla = tieneTallas ? document.getElementById("talla").value : null;
 
-      if (cantidad < 1) {
-        Swal.fire("Cantidad inválida", "", "error");
-        return;
-      }
-
       let item = carrito.find(p => p.nombre === nombre && p.talla === talla);
 
-      if (item) {
-        item.cantidad += cantidad;
-      } else {
-        carrito.push({ nombre, precio, cantidad, talla });
-      }
+      if (item) item.cantidad += cantidad;
+      else carrito.push({ nombre, precio, cantidad, talla });
 
       localStorage.setItem("carrito", JSON.stringify(carrito));
       actualizarContador();
 
       Swal.fire({
-        title: 'Producto agregado',
-        text: `${cantidad} unidad(es) de "${nombre}" fueron agregadas al carrito`,
-        icon: 'success',
+        title: "¡Producto agregado!",
+        icon: "success",
+        confirmButtonText: "Ver carrito",
         showCancelButton: true,
-        confirmButtonText: 'Ver carrito',
-        cancelButtonText: 'Seguir comprando'
+        cancelButtonText: "Seguir comprando",
       }).then(res => {
-        if (res.isConfirmed) {
-          window.location.href = '../../opciones/vercarrito.html';
-        }
+        if (res.isConfirmed) window.location.href = '../../opciones/vercarrito.html';
       });
     }
 
