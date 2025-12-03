@@ -198,11 +198,11 @@
   </header>
 
   <main class="producto-detalle">
-    <img id="imagenProducto" src="../../imagenes/calzado1.jpg" alt="Imagen del producto">
+    <img src="../../imagenes/calzado1.jpg" alt="Calzado Bicolor mexicano Karla Vázquez #1">
     <div class="info-producto">
-      <h2 id="nombreProducto">Producto</h2>
-      <p><strong>Precio:</strong> Q<span id="precioProducto">0.00</span></p>
-      <p><strong>Descripción:</strong> <span id="descripcionProducto">Descripción aquí...</span></p>
+      <h2>Calzado Bicolor mexicano Karla Vázquez #1</h2>
+      <p><strong>Precio:</strong> Q180.00</p>
+      <p><strong>Descripción:</strong> 100% mexicano, elaborado en textiles de alta calidad y lo mejor en modas. Perfecto para lucir auténtico y elegante.</p>
 
       <label for="talla">Talla disponible:</label>
       <select id="talla">
@@ -225,18 +225,7 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
   <script>
-    // Cargar datos dinámicos desde localStorage
-    const producto = JSON.parse(localStorage.getItem("productoSeleccionado"));
-
-    if (producto) {
-      document.getElementById("imagenProducto").src = producto.image;
-      document.getElementById("nombreProducto").textContent = producto.title;
-      document.getElementById("precioProducto").textContent = producto.price;
-      document.getElementById("descripcionProducto").textContent = producto.description;
-    }
-
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
     function actualizarContador() {
@@ -247,38 +236,29 @@
 
     function agregarAlCarrito() {
       const cantidad = parseInt(document.getElementById('cantidad').value);
+      const nombre = "Calzado Bicolor mexicano Karla Vázquez #1";
+      const precio = 180;
       const talla = document.getElementById('talla').value;
-
-      if (!producto) return;
 
       if (isNaN(cantidad) || cantidad < 1) {
         Swal.fire('Cantidad inválida', '', 'error');
         return;
       }
 
-      let existente = carrito.find(
-        p => p.id === producto.id && p.talla === talla
-      );
-
+      let existente = carrito.find(p => p.nombre === nombre && p.talla === talla);
       if (existente) {
         existente.cantidad += cantidad;
       } else {
-        carrito.push({
-          id: producto.id,
-          nombre: producto.title,
-          precio: Number(producto.price),
-          cantidad,
-          talla,
-          imagen: producto.image
-        });
+        carrito.push({ nombre, precio, cantidad, talla });
       }
 
       localStorage.setItem('carrito', JSON.stringify(carrito));
       actualizarContador();
 
+      // ✅ **AQUÍ VA LA NOTIFICACIÓN QUE ME PEDISTE**
       Swal.fire({
         title: 'Producto agregado',
-        text: `${cantidad} ${producto.title} Talla ${talla} agregado al carrito`,
+        text: `${cantidad} ${nombre} Talla ${talla} agregado al carrito`,
         icon: 'success',
         showCancelButton: true,
         confirmButtonText: 'Ver carrito',
@@ -295,22 +275,22 @@
   </script>
 
   <script>
-    // Bloquear clic derecho
-    document.addEventListener('contextmenu', function(e) {
-      e.preventDefault();
-    });
+  // Bloquear clic derecho
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+  });
 
-    // Bloquear teclas
-    document.onkeydown = function(e) {
-      if (
-        e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'c') ||
-        (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-        e.key === 'F12'
-      ) {
-        e.preventDefault();
-        return false;
-      }
-    };
+  // Bloquear teclas Ctrl+U, Ctrl+S, Ctrl+Shift+I, F12
+  document.onkeydown = function(e) {
+    if (
+      e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'c') ||
+      (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+      e.key === 'F12'
+    ) {
+      e.preventDefault();
+      return false;
+    }
+  };
   </script>
 
 </body>
