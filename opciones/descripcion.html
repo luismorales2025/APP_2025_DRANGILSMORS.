@@ -4,13 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Detalle del Producto</title>
+
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <style>
     body {
       font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 0;
       color: #333;
-      background: url('../../imagenes/plata.jpeg') no-repeat center center fixed;
+      background: url('../../images/plata.jpeg') no-repeat center center fixed;
       background-size: cover;
     }
 
@@ -106,38 +110,6 @@
       margin-bottom: 10px;
     }
 
-    .info-producto label {
-      font-weight: bold;
-      color: #333;
-    }
-
-    .info-producto select,
-    .info-producto input[type="number"] {
-      padding: 0.5em;
-      margin: 0.5em 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      width: 100%;
-    }
-
-    .info-producto button {
-      background-color: #ff5722;
-      border: none;
-      padding: 0.7em;
-      border-radius: 10px;
-      cursor: pointer;
-      color: white;
-      font-weight: bold;
-      width: 100%;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease, background-color 0.3s ease;
-    }
-
-    .info-producto button:hover {
-      background-color: #ff7043;
-      transform: scale(1.05);
-    }
-
     footer {
       background-color: #232f3e;
       color: white;
@@ -161,31 +133,16 @@
         flex-direction: column;
         align-items: center;
       }
-
       nav a {
         width: 90%;
-        margin: 2px 0;
-        font-size: 13px;
-        text-align: center;
-        padding: 0.6em;
       }
-
-      header h1 {
-        font-size: 1.2em;
-      }
-
-      .info-producto {
-        width: 90%;
-        padding: 1em;
-      }
-
       .producto-detalle img {
         max-width: 90%;
-        height: auto;
       }
     }
   </style>
 </head>
+
 <body>
   <header>
     <h1>DRANGILS MORALES</h1>
@@ -198,20 +155,18 @@
   </header>
 
   <main class="producto-detalle">
-    <img src="../../imagenes/calzado1.jpg" alt="Calzado Bicolor mexicano Karla Vázquez #1">
-    <div class="info-producto">
-      <h2>Calzado Bicolor mexicano Karla Vázquez #1</h2>
-      <p><strong>Precio:</strong> Q180.00</p>
-      <p><strong>Descripción:</strong> 100% mexicano, elaborado en textiles de alta calidad y lo mejor en modas. Perfecto para lucir auténtico y elegante.</p>
+    <img id="imgProducto" src="" alt="Producto">
 
-      <label for="talla">Talla disponible:</label>
-      <select id="talla">
-        <option>35</option>
-        <option>36</option>
-        <option>37</option>
-        <option>38</option>
-        <option>39</option>
-      </select>
+    <div class="info-producto">
+      <h2 id="nombreProducto">Cargando...</h2>
+      <p><strong>Precio:</strong> Q<span id="precioProducto">--</span></p>
+      <p><strong>Descripción:</strong> <span id="descripcionProducto">--</span></p>
+
+      <!-- BLOQUE DE TALLAS (SE OCULTA AUTOMÁTICAMENTE) -->
+      <div id="bloqueTallas" style="display:none;">
+        <label for="talla">Talla disponible:</label>
+        <select id="talla"></select>
+      </div>
 
       <label for="cantidad">Cantidad:</label>
       <input type="number" id="cantidad" value="1" min="1" />
@@ -224,7 +179,6 @@
     <p>© 2025 DRANGILS MORALES_APPS</p>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
@@ -234,63 +188,80 @@
       contador.textContent = total;
     }
 
-    function agregarAlCarrito() {
-      const cantidad = parseInt(document.getElementById('cantidad').value);
-      const nombre = "Calzado Bicolor mexicano Karla Vázquez #1";
-      const precio = 180;
-      const talla = document.getElementById('talla').value;
+    // OBTENER ID DEL PRODUCTO
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get("id");
 
-      if (isNaN(cantidad) || cantidad < 1) {
-        Swal.fire('Cantidad inválida', '', 'error');
+    // CARGAR PRODUCTO DESDE JSON GITHUB
+    fetch("https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/data/products.json")
+      .then(res => res.json())
+      .then(lista => {
+        const prod = lista.find(p => p.id === productId);
+
+        if (!prod) {
+          Swal.fire("Producto no encontrado", "", "error");
+          return;
+        }
+
+        document.getElementById("imgProducto").src = prod.image;
+        document.getElementById("nombreProducto").textContent = prod.title;
+        document.getElementById("precioProducto").textContent = prod.price;
+        document.getElementById("descripcionProducto").textContent = prod.description;
+
+        // ---------- MOSTRAR TALLAS SOLO SI EXISTEN ----------
+        if (prod.sizes && prod.sizes.length > 0) {
+          const select = document.getElementById("talla");
+          prod.sizes.forEach(t => {
+            const op = document.createElement("option");
+            op.textContent = t;
+            op.value = t;
+            select.appendChild(op);
+          });
+          document.getElementById("bloqueTallas").style.display = "block";
+        } else {
+          document.getElementById("bloqueTallas").style.display = "none";
+        }
+      });
+
+    // ---------- AGREGAR AL CARRITO ----------
+    function agregarAlCarrito() {
+      const nombre = document.getElementById("nombreProducto").textContent;
+      const precio = parseFloat(document.getElementById("precioProducto").textContent);
+      const cantidad = parseInt(document.getElementById("cantidad").value);
+      const tieneTallas = document.getElementById("bloqueTallas").style.display !== "none";
+      const talla = tieneTallas ? document.getElementById("talla").value : null;
+
+      if (cantidad < 1) {
+        Swal.fire("Cantidad inválida", "", "error");
         return;
       }
 
-      let existente = carrito.find(p => p.nombre === nombre && p.talla === talla);
-      if (existente) {
-        existente.cantidad += cantidad;
+      let item = carrito.find(p => p.nombre === nombre && p.talla === talla);
+
+      if (item) {
+        item.cantidad += cantidad;
       } else {
         carrito.push({ nombre, precio, cantidad, talla });
       }
 
-      localStorage.setItem('carrito', JSON.stringify(carrito));
+      localStorage.setItem("carrito", JSON.stringify(carrito));
       actualizarContador();
 
-      // ✅ **AQUÍ VA LA NOTIFICACIÓN QUE ME PEDISTE**
       Swal.fire({
         title: 'Producto agregado',
-        text: `${cantidad} ${nombre} Talla ${talla} agregado al carrito`,
+        text: `${cantidad} unidad(es) de "${nombre}" fueron agregadas al carrito`,
         icon: 'success',
         showCancelButton: true,
         confirmButtonText: 'Ver carrito',
-        cancelButtonText: 'Seguir comprando',
-        reverseButtons: true
-      }).then((result) => {
-        if (result.isConfirmed) {
+        cancelButtonText: 'Seguir comprando'
+      }).then(res => {
+        if (res.isConfirmed) {
           window.location.href = '../../opciones/vercarrito.html';
         }
       });
     }
 
     actualizarContador();
-  </script>
-
-  <script>
-  // Bloquear clic derecho
-  document.addEventListener('contextmenu', function(e) {
-    e.preventDefault();
-  });
-
-  // Bloquear teclas Ctrl+U, Ctrl+S, Ctrl+Shift+I, F12
-  document.onkeydown = function(e) {
-    if (
-      e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'c') ||
-      (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-      e.key === 'F12'
-    ) {
-      e.preventDefault();
-      return false;
-    }
-  };
   </script>
 
 </body>
