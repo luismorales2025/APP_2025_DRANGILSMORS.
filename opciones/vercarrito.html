@@ -4,10 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Carrito de Compras</title>
+
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       font-family: 'Poppins', sans-serif;
@@ -15,21 +14,22 @@
       padding: 0;
       background: url('../imagenes/plata.jpeg') no-repeat center center fixed;
       background-size: cover;
-      color: #333;
+      color: #fff;
     }
 
-    /* ---------- NAVBAR ---------- */
+    /* NAVBAR */
     header {
-      background-color: #232f3e;
+      background-color: rgba(35,47,62,0.95);
       padding: 0.8em 1em;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
       position: sticky;
       top: 0;
       z-index: 1000;
+      backdrop-filter: blur(3px);
     }
 
     header h1 {
@@ -45,10 +45,9 @@
     nav {
       display: flex;
       justify-content: center;
-      gap: 10px;
+      gap: 12px;
       width: 100%;
       flex-wrap: wrap;
-      margin-top: 0.5em;
     }
 
     nav a {
@@ -59,37 +58,30 @@
       border-radius: 10px;
       font-weight: bold;
       font-size: 1em;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.3);
-      transition: all 0.3s ease;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+      transition: 0.3s ease;
     }
 
     nav a:hover {
       background-color: #ff3399;
-      transform: scale(1.05);
+      transform: scale(1.06);
     }
 
     @keyframes flotar {
-      from { transform: translateY(0); }
-      to { transform: translateY(-5px); }
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-5px); }
     }
 
-    h1 {
-      text-align: center;
-      color: #ffcc00;
-      text-shadow: 0 0 8px #ffcc00;
-      margin-top: 1.5em;
-      animation: flotar 2s ease-in-out infinite alternate;
-    }
-
-    /* ---------- CARRITO ---------- */
+    /* TABLA / CARRITO */
     .tabla-container {
       overflow-x: auto;
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255,255,255,0.9);
       margin: 1.5em auto;
       padding: 1em;
       max-width: 900px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      color: #333;
     }
 
     table {
@@ -105,14 +97,8 @@
       font-size: 15px;
     }
 
-    th {
-      background-color: #232f3e;
-      color: white;
-    }
-
-    td {
-      background-color: #f9f9f9;
-    }
+    th { background-color: #232f3e; color: white; }
+    td { background-color: #f7f7f7; }
 
     button {
       padding: 0.4em 0.7em;
@@ -127,16 +113,17 @@
 
     button:hover {
       background-color: #ff7043;
-      transform: scale(1.05);
+      transform: scale(1.1);
     }
 
     #total {
-      margin: 1em auto;
+      margin: 1.2em auto;
       max-width: 900px;
-      font-size: 1.1em;
+      font-size: 1.2em;
       text-align: right;
       font-weight: bold;
-      color: #232f3e;
+      color: #ffcc00;
+      text-shadow: 0 0 5px black;
     }
 
     #btnCompletar {
@@ -145,160 +132,114 @@
       padding: 1em 2em;
       background: #ff007f;
       color: white;
-      font-size: 1.1em;
+      font-size: 1.2em;
       border: none;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-      transition: background 0.3s ease;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      transition: 0.3s ease;
     }
 
     #btnCompletar:hover {
       background: #e60073;
-    }
-
-    /* ---------- RESPONSIVE ---------- */
-    @media (max-width: 768px) {
-      header h1 {
-        font-size: 1.4em;
-      }
-
-      nav a {
-        font-size: 0.95em;
-        padding: 0.5em 1em;
-      }
-
-      th, td {
-        font-size: 13px;
-        padding: 0.6em;
-      }
-
-      #btnCompletar {
-        width: 90%;
-        font-size: 1em;
-      }
-
-      #total {
-        font-size: 1em;
-        padding: 0 1em;
-      }
-    }
-
-    @media (max-width: 480px) {
-      nav {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      nav a {
-        width: 90%;
-        margin-bottom: 8px;
-      }
-
-      header h1 {
-        font-size: 1.2em;
-      }
+      transform: scale(1.05);
     }
   </style>
 </head>
 <body>
 
-  <!-- Barra de navegación -->
-  <header>
-    <h1>DRANGILS MORALES</h1>
-    <nav>
-      <a href="../pagina_principal/pagina_principal.html">Inicio</a>
-      <a href="../categorias_general/categoria.html">Categorías</a>
-      <a href="../opciones/contactogeneral8.html">Contacto</a>
-    </nav>
-  </header>
+<header>
+  <h1>DRANGILS MORALES</h1>
+  <nav>
+    <a href="../pagina_principal/pagina_principal.html">Inicio</a>
+    <a href="../categorias_general/categoria.html">Categorías</a>
+    <a href="../opciones/contactogeneral8.html">Contacto</a>
+  </nav>
+</header>
 
-  <h1>🛒 Tu Carrito</h1>
+<h1 style="text-align:center; color:#ffcc00; margin-top:20px;">🛒 Tu Carrito</h1>
 
-  <div class="tabla-container" id="carritoContainer"></div>
-  <div id="total"></div>
-  <button id="btnCompletar">Completar tu pedido</button>
+<div class="tabla-container" id="carritoContainer"></div>
+<div id="total"></div>
 
-  <script>
-    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+<button id="btnCompletar">Completar tu pedido</button>
 
-    function renderCarrito() {
-      const container = document.getElementById('carritoContainer');
-      const totalDiv = document.getElementById('total');
-      container.innerHTML = '';
+<script>
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-      if (carrito.length === 0) {
-        container.innerHTML = '<p>No hay productos en tu carrito.</p>';
-        totalDiv.innerHTML = '';
-        return;
-      }
+  function renderCarrito() {
+    const container = document.getElementById("carritoContainer");
+    const totalDiv = document.getElementById("total");
 
-      let total = 0;
-      let tabla = '<table><tr><th>Producto</th><th>Talla</th><th>Precio</th><th>Cantidad</th><th>Subtotal</th><th>Acciones</th></tr>';
-
-      carrito.forEach((producto, index) => {
-        const subtotal = producto.precio * producto.cantidad;
-        total += subtotal;
-        tabla += `
-          <tr>
-            <td>${producto.nombre}</td>
-            <td>${producto.talla || '-'}</td>
-            <td>Q${producto.precio.toFixed(2)}</td>
-            <td>${producto.cantidad}</td>
-            <td>Q${subtotal.toFixed(2)}</td>
-            <td>
-              <button onclick="cambiarCantidad(${index}, 1)">➕</button>
-              <button onclick="cambiarCantidad(${index}, -1)">➖</button>
-              <button onclick="eliminarProducto(${index})">🗑️</button>
-            </td>
-          </tr>`;
-      });
-
-      tabla += '</table>';
-      container.innerHTML = tabla;
-      totalDiv.textContent = `Total a pagar: Q${total.toFixed(2)}`;
+    if (carrito.length === 0) {
+      container.innerHTML = "<p>No hay productos en tu carrito.</p>";
+      totalDiv.innerHTML = "";
+      return;
     }
 
-    function cambiarCantidad(index, cambio) {
-      carrito[index].cantidad += cambio;
-      if (carrito[index].cantidad <= 0) {
-        carrito.splice(index, 1);
-      }
-      localStorage.setItem('carrito', JSON.stringify(carrito));
-      renderCarrito();
-    }
+    let total = 0;
+    let tabla = `
+      <table>
+        <tr>
+          <th>Producto</th>
+          <th>Talla</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Subtotal</th>
+          <th>Acciones</th>
+        </tr>
+    `;
 
-    function eliminarProducto(index) {
+    carrito.forEach((producto, index) => {
+      const subtotal = producto.precio * producto.cantidad;
+      total += subtotal;
+
+      tabla += `
+      <tr>
+        <td>${producto.nombre}</td>
+        <td>${producto.talla ? producto.talla : "-"}</td>
+        <td>Q${producto.precio.toFixed(2)}</td>
+        <td>${producto.cantidad}</td>
+        <td>Q${subtotal.toFixed(2)}</td>
+        <td>
+          <button onclick="cambiarCantidad(${index}, 1)">➕</button>
+          <button onclick="cambiarCantidad(${index}, -1)">➖</button>
+          <button onclick="eliminarProducto(${index})">🗑️</button>
+        </td>
+      </tr>`;
+    });
+
+    tabla += "</table>";
+    container.innerHTML = tabla;
+    totalDiv.textContent = `Total a pagar: Q${total.toFixed(2)}`;
+  }
+
+  function cambiarCantidad(index, cambio) {
+    carrito[index].cantidad += cambio;
+
+    if (carrito[index].cantidad <= 0) {
       carrito.splice(index, 1);
-      localStorage.setItem('carrito', JSON.stringify(carrito));
-      renderCarrito();
     }
 
-    document.getElementById('btnCompletar').onclick = () => {
-      if (carrito.length === 0) {
-        alert('Tu carrito está vacío');
-        return;
-      }
-      window.location.href = "../opciones/emailjscarrito.html";
-    };
-
+    localStorage.setItem("carrito", JSON.stringify(carrito));
     renderCarrito();
+  }
 
-    // Bloquear clic derecho
-  document.addEventListener('contextmenu', function(e) {
-    e.preventDefault();
-  });
+  function eliminarProducto(index) {
+    carrito.splice(index, 1);
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    renderCarrito();
+  }
 
-  // Bloquear teclas Ctrl+U, Ctrl+S, Ctrl+Shift+I, F12
-  document.onkeydown = function(e) {
-    if (
-      e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'c') ||
-      (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-      e.key === 'F12'
-    ) {
-      e.preventDefault();
-      return false;
+  document.getElementById("btnCompletar").onclick = () => {
+    if (carrito.length === 0) {
+      alert("Tu carrito está vacío.");
+      return;
     }
+    window.location.href = "../opciones/emailjscarrito.html";
   };
+
+  renderCarrito();
 </script>
+
 </body>
 </html>
