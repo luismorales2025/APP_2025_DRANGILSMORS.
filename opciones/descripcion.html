@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Detalle del Producto</title>
+
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -106,38 +110,6 @@
       margin-bottom: 10px;
     }
 
-    .info-producto label {
-      font-weight: bold;
-      color: #333;
-    }
-
-    .info-producto select,
-    .info-producto input[type="number"] {
-      padding: 0.5em;
-      margin: 0.5em 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      width: 100%;
-    }
-
-    .info-producto button {
-      background-color: #ff5722;
-      border: none;
-      padding: 0.7em;
-      border-radius: 10px;
-      cursor: pointer;
-      color: white;
-      font-weight: bold;
-      width: 100%;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease, background-color 0.3s ease;
-    }
-
-    .info-producto button:hover {
-      background-color: #ff7043;
-      transform: scale(1.05);
-    }
-
     footer {
       background-color: #232f3e;
       color: white;
@@ -161,27 +133,11 @@
         flex-direction: column;
         align-items: center;
       }
-
       nav a {
         width: 90%;
-        margin: 2px 0;
-        font-size: 13px;
-        text-align: center;
-        padding: 0.6em;
       }
-
-      header h1 {
-        font-size: 1.2em;
-      }
-
-      .info-producto {
-        width: 90%;
-        padding: 1em;
-      }
-
       .producto-detalle img {
         max-width: 90%;
-        height: auto;
       }
     }
   </style>
@@ -206,7 +162,6 @@
       <p><strong>Precio:</strong> Q<span id="precioProducto">--</span></p>
       <p><strong>Descripción:</strong> <span id="descripcionProducto">--</span></p>
 
-      <!-- TALLAS -->
       <div id="bloqueTallas" style="display:none;">
         <label for="talla">Talla disponible:</label>
         <select id="talla"></select>
@@ -232,17 +187,18 @@
       contador.textContent = total;
     }
 
-    // CARGAR PRODUCTO DESDE JSON
+    // OBTENER PRODUCTO DESDE URL
     const params = new URLSearchParams(window.location.search);
     const productId = params.get("id");
 
+    // CARGAR PRODUCTO DESDE JSON
     fetch("https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/data/products.json")
       .then(res => res.json())
       .then(lista => {
         const prod = lista.find(p => p.id === productId);
 
         if (!prod) {
-          alert("Producto no encontrado");
+          Swal.fire("Producto no encontrado", "", "error");
           return;
         }
 
@@ -251,7 +207,7 @@
         document.getElementById("precioProducto").textContent = prod.price;
         document.getElementById("descripcionProducto").textContent = prod.description;
 
-        // TALLAS
+        // Tallas dinámicas
         if (prod.sizes && prod.sizes.length > 0) {
           const select = document.getElementById("talla");
           prod.sizes.forEach(t => {
@@ -259,19 +215,21 @@
             op.textContent = t;
             select.appendChild(op);
           });
-
           document.getElementById("bloqueTallas").style.display = "block";
         }
       });
 
-    // AGREGAR AL CARRITO
+    // AGREGAR AL CARRITO CON SweetAlert2
     function agregarAlCarrito() {
       const nombre = document.getElementById("nombreProducto").textContent;
       const precio = parseFloat(document.getElementById("precioProducto").textContent);
       const cantidad = parseInt(document.getElementById("cantidad").value);
       const talla = document.getElementById("talla") ? document.getElementById("talla").value : null;
 
-      if (cantidad < 1) return alert("Cantidad inválida");
+      if (cantidad < 1) {
+        Swal.fire("Cantidad inválida", "", "error");
+        return;
+      }
 
       let item = carrito.find(p => p.nombre === nombre && p.talla === talla);
 
@@ -282,9 +240,20 @@
       }
 
       localStorage.setItem("carrito", JSON.stringify(carrito));
-      alert("Producto agregado correctamente");
-
       actualizarContador();
+
+      Swal.fire({
+        title: 'Producto agregado',
+        text: `${cantidad} unidad(es) de "${nombre}" fueron agregadas al carrito`,
+        icon: 'success',
+        showCancelButton: true,
+        confirmButtonText: 'Ver carrito',
+        cancelButtonText: 'Seguir comprando'
+      }).then((res) => {
+        if (res.isConfirmed) {
+          window.location.href = '../../opciones/vercarrito.html';
+        }
+      });
     }
 
     actualizarContador();
@@ -292,5 +261,3 @@
 
 </body>
 </html>
-
-
