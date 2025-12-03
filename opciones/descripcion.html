@@ -1,287 +1,233 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Detalle del Producto</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DRANGILS MORALES - Tienda</title>
 
-  <style>
-    /* === CSS AJUSTADO PARA QUE SE MIRE EXACTAMENTE COMO EN TU FOTO === */
+<!-- SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<style>
     body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 0;
-      color: #333;
-      background: url('../../imagenes/plata.jpeg') no-repeat center center fixed;
-      background-size: cover;
+        margin: 0;
+        padding: 0;
+        background: url('fondo.jpg');
+        background-size: cover;
+        background-attachment: fixed;
+        font-family: Arial, sans-serif;
     }
 
-    header {
-      background-color: #232f3e;
-      color: white;
-      padding: 1em;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
+    .contenedor-principal {
+        padding: 20px;
+        padding-bottom: 90px;
     }
 
-    header h1 {
-      margin: 0;
-      color: #ffcc00;
-      font-size: 1.8em;
-      animation: flotar 2s ease-in-out infinite alternate;
-      text-shadow: 0 0 10px #ffcc00;
-      flex: 1 1 100%;
-      text-align: center;
+    /* ---- CATEGORÍAS AUTOMÁTICAS ---- */
+    .categorias-container {
+        display: flex;
+        gap: 12px;
+        overflow-x: auto;
+        padding: 15px;
+        margin-bottom: 20px;
     }
 
-    nav {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-      width: 100%;
-      margin-top: 0.5em;
+    .categoria-btn {
+        background: #ff6a00;
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 20px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        white-space: nowrap;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        transition: transform 0.2s;
+    }
+    .categoria-btn:hover {
+        transform: scale(1.1);
+        background: #ff7c24;
     }
 
-    nav a {
-      color: white;
-      text-decoration: none;
-      padding: 0.5em 1.2em;
-      background-color: #f1633f;
-      border-radius: 8px;
-      font-weight: bold;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      font-size: 15px;
-      transition: transform 0.2s, background-color 0.3s;
+    /* ---- GRID DE PRODUCTOS (4–6 por fila) ---- */
+    .productos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 25px;
     }
 
-    nav a:hover {
-      background-color: #ff3399;
-      transform: scale(1.05);
+    /* ---- CARD ---- */
+    .producto-card {
+        background: white;
+        border-radius: 18px;
+        padding: 15px;
+        text-align: center;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+        transition: transform 0.2s;
     }
 
-    .producto-detalle {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      gap: 2em;
-      padding: 2em;
+    .producto-card:hover {
+        transform: translateY(-6px);
     }
 
-    .producto-detalle img {
-      width: 400px;
-      height: 450px;
-      object-fit: cover;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-      cursor: pointer;
-      transition: transform 0.3s ease;
+    .producto-img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        border-radius: 12px;
     }
 
-    .producto-detalle img:hover {
-      transform: scale(1.05);
+    .titulo {
+        font-weight: bold;
+        margin: 10px 0;
+        min-height: 55px;
     }
 
-    .info-producto {
-      max-width: 500px;
-      background-color: rgba(2, 182, 206, 0.93);
-      padding: 1.7em;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      animation: flotar 3s ease-in-out infinite alternate;
+    .precio {
+        color: #444;
+        font-size: 18px;
+        margin-bottom: 12px;
     }
 
-    .info-producto h2 {
-      font-size: 24px;
-      color: #fffb00;
-      text-shadow: 1px 1px #fff;
-      margin-bottom: 12px;
+    .btn {
+        width: 100%;
+        background: #ff6a00;
+        padding: 10px;
+        border-radius: 10px;
+        color: white;
+        border: none;
+        margin-top: 8px;
+        cursor: pointer;
+        font-weight: bold;
     }
 
-    .info-producto p {
-      font-size: 20px;
-      line-height: 1.7;
-      color: #444;
-      margin-bottom: 12px;
+    .btn:hover {
+        background: #ff7c24;
     }
 
-    .info-producto label {
-      font-weight: bold;
-      color: #222;
+    /* ---- BARRA INFERIOR ---- */
+    .barra-bottom {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background: white;
+        padding: 10px;
+        box-shadow: 0 -4px 12px rgba(0,0,0,0.3);
+        display: flex;
+        justify-content: space-around;
     }
 
-    .info-producto select,
-    .info-producto input[type="number"] {
-      padding: 0.6em;
-      margin: 0.5em 0;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      width: 100%;
-      font-size: 16px;
+    .barra-bottom button {
+        background: #ff6a00;
+        padding: 12px 20px;
+        border-radius: 20px;
+        border: none;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
 
-    .info-producto button {
-      background-color: #ff5722;
-      border: none;
-      padding: 0.8em;
-      border-radius: 10px;
-      cursor: pointer;
-      color: white;
-      font-weight: bold;
-      width: 100%;
-      font-size: 17px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      transition: 0.3s ease;
-    }
-
-    .info-producto button:hover {
-      background-color: #ff7043;
-      transform: scale(1.05);
-    }
-
-    footer {
-      background-color: #232f3e;
-      color: white;
-      padding: 2em;
-      text-align: center;
-      margin-top: 3em;
-    }
-
-    footer p {
-      font-size: 13px;
-      color: #ccc;
-    }
-
-    @keyframes flotar {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-5px); }
-    }
-
-    @media (max-width: 600px) {
-      nav {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .producto-detalle img {
-        max-width: 90%;
-        height: auto;
-      }
-
-      .info-producto {
-        width: 90%;
-      }
-    }
-
-  </style>
+</style>
 </head>
-
 <body>
-  <header>
-    <h1>DRANGILS MORALES</h1>
-    <nav>
-      <a href="../../pagina_principal/pagina_principal.html">Inicio</a>
-      <a href="../../categorias_general/categoria.html">Categorías</a>
-      <a href="../../opciones/contactogeneral6.html">Contacto</a>
-      <a href="../../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
-    </nav>
-  </header>
 
-  <main class="producto-detalle">
-    <img id="imgProducto" src="" alt="Producto">
+<div class="contenedor-principal">
 
-    <div class="info-producto">
-      <h2 id="nombreProducto">Cargando...</h2>
-      <p><strong>Precio:</strong> Q<span id="precioProducto">--</span></p>
-      <p><strong>Descripción:</strong> <span id="descripcionProducto">--</span></p>
+    <!-- Categorías automáticas -->
+    <div class="categorias-container" id="categorias"></div>
 
-      <!-- TALLAS -->
-      <div id="bloqueTallas" style="display:none;">
-        <label for="talla">Talla disponible:</label>
-        <select id="talla"></select>
-      </div>
+    <!-- Grid de productos -->
+    <div class="productos-grid" id="productos"></div>
 
-      <label for="cantidad">Cantidad:</label>
-      <input type="number" id="cantidad" value="1" min="1" />
+</div>
 
-      <button onclick="agregarAlCarrito()">Agregar al carrito</button>
-    </div>
-  </main>
+<!-- Barra inferior -->
+<div class="barra-bottom">
+    <button onclick="location.href='carrito.html'">Ir al carrito</button>
+    <button onclick="location.href='index.html'">Inicio</button>
+</div>
 
-  <footer>
-    <p>© 2025 DRANGILS MORALES_APPS</p>
-  </footer>
+<script>
+    const jsonURL = "products.json"; // ← TU JSON AQUÍ
 
-  <script>
-    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    let productos = [];
 
-    function actualizarContador() {
-      const contador = document.getElementById('contadorCarrito');
-      const total = carrito.reduce((acc, prod) => acc + (prod.cantidad || 1), 0);
-      contador.textContent = total;
+    async function cargarProductos() {
+        const res = await fetch(jsonURL);
+        productos = await res.json();
+
+        generarCategorias();
+        mostrarProductos(productos);
     }
 
-    // CARGAR PRODUCTO DESDE JSON
-    const params = new URLSearchParams(window.location.search);
-    const productId = params.get("id");
+    /* ---- GENERAR BOTONES SEGÚN CATEGORÍAS ---- */
+    function generarCategorias() {
+        const cont = document.getElementById("categorias");
+        const categorias = [...new Set(productos.map(p => p.category))];
 
-    fetch("https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/data/products.json")
-      .then(res => res.json())
-      .then(lista => {
-        const prod = lista.find(p => p.id === productId);
+        cont.innerHTML = `<button class="categoria-btn" onclick="mostrarProductos(productos)">Todas</button>`;
 
-        if (!prod) {
-          alert("Producto no encontrado");
-          return;
-        }
-
-        document.getElementById("imgProducto").src = prod.image;
-        document.getElementById("nombreProducto").textContent = prod.title;
-        document.getElementById("precioProducto").textContent = prod.price;
-        document.getElementById("descripcionProducto").textContent = prod.description;
-
-        // TALLAS
-        if (prod.sizes && prod.sizes.length > 0) {
-          const select = document.getElementById("talla");
-          prod.sizes.forEach(t => {
-            const op = document.createElement("option");
-            op.textContent = t;
-            select.appendChild(op);
-          });
-
-          document.getElementById("bloqueTallas").style.display = "block";
-        }
-      });
-
-    // AGREGAR AL CARRITO
-    function agregarAlCarrito() {
-      const nombre = document.getElementById("nombreProducto").textContent;
-      const precio = parseFloat(document.getElementById("precioProducto").textContent);
-      const cantidad = parseInt(document.getElementById("cantidad").value);
-      const talla = document.getElementById("talla") ? document.getElementById("talla").value : null;
-
-      if (cantidad < 1) return alert("Cantidad inválida");
-
-      let item = carrito.find(p => p.nombre === nombre && p.talla === talla);
-
-      if (item) {
-        item.cantidad += cantidad;
-      } else {
-        carrito.push({ nombre, precio, cantidad, talla });
-      }
-
-      localStorage.setItem("carrito", JSON.stringify(carrito));
-      alert("Producto agregado correctamente");
-
-      actualizarContador();
+        categorias.forEach(c => {
+            cont.innerHTML += `
+                <button class="categoria-btn" onclick="filtrarCategoria('${c}')">${c}</button>
+            `;
+        });
     }
 
-    actualizarContador();
-  </script>
+    function filtrarCategoria(cat) {
+        const filtrados = productos.filter(p => p.category === cat);
+        mostrarProductos(filtrados);
+    }
+
+    /* ---- MOSTRAR PRODUCTOS ---- */
+    function mostrarProductos(lista) {
+        const cont = document.getElementById("productos");
+        cont.innerHTML = "";
+
+        lista.forEach(p => {
+            cont.innerHTML += `
+                <div class="producto-card">
+                    <img src="${p.image}" class="producto-img">
+
+                    <div class="titulo">${p.name}</div>
+
+                    <div class="precio">Q${p.price}.00</div>
+
+                    <button class="btn" onclick="agregarCarrito('${p.id}')">Agregar al carrito</button>
+                    <button class="btn" onclick="verDescripcion('${p.id}')">Ver descripción</button>
+                </div>
+            `;
+        });
+    }
+
+    /* ---- CARRITO + SWEETALERT ---- */
+    function agregarCarrito(id) {
+        Swal.fire({
+            title: "Producto agregado",
+            text: "¿Qué deseas hacer?",
+            icon: "success",
+            showCancelButton: true,
+            confirmButtonText: "Ver carrito",
+            cancelButtonText: "Seguir comprando",
+            confirmButtonColor: "#ff6a00",
+            cancelButtonColor: "#444"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                location.href = "carrito.html";
+            }
+        });
+    }
+
+    /* ---- DESCRIPCIÓN ---- */
+    function verDescripcion(id) {
+        location.href = `descripcion.html?id=${id}`;
+    }
+
+    cargarProductos();
+</script>
 
 </body>
 </html>
