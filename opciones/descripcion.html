@@ -5,16 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Detalle del Producto</title>
 
-  <!-- SweetAlert2 -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
   <style>
     body {
       font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 0;
       color: #333;
-      background: url('../../images/plata.jpeg') no-repeat center center fixed;
+      background: url('../../imagenes/plata.jpeg') no-repeat center center fixed;
       background-size: cover;
     }
 
@@ -110,6 +107,38 @@
       margin-bottom: 10px;
     }
 
+    .info-producto label {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .info-producto select,
+    .info-producto input[type="number"] {
+      padding: 0.5em;
+      margin: 0.5em 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      width: 100%;
+    }
+
+    .info-producto button {
+      background-color: #ff5722;
+      border: none;
+      padding: 0.7em;
+      border-radius: 10px;
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+      width: 100%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .info-producto button:hover {
+      background-color: #ff7043;
+      transform: scale(1.05);
+    }
+
     footer {
       background-color: #232f3e;
       color: white;
@@ -127,23 +156,11 @@
       0% { transform: translateY(0); }
       100% { transform: translateY(-5px); }
     }
-
-    @media (max-width: 600px) {
-      nav {
-        flex-direction: column;
-        align-items: center;
-      }
-      nav a {
-        width: 90%;
-      }
-      .producto-detalle img {
-        max-width: 90%;
-      }
-    }
   </style>
 </head>
 
 <body>
+
   <header>
     <h1>DRANGILS MORALES</h1>
     <nav>
@@ -162,6 +179,7 @@
       <p><strong>Precio:</strong> Q<span id="precioProducto">--</span></p>
       <p><strong>Descripción:</strong> <span id="descripcionProducto">--</span></p>
 
+      <!-- BLOQUE DE TALLAS -->
       <div id="bloqueTallas" style="display:none;">
         <label for="talla">Talla disponible:</label>
         <select id="talla"></select>
@@ -187,18 +205,16 @@
       contador.textContent = total;
     }
 
-    // OBTENER PRODUCTO DESDE URL
     const params = new URLSearchParams(window.location.search);
     const productId = params.get("id");
 
-    // CARGAR PRODUCTO DESDE JSON
     fetch("https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/data/products.json")
       .then(res => res.json())
       .then(lista => {
         const prod = lista.find(p => p.id === productId);
 
         if (!prod) {
-          Swal.fire("Producto no encontrado", "", "error");
+          alert("Producto no encontrado");
           return;
         }
 
@@ -207,7 +223,6 @@
         document.getElementById("precioProducto").textContent = prod.price;
         document.getElementById("descripcionProducto").textContent = prod.description;
 
-        // Tallas dinámicas
         if (prod.sizes && prod.sizes.length > 0) {
           const select = document.getElementById("talla");
           prod.sizes.forEach(t => {
@@ -215,21 +230,18 @@
             op.textContent = t;
             select.appendChild(op);
           });
+
           document.getElementById("bloqueTallas").style.display = "block";
         }
       });
 
-    // AGREGAR AL CARRITO CON SweetAlert2
     function agregarAlCarrito() {
       const nombre = document.getElementById("nombreProducto").textContent;
       const precio = parseFloat(document.getElementById("precioProducto").textContent);
       const cantidad = parseInt(document.getElementById("cantidad").value);
       const talla = document.getElementById("talla") ? document.getElementById("talla").value : null;
 
-      if (cantidad < 1) {
-        Swal.fire("Cantidad inválida", "", "error");
-        return;
-      }
+      if (cantidad < 1) return alert("Cantidad inválida");
 
       let item = carrito.find(p => p.nombre === nombre && p.talla === talla);
 
@@ -240,20 +252,9 @@
       }
 
       localStorage.setItem("carrito", JSON.stringify(carrito));
-      actualizarContador();
+      alert("Producto agregado correctamente");
 
-      Swal.fire({
-        title: 'Producto agregado',
-        text: `${cantidad} unidad(es) de "${nombre}" fueron agregadas al carrito`,
-        icon: 'success',
-        showCancelButton: true,
-        confirmButtonText: 'Ver carrito',
-        cancelButtonText: 'Seguir comprando'
-      }).then((res) => {
-        if (res.isConfirmed) {
-          window.location.href = '../../opciones/vercarrito.html';
-        }
-      });
+      actualizarContador();
     }
 
     actualizarContador();
