@@ -60,6 +60,7 @@
       transform: scale(1.1);
     }
 
+    /* BARRA DE CATEGORÍAS SIN ENLACES */
     .categorias-bar {
       background-color: rgba(2, 117, 216, 0.9);
       color: white;
@@ -71,17 +72,19 @@
       scroll-behavior: smooth;
     }
 
-    .categorias-bar a {
-      color: white;
-      text-decoration: none;
+    .categoria-item {
       background-color: #00c4ff;
+      color: white;
       padding: 0.5em 1em;
       border-radius: 8px;
       font-weight: bold;
+      display: inline-block;
+      cursor: default;
       transition: transform 0.3s, background-color 0.3s;
+      user-select: none;
     }
 
-    .categorias-bar a:hover {
+    .categoria-item:hover {
       background-color: #00e1ff;
       transform: scale(1.1);
     }
@@ -184,7 +187,7 @@
   </nav>
 </header>
 
-<!-- CATEGORÍAS AUTOMÁTICAS -->
+<!-- CATEGORÍAS AUTOMÁTICAS SIN LINKS -->
 <section id="barraCategorias" class="categorias-bar"></section>
 
 <section class="video-promocional">
@@ -212,14 +215,13 @@ const URL_JSON =
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
 // ---------------------------------------------------
-//   CARGAR CATEGORÍAS DESDE JSON AUTOMÁTICAMENTE
+//   CARGAR CATEGORÍAS SIN LINKS
 // ---------------------------------------------------
 async function cargarCategorias() {
   try {
     const resp = await fetch(URL_JSON);
     const data = await resp.json();
 
-    // obtener categorías únicas
     const categorias = [...new Set(data.map(p => p.category))];
 
     const barra = document.getElementById("barraCategorias");
@@ -227,7 +229,7 @@ async function cargarCategorias() {
 
     categorias.forEach(cat => {
       barra.innerHTML += `
-        <a href="../categorias_general/categorias/${cat}.html">${cat}</a>
+        <span class="categoria-item">${cat}</span>
       `;
     });
 
@@ -235,7 +237,7 @@ async function cargarCategorias() {
 }
 
 // ---------------------------------------------------
-//      CARGAR PRODUCTOS + AUTODESCRIPCIÓN
+//      CARGAR PRODUCTOS
 // ---------------------------------------------------
 async function cargarProductos() {
   try {
@@ -256,7 +258,6 @@ async function cargarProductos() {
             Agregar al carrito
           </button>
 
-          <!-- DESCRIPCIÓN AUTOMÁTICA -->
           <a href="../opciones/descripcion.html?id=${p.id}" class="boton-descripcion">
             Ver descripción
           </a>
@@ -272,9 +273,6 @@ async function cargarProductos() {
   }
 }
 
-// ---------------------------------------------------
-//        CARRITO
-// ---------------------------------------------------
 function activarBotones() {
   document.querySelectorAll('.boton-carrito').forEach(btn => {
     btn.addEventListener('click', () => {
