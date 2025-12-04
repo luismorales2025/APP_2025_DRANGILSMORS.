@@ -18,15 +18,18 @@
       overflow-x: hidden;
     }
 
+    /* BARRA SUPERIOR IGUAL QUE LA DEL INDEX */
     header {
-      background-color: rgba(35, 47, 62, 0.9);
+      background-color: rgba(35, 47, 62, 0.95);
       color: white;
-      padding: 1em;
+      padding: 12px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
       width: 100%;
+      position: sticky;
+      top: 0;
+      z-index: 9999;
     }
 
     header h1 {
@@ -47,9 +50,9 @@
       text-decoration: none;
       padding: 0.5em 1em;
       background-color: #ff007f;
-      border-radius: 8px;
+      border-radius: 10px;
       margin-left: 8px;
-      font-size: 14px;
+      font-size: 15px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.3);
       transition: transform 0.3s, background-color 0.3s;
     }
@@ -66,7 +69,7 @@
       font-size: 1.8em;
     }
 
-    /* BOTONES DE CATEGORÍAS */
+    /* BOTONES CATEGORÍAS */
     .categoria-btn {
       background: #ff007f;
       color: white;
@@ -94,7 +97,17 @@
       padding-bottom: 20px;
     }
 
-    /* GRID DE PRODUCTOS RESPONSIVE EXACTO */
+    /* VIDEO DE ANUNCIO */
+    #video-anuncio {
+      width: 100%;
+      max-height: 400px;
+      display: none;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      margin-top: 10px;
+    }
+
+    /* GRID RESPONSIVE EXACTO */
     #productos-lista {
       display: grid;
       gap: 1.3em;
@@ -103,35 +116,12 @@
       margin-bottom: 120px;
     }
 
-    /* 6 por fila */
-    @media (min-width: 1400px) {
-      #productos-lista { grid-template-columns: repeat(6, 1fr); }
-    }
-
-    /* 5 por fila */
-    @media (min-width: 1200px) and (max-width: 1399px) {
-      #productos-lista { grid-template-columns: repeat(5, 1fr); }
-    }
-
-    /* 4 por fila */
-    @media (min-width: 900px) and (max-width: 1199px) {
-      #productos-lista { grid-template-columns: repeat(4, 1fr); }
-    }
-
-    /* 3 por fila */
-    @media (min-width: 700px) and (max-width: 899px) {
-      #productos-lista { grid-template-columns: repeat(3, 1fr); }
-    }
-
-    /* 2 por fila */
-    @media (min-width: 500px) and (max-width: 699px) {
-      #productos-lista { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    /* 1 por fila */
-    @media (max-width: 499px) {
-      #productos-lista { grid-template-columns: repeat(1, 1fr); }
-    }
+    @media (min-width: 1400px) { #productos-lista { grid-template-columns: repeat(6, 1fr); } }
+    @media (min-width: 1200px) and (max-width: 1399px) { #productos-lista { grid-template-columns: repeat(5, 1fr); } }
+    @media (min-width: 900px) and (max-width: 1199px) { #productos-lista { grid-template-columns: repeat(4, 1fr); } }
+    @media (min-width: 700px) and (max-width: 899px) { #productos-lista { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 500px) and (max-width: 699px) { #productos-lista { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 499px) { #productos-lista { grid-template-columns: repeat(1, 1fr); } }
 
     .producto {
       background: rgba(255, 255, 255, 0.88);
@@ -143,9 +133,7 @@
       transition: 0.3s;
     }
 
-    .producto:hover {
-      transform: translateY(-8px) scale(1.03);
-    }
+    .producto:hover { transform: translateY(-8px) scale(1.03); }
 
     .producto img {
       width: 100%;
@@ -166,14 +154,10 @@
       transition: 0.3s;
     }
 
-    .boton-descripcion:hover {
-      background: #ff7043;
-      transform: scale(1.05);
-    }
+    .boton-descripcion:hover { background: #ff7043; transform: scale(1.05); }
 
-    /* FOOTER PEGADO AL FINAL */
     footer {
-      background-color: rgba(35, 47, 62, 0.9);
+      background-color: rgba(35, 47, 62, 0.95);
       color: white;
       padding: 1em;
       text-align: center;
@@ -198,6 +182,9 @@
 
 <div class="contenedor-categorias" id="categoria-container"></div>
 
+<!-- VIDEO DE ANUNCIO -->
+<video id="video-anuncio" controls></video>
+
 <h2 id="titulo-cat" style="display:none;">Productos</h2>
 
 <div id="productos-lista"></div>
@@ -208,14 +195,22 @@
 
 <script>
 const URL_JSON =
- "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/data/products.json";
+"https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/data/products.json";
+
+/* RUTAS DE VIDEOS PARA CADA CATEGORÍA */
+const videosCategorias = {
+  "calzado": "../../videos/calzado.mp4",
+  "catalogos": "../../videos/catalogos.mp4",
+  "ropa": "../../videos/ropa.mp4",
+  "plata": "../../videos/plata.mp4",
+  "joyeria": "../../videos/joyeria.mp4"
+};
 
 document.addEventListener("DOMContentLoaded", () => {
   fetch(URL_JSON)
     .then(res => res.json())
     .then(productos => {
 
-      // obtener categorias únicas
       const categorias = [...new Set(productos.map(p => p.category))];
 
       const cont = document.getElementById("categoria-container");
@@ -224,33 +219,43 @@ document.addEventListener("DOMContentLoaded", () => {
       ).join("");
 
       window.todosProductos = productos;
-    })
-    .catch(() => {
-      alert("Error cargando datos desde GitHub.");
     });
 });
 
-/* MOSTRAR PRODUCTOS FILTRADOS */
+/* MOSTRAR VIDEO + PRODUCTOS */
 function mostrarProductos(cat) {
+  const video = document.getElementById("video-anuncio");
   const titulo = document.getElementById("titulo-cat");
   const lista = document.getElementById("productos-lista");
 
-  titulo.style.display = "block";
-  titulo.innerText = "Mostrando: " + cat;
+  lista.innerHTML = "";
+  titulo.style.display = "none";
 
-  const filtrados = window.todosProductos.filter(p => p.category === cat);
+  // Mostrar video
+  video.src = videosCategorias[cat] || "";
+  video.style.display = "block";
+  video.play();
 
-  lista.innerHTML = filtrados.map(p => `
-    <div class="producto">
-      <img src="${p.image}">
-      <h3>${p.title}</h3>
-      <p><b>Q${p.price}</b></p>
+  // Cuando termina el video → mostrar productos
+  video.onended = () => {
+    video.style.display = "none";
+    titulo.style.display = "block";
+    titulo.innerText = "Mostrando: " + cat;
 
-      <a href="../../opciones/descripcion.html?id=${p.id}" class="boton-descripcion">
-        Ver descripción
-      </a>
-    </div>
-  `).join("");
+    const filtrados = window.todosProductos.filter(p => p.category === cat);
+
+    lista.innerHTML = filtrados.map(p => `
+      <div class="producto">
+        <img src="${p.image}">
+        <h3>${p.title}</h3>
+        <p><b>Q${p.price}</b></p>
+
+        <a href="../../opciones/descripcion.html?id=${p.id}" class="boton-descripcion">
+          Ver descripción
+        </a>
+      </div>
+    `).join("");
+  };
 }
 </script>
 
