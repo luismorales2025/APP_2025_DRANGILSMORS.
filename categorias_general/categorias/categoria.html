@@ -6,7 +6,6 @@
   <title>Categorías de Productos</title>
 
   <style>
-    /* ===== TU CSS ORIGINAL SIN CAMBIOS ===== */
     body {
       margin: 0;
       min-height: 100vh;
@@ -26,7 +25,6 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      width: 100%;
       position: sticky;
       top: 0;
       z-index: 9999;
@@ -36,13 +34,7 @@
       margin: 0;
       color: #ffcc00;
       font-size: 1.8em;
-      animation: flotar 2s ease-in-out infinite alternate;
       text-shadow: 0 0 10px #ffcc00;
-    }
-
-    @keyframes flotar {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-6px); }
     }
 
     nav a {
@@ -52,21 +44,11 @@
       background-color: #ff007f;
       border-radius: 10px;
       margin-left: 8px;
-      font-size: 15px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      transition: transform 0.3s, background-color 0.3s;
-    }
-
-    nav a:hover {
-      background-color: #ff3399;
-      transform: scale(1.1);
     }
 
     h2 {
       text-align: center;
       margin-top: 20px;
-      text-shadow: 0 0 8px #000;
-      font-size: 1.8em;
     }
 
     .categoria-btn {
@@ -75,17 +57,9 @@
       padding: 1em 2em;
       border-radius: 16px;
       margin: 10px;
-      font-size: clamp(16px, 3vw, 22px);
       border: none;
       font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      transition: 0.3s;
-    }
-
-    .categoria-btn:hover {
-      transform: scale(1.1);
-      background: #ff3399;
     }
 
     .contenedor-categorias {
@@ -99,8 +73,6 @@
       width: 100%;
       max-height: 400px;
       display: none;
-      border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
       margin-top: 10px;
     }
 
@@ -108,39 +80,30 @@
       display: grid;
       gap: 1.3em;
       padding: 1.5em;
-      width: 100%;
-      margin-bottom: 120px;
     }
 
-    @media (min-width: 1200px) { #productos-lista { grid-template-columns: repeat(4, 1fr); } }
-    @media (max-width: 1199px) { #productos-lista { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 600px) { #productos-lista { grid-template-columns: 1fr; } }
+    @media (min-width: 1200px) {
+      #productos-lista { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (max-width: 1199px) {
+      #productos-lista { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      #productos-lista { grid-template-columns: 1fr; }
+    }
 
     .producto {
-      background: rgba(255, 255, 255, 0.88);
+      background: rgba(255,255,255,0.88);
       padding: 1em;
       border-radius: 12px;
       text-align: center;
       color: #000;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
 
     .producto img {
       width: 100%;
       height: 170px;
-      border-radius: 10px;
       object-fit: cover;
-    }
-
-    .boton-descripcion {
-      display: block;
-      margin-top: 10px;
-      padding: 0.6em;
-      background: #ff5722;
-      border-radius: 8px;
-      color: white;
-      font-weight: bold;
-      text-decoration: none;
     }
 
     footer {
@@ -170,12 +133,12 @@
 
 <video id="video-anuncio" controls></video>
 
-<h2 id="titulo-cat" style="display:none;">Productos</h2>
+<h2 id="titulo-cat" style="display:none;"></h2>
 
 <div id="productos-lista"></div>
 
 <footer>
-  © 2025 DRANGILS MORALES — Todos los derechos reservados.
+  © 2025 DRANGILS MORALES
 </footer>
 
 <script>
@@ -184,26 +147,25 @@ const URL_JSON =
 
 const videosCategorias = {
   calzado: "../../videos/calzado.mp4",
-  catalogos: "../../videos/catalogos.mp4",
-  ropa: "../../videos/ropa.mp4"
+  ropa: "../../videos/ropa.mp4",
+  joya: "../../videos/joya.mp4",
+  catalogos: "../../videos/catalogos.mp4"
 };
 
-let todosProductos = [];
+let productos = [];
 
 fetch(URL_JSON)
-  .then(res => res.json())
+  .then(r => r.json())
   .then(data => {
-    todosProductos = data;
-
+    productos = data;
     const categorias = [...new Set(data.map(p => p.category))];
-    const cont = document.getElementById("categoria-container");
-
-    cont.innerHTML = categorias.map(cat =>
-      `<button class="categoria-btn" onclick="mostrarCategoria('${cat}')">${cat}</button>`
-    ).join("");
+    document.getElementById("categoria-container").innerHTML =
+      categorias.map(c =>
+        `<button class="categoria-btn" onclick="mostrarCategoria('${c}')">${c}</button>`
+      ).join("");
   });
 
-function mostrarCategoria(categoria) {
+function mostrarCategoria(cat) {
   const video = document.getElementById("video-anuncio");
   const lista = document.getElementById("productos-lista");
   const titulo = document.getElementById("titulo-cat");
@@ -211,28 +173,30 @@ function mostrarCategoria(categoria) {
   lista.innerHTML = "";
   titulo.style.display = "none";
 
-  video.src = videosCategorias[categoria] || "";
-  video.style.display = "block";
-  video.play();
+  if (videosCategorias[cat]) {
+    video.src = videosCategorias[cat];
+    video.style.display = "block";
+    video.play();
+    video.onended = mostrarProductos;
+  } else {
+    mostrarProductos();
+  }
 
-  video.onended = () => {
+  function mostrarProductos() {
     video.style.display = "none";
     titulo.style.display = "block";
-    titulo.textContent = "Mostrando: " + categoria;
+    titulo.textContent = "Categoría: " + cat;
 
-    const filtrados = todosProductos.filter(p => p.category === categoria);
-
-    lista.innerHTML = filtrados.map(p => `
-      <div class="producto">
-        <img src="${p.image}">
-        <h3>${p.title}</h3>
-        <p><b>Q${p.price}</b></p>
-        <a class="boton-descripcion" href="../../opciones/descripcion.html?id=${p.id}">
-          Ver descripción
-        </a>
-      </div>
-    `).join("");
-  };
+    lista.innerHTML = productos
+      .filter(p => p.category === cat)
+      .map(p => `
+        <div class="producto">
+          <img src="${p.image}">
+          <h3>${p.title}</h3>
+          <p><b>Q${p.price}</b></p>
+        </div>
+      `).join("");
+  }
 }
 </script>
 
