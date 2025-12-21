@@ -1,15 +1,1 @@
-[
-  {
-    "id": "p_1764210984147",
-    "title": "proyecto 1",
-    "description": "esto es proyecto 1",
-    "price": "323",
-    "category": "catalogos",
-    "image": "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/images/img_1764210980788.jpeg",
-    "quantity": 0,
-    "maxAllowed": 100,
-    "controlStock": true,
-    "sizes": [],
-    "created_at": "2025-11-27T02:36:24.147Z"
-  }
-]
+[]
