@@ -19,6 +19,27 @@
     ]
   },
   {
+    "id": "p_1764195062986",
+    "title": "producto 34",
+    "description": "hola esto es una preuba xd",
+    "price": "324",
+    "category": "calzado",
+    "image": "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/images/img_1764195061028.jpeg",
+    "created_at": "2025-11-26T22:11:02.986Z",
+    "quantity": 7,
+    "maxAllowed": 100,
+    "controlStock": true,
+    "sizes": [
+      "33",
+      "54",
+      "12",
+      "43",
+      "54",
+      "65"
+    ],
+    "updated_at": "2025-11-27T04:31:21.066Z"
+  },
+  {
     "id": "p_1764210984147",
     "title": "proyecto 1",
     "description": "esto es proyecto 1",
@@ -43,18 +64,5 @@
     "controlStock": true,
     "sizes": [],
     "created_at": "2025-12-02T13:59:30.024Z"
-  },
-  {
-    "id": "p_1765601279237",
-    "title": "producto 34",
-    "description": "calzado bicolor mexicano Karla Vazquez",
-    "price": "423",
-    "category": "accesorios",
-    "image": "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/images/img_1765601271813.jpeg",
-    "quantity": 23,
-    "maxAllowed": 100,
-    "controlStock": true,
-    "sizes": [],
-    "created_at": "2025-12-13T04:47:59.238Z"
   }
 ]
