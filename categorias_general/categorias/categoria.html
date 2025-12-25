@@ -9,8 +9,6 @@
 body{
   margin:0;
   min-height:100vh;
-  display:flex;
-  flex-direction:column;
   font-family:Arial,sans-serif;
   background:url('../../images/plata.jpeg') no-repeat center center fixed;
   background-size:cover;
@@ -18,9 +16,9 @@ body{
   overflow-x:hidden;
 }
 
+/* HEADER */
 header{
   background:rgba(35,47,62,.95);
-  color:#fff;
   padding:12px 20px;
   display:flex;
   justify-content:space-between;
@@ -33,82 +31,91 @@ header{
 header h1{
   margin:0;
   color:#ffcc00;
-  font-size:1.6em;
-  text-shadow:0 0 10px #ffcc00;
+  font-size:1.5em;
 }
 
 nav a{
   color:#fff;
   text-decoration:none;
-  padding:.5em 1em;
+  padding:.4em .8em;
   background:#ff007f;
-  border-radius:10px;
-  margin-left:8px;
+  border-radius:8px;
+  margin-left:6px;
+  font-size:14px;
 }
 
-h2{text-align:center;margin-top:15px;}
-
+/* CATEGORÍAS */
 .contenedor-categorias{
   display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  margin:1em;
-  transition:all .4s ease;
+  gap:10px;
+  overflow-x:auto;
+  padding:10px;
+  background:#1e88e5;
+  position:sticky;
+  top:70px;
+  z-index:999;
+  transition:transform .3s ease;
 }
 
-.oculto{
-  display:none !important;
+.contenedor-categorias.ocultar{
+  transform:translateY(-120%);
 }
 
 .categoria-btn{
-  background:#ff007f;
+  background:#00bcd4;
   color:#fff;
-  padding:1em 2em;
-  border-radius:16px;
-  margin:8px;
+  padding:.5em 1em;
+  border-radius:20px;
   border:none;
   font-weight:bold;
   cursor:pointer;
-  font-size:1em;
+  white-space:nowrap;
 }
 
+/* VIDEO */
 #video-anuncio{
   width:100%;
-  max-height:380px;
+  max-height:300px;
+  object-fit:cover;
   display:none;
-  margin-top:10px;
-  border-radius:12px;
 }
 
+/* PRODUCTOS */
 #productos-lista{
   display:grid;
-  gap:1.2em;
-  padding:1.2em;
+  gap:1em;
+  padding:1em;
 }
 
-@media(min-width:1200px){#productos-lista{grid-template-columns:repeat(4,1fr);}}
-@media(max-width:1199px){#productos-lista{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:600px){#productos-lista{grid-template-columns:1fr;}}
+@media(min-width:1000px){
+  #productos-lista{grid-template-columns:repeat(4,1fr);}
+}
+@media(max-width:999px){
+  #productos-lista{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:600px){
+  #productos-lista{grid-template-columns:1fr;}
+}
 
 .producto{
-  background:rgba(255,255,255,.9);
-  padding:1em;
-  border-radius:12px;
-  text-align:center;
+  background:#fff;
   color:#000;
+  border-radius:12px;
+  padding:.8em;
+  text-align:center;
 }
 
 .producto img{
   width:100%;
-  height:170px;
+  height:160px;
   object-fit:cover;
   border-radius:10px;
 }
 
 .boton-descripcion{
   display:block;
-  margin-top:10px;
-  padding:.6em;
+  margin-top:8px;
+  padding:.5em;
   background:#ff5722;
   color:#fff;
   border-radius:8px;
@@ -118,10 +125,8 @@ h2{text-align:center;margin-top:15px;}
 
 footer{
   background:rgba(35,47,62,.95);
-  color:#fff;
-  padding:1em;
   text-align:center;
-  margin-top:auto;
+  padding:1em;
 }
 </style>
 </head>
@@ -137,13 +142,9 @@ footer{
   </nav>
 </header>
 
-<h2 id="titulo-principal">Categorías de Productos</h2>
-
 <div class="contenedor-categorias" id="categoria-container"></div>
 
-<video id="video-anuncio" controls></video>
-
-<h2 id="titulo-cat" style="display:none;"></h2>
+<video id="video-anuncio" muted autoplay></video>
 
 <div id="productos-lista"></div>
 
@@ -151,88 +152,82 @@ footer{
 
 <script>
 const URL_JSON =
-"https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/data/products.json";
+"https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS/main/data/products.json";
 
 const videosCategorias = {
-  calzado: "../../videos/calzado.mp4",
-  ropa: "../../videos/ropa.mp4",
-  joyeria: "../../videos/joyeria.mp4",
-  catalogos: "../../anuncio1.mp4" type="video/mp4">,
-  plata: "../../videos/plata.mp4"
+  "Calzado mexicano": "../../videos/calzado.mp4",
+  "Plata": "../../videos/plata.mp4"
 };
 
 let productos = [];
-let ultimaScroll = 0;
+let lastScroll = 0;
 
+/* CARGAR JSON */
 fetch(URL_JSON)
-  .then(r => r.json())
-  .then(data => {
-    productos = data;
-    const categorias = [...new Set(data.map(p => p.category))];
+.then(res => res.json())
+.then(data => {
+  productos = data;
 
-    document.getElementById("categoria-container").innerHTML =
-      categorias.map(c =>
-        `<button class="categoria-btn" onclick="mostrarCategoria('${c}')">${c}</button>`
-      ).join("");
-  });
+  const categorias = [...new Set(productos.map(p => p.category))];
+  document.getElementById("categoria-container").innerHTML =
+    categorias.map(c =>
+      `<button class="categoria-btn" onclick="mostrarCategoria('${c}')">${c}</button>`
+    ).join("");
+})
+.catch(err => console.error("Error JSON:", err));
 
+/* MOSTRAR CATEGORÍA */
 function mostrarCategoria(cat){
   const video = document.getElementById("video-anuncio");
   const lista = document.getElementById("productos-lista");
-  const titulo = document.getElementById("titulo-cat");
-  const categorias = document.getElementById("categoria-container");
 
-  categorias.classList.add("oculto");
-  document.getElementById("titulo-principal").style.display="none";
-
-  lista.innerHTML="";
-  titulo.style.display="none";
-
-  const mostrarProductos = () => {
-    video.style.display="none";
-    titulo.style.display="block";
-    titulo.textContent="Categoría: "+cat;
-
-    lista.innerHTML = productos
-      .filter(p=>p.category===cat)
-      .map(p=>`
-        <div class="producto">
-          <img src="${p.image}">
-          <h3>${p.title}</h3>
-          <p><b>Q${p.price}</b></p>
-          <a class="boton-descripcion"
-             href="../../opciones/descripcion.html?id=${p.id}">
-             Ver descripción
-          </a>
-        </div>
-      `).join("");
-  };
+  lista.innerHTML = "";
 
   if(videosCategorias[cat]){
-    video.src=videosCategorias[cat];
-    video.style.display="block";
+    video.src = videosCategorias[cat];
+    video.style.display = "block";
+    video.currentTime = 0;
     video.play();
-    video.onended=mostrarProductos;
-  }else{
-    mostrarProductos();
+
+    setTimeout(() => {
+      video.style.display = "none";
+      cargarProductos(cat);
+    }, 3500);
+  } else {
+    cargarProductos(cat);
   }
 }
 
-/* MOSTRAR / OCULTAR CATEGORÍAS SEGÚN SCROLL */
-window.addEventListener("scroll",()=>{
-  const actual = window.scrollY;
-  const categorias = document.getElementById("categoria-container");
-  const titulo = document.getElementById("titulo-principal");
+/* PRODUCTOS */
+function cargarProductos(cat){
+  document.getElementById("productos-lista").innerHTML =
+    productos.filter(p => p.category === cat)
+    .map(p => `
+      <div class="producto">
+        <img src="${p.image}">
+        <h4>${p.title}</h4>
+        <p><b>Q${p.price}</b></p>
+        <a class="boton-descripcion"
+           href="../../opciones/descripcion.html?id=${p.id}">
+           Ver descripción
+        </a>
+      </div>
+    `).join("");
+}
 
-  if(actual < ultimaScroll){
-    categorias.classList.remove("oculto");
-    titulo.style.display="block";
+/* OCULTAR / MOSTRAR CATEGORÍAS AL SCROLL */
+window.addEventListener("scroll", () => {
+  const cont = document.getElementById("categoria-container");
+  const actual = window.pageYOffset;
+
+  if(actual > lastScroll){
+    cont.classList.add("ocultar");
+  }else{
+    cont.classList.remove("ocultar");
   }
-  ultimaScroll = actual;
+  lastScroll = actual;
 });
 </script>
 
 </body>
 </html>
-
-
