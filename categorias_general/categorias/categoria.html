@@ -33,7 +33,7 @@ header{
 header h1{
   margin:0;
   color:#ffcc00;
-  font-size:1.8em;
+  font-size:1.6em;
   text-shadow:0 0 10px #ffcc00;
 }
 
@@ -46,13 +46,18 @@ nav a{
   margin-left:8px;
 }
 
-h2{text-align:center;margin-top:20px;}
+h2{text-align:center;margin-top:15px;}
 
 .contenedor-categorias{
   display:flex;
   flex-wrap:wrap;
   justify-content:center;
-  margin:1.5em;
+  margin:1em;
+  transition:all .4s ease;
+}
+
+.oculto{
+  display:none !important;
 }
 
 .categoria-btn{
@@ -60,37 +65,33 @@ h2{text-align:center;margin-top:20px;}
   color:#fff;
   padding:1em 2em;
   border-radius:16px;
-  margin:10px;
+  margin:8px;
   border:none;
   font-weight:bold;
   cursor:pointer;
+  font-size:1em;
 }
 
 #video-anuncio{
   width:100%;
-  max-height:400px;
+  max-height:380px;
   display:none;
   margin-top:10px;
+  border-radius:12px;
 }
 
 #productos-lista{
   display:grid;
-  gap:1.3em;
-  padding:1.5em;
+  gap:1.2em;
+  padding:1.2em;
 }
 
-@media(min-width:1200px){
-  #productos-lista{grid-template-columns:repeat(4,1fr);}
-}
-@media(max-width:1199px){
-  #productos-lista{grid-template-columns:repeat(2,1fr);}
-}
-@media(max-width:600px){
-  #productos-lista{grid-template-columns:1fr;}
-}
+@media(min-width:1200px){#productos-lista{grid-template-columns:repeat(4,1fr);}}
+@media(max-width:1199px){#productos-lista{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:600px){#productos-lista{grid-template-columns:1fr;}}
 
 .producto{
-  background:rgba(255,255,255,.88);
+  background:rgba(255,255,255,.9);
   padding:1em;
   border-radius:12px;
   text-align:center;
@@ -136,7 +137,7 @@ footer{
   </nav>
 </header>
 
-<h2>Categorías de Productos</h2>
+<h2 id="titulo-principal">Categorías de Productos</h2>
 
 <div class="contenedor-categorias" id="categoria-container"></div>
 
@@ -155,18 +156,20 @@ const URL_JSON =
 const videosCategorias = {
   calzado: "../../videos/calzado.mp4",
   ropa: "../../videos/ropa.mp4",
-  joya: "../../videos/joya.mp4",
-  catalogos: "../../videos/catalogos.mp4"
+  joyeria: "../../videos/joyeria.mp4",
+  catalogos: "../../videos/catalogos.mp4",
+  plata: "../../videos/plata.mp4"
 };
 
 let productos = [];
+let ultimaScroll = 0;
 
 fetch(URL_JSON)
   .then(r => r.json())
   .then(data => {
     productos = data;
-
     const categorias = [...new Set(data.map(p => p.category))];
+
     document.getElementById("categoria-container").innerHTML =
       categorias.map(c =>
         `<button class="categoria-btn" onclick="mostrarCategoria('${c}')">${c}</button>`
@@ -177,20 +180,22 @@ function mostrarCategoria(cat){
   const video = document.getElementById("video-anuncio");
   const lista = document.getElementById("productos-lista");
   const titulo = document.getElementById("titulo-cat");
+  const categorias = document.getElementById("categoria-container");
 
-  lista.innerHTML = "";
-  titulo.style.display = "none";
+  categorias.classList.add("oculto");
+  document.getElementById("titulo-principal").style.display="none";
+
+  lista.innerHTML="";
+  titulo.style.display="none";
 
   const mostrarProductos = () => {
-    video.pause();
-    video.style.display = "none";
-
-    titulo.style.display = "block";
-    titulo.textContent = "Categoría: " + cat;
+    video.style.display="none";
+    titulo.style.display="block";
+    titulo.textContent="Categoría: "+cat;
 
     lista.innerHTML = productos
-      .filter(p => p.category === cat)
-      .map(p => `
+      .filter(p=>p.category===cat)
+      .map(p=>`
         <div class="producto">
           <img src="${p.image}">
           <h3>${p.title}</h3>
@@ -204,15 +209,27 @@ function mostrarCategoria(cat){
   };
 
   if(videosCategorias[cat]){
-    video.src = videosCategorias[cat];
-    video.style.display = "block";
-    video.currentTime = 0;
+    video.src=videosCategorias[cat];
+    video.style.display="block";
     video.play();
-    video.onended = mostrarProductos;
+    video.onended=mostrarProductos;
   }else{
     mostrarProductos();
   }
 }
+
+/* MOSTRAR / OCULTAR CATEGORÍAS SEGÚN SCROLL */
+window.addEventListener("scroll",()=>{
+  const actual = window.scrollY;
+  const categorias = document.getElementById("categoria-container");
+  const titulo = document.getElementById("titulo-principal");
+
+  if(actual < ultimaScroll){
+    categorias.classList.remove("oculto");
+    titulo.style.display="block";
+  }
+  ultimaScroll = actual;
+});
 </script>
 
 </body>
