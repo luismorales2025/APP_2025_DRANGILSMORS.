@@ -40,8 +40,12 @@ nav a{
   margin-left:8px;
 }
 
-h2{text-align:center;margin-top:15px;}
+h2{
+  text-align:center;
+  margin-top:15px;
+}
 
+/* ================= CATEGORÍAS ================= */
 .contenedor-categorias{
   display:flex;
   flex-wrap:wrap;
@@ -60,34 +64,46 @@ h2{text-align:center;margin-top:15px;}
   cursor:pointer;
 }
 
-/* VIDEO HORIZONTAL */
-#video-anuncio{
+/* ================= VIDEO HORIZONTAL ================= */
+.video-wrapper{
   width:100%;
-  max-height:420px;
-  object-fit:cover;
-  display:none;
+  max-width:1400px;
   margin:15px auto;
-  border-radius:15px;
+  display:none;
 }
 
-/* PRODUCTOS */
+.video-wrapper video{
+  width:100%;
+  aspect-ratio:16/9;      /* FORZADO HORIZONTAL */
+  object-fit:cover;
+  border-radius:16px;
+  box-shadow:0 6px 20px rgba(0,0,0,.6);
+}
+
+/* ================= PRODUCTOS ================= */
 #productos-lista{
   display:grid;
   gap:1.2em;
   padding:1.2em;
 }
 
-@media(min-width:1200px){#productos-lista{grid-template-columns:repeat(4,1fr);}}
-@media(max-width:1199px){#productos-lista{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:600px){#productos-lista{grid-template-columns:1fr;}}
+@media(min-width:1200px){
+  #productos-lista{grid-template-columns:repeat(4,1fr);}
+}
+@media(max-width:1199px){
+  #productos-lista{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:600px){
+  #productos-lista{grid-template-columns:1fr;}
+}
 
 .producto{
   background:rgba(255,255,255,.9);
   padding:1em;
-  border-radius:12px;
+  border-radius:14px;
   text-align:center;
   color:#000;
-  animation: flotar 3s ease-in-out infinite alternate;
+  animation:flotar 3s ease-in-out infinite alternate;
 }
 
 @keyframes flotar{
@@ -128,7 +144,9 @@ footer{
   <h1>DRANGILS MORALES</h1>
   <nav>
     <a href="../../pagina_principal/pagina_principal.html">Inicio</a>
-    <a href="../../opciones/vercarrito.html">Carrito (<span id="contadorCarrito">0</span>)</a>
+    <a href="../../opciones/vercarrito.html">
+      Carrito (<span id="contadorCarrito">0</span>)
+    </a>
   </nav>
 </header>
 
@@ -136,8 +154,10 @@ footer{
 
 <div class="contenedor-categorias" id="categoria-container"></div>
 
-<!-- VIDEO PROMOCIONAL POR CATEGORÍA -->
-<video id="video-anuncio" autoplay muted playsinline></video>
+<!-- VIDEO PROMOCIONAL -->
+<div class="video-wrapper" id="videoWrapper">
+  <video id="video-anuncio" autoplay muted playsinline></video>
+</div>
 
 <h2 id="titulo-cat" style="display:none;"></h2>
 
@@ -148,55 +168,68 @@ footer{
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-// ================== JSON DESDE GITHUB ==================
+/* ======================================================
+   JSON DESDE GITHUB (NO TOCAR)
+====================================================== */
 const URL_JSON =
 "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/data/products.json";
 
-/*
-========================================================
-MAPEO DE CATEGORÍAS → VIDEOS (HORIZONTAL)
-EL NOMBRE DEBE COINCIDIR CON:
-- category en el JSON
-========================================================
-*/
+/* ======================================================
+   VIDEOS POR CATEGORÍA
+   🔹 EL NOMBRE DEBE SER IGUAL AL "category" DEL JSON
+====================================================== */
 const videosCategorias = {
-  calzado: "../../videos/calzado_horizontal.mp4",
-  ropa: "../../anuncio2.mp4",
-  accesorios: "../../anuncio2.mp4",
-  catalogos: "../../anuncio2.mp4"
+  // category: "catalogos"
+  catalogos: "../../sanuncio1.mp4",
+
+  // category: "ropa"
+  ropa: "../../anuncio1.mp4",
+
+  // category: "accesorios"
+  accesorios: "../../anuncio1.mp4",
+
+  // category: "calzado"
+  calzado: "../../videos/calzado_horizontal.mp4"
 };
 
 let productos = [];
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-// ================== CARGAR DATOS ==================
+/* ================== CARGAR CATEGORÍAS ================== */
 fetch(URL_JSON)
   .then(r => r.json())
   .then(data => {
     productos = data;
+
     const categorias = [...new Set(data.map(p => p.category))];
 
     document.getElementById("categoria-container").innerHTML =
-      categorias.map(c =>
-        `<button class="categoria-btn" onclick="mostrarCategoria('${c}')">${c}</button>`
+      categorias.map(cat =>
+        `<button class="categoria-btn" onclick="mostrarCategoria('${cat}')">
+          ${cat}
+        </button>`
       ).join("");
 
     actualizarContador();
   });
 
-// ================== MOSTRAR CATEGORÍA ==================
+/* ================== MOSTRAR CATEGORÍA ================== */
 function mostrarCategoria(cat){
   const video = document.getElementById("video-anuncio");
+  const wrapper = document.getElementById("videoWrapper");
   const lista = document.getElementById("productos-lista");
+  const titulo = document.getElementById("titulo-cat");
 
   document.getElementById("titulo-principal").style.display="none";
   document.getElementById("categoria-container").style.display="none";
 
+  titulo.style.display="block";
+  titulo.textContent="Categoría: "+cat;
   lista.innerHTML="";
-  video.style.display="none";
 
   const mostrarProductos = () => {
-    video.style.display="none";
+    wrapper.style.display="none";
+
     lista.innerHTML = productos
       .filter(p=>p.category===cat)
       .map(p=>`
@@ -205,11 +238,13 @@ function mostrarCategoria(cat){
           <h3>${p.title}</h3>
           <p><b>Q${p.price}</b></p>
 
-          <button class="boton" onclick="agregarCarrito('${p.title}',${p.price})">
+          <button class="boton"
+            onclick="agregarCarrito('${p.title}',${p.price})">
             Agregar al carrito
           </button>
 
-          <a class="boton" href="../../opciones/descripcion.html?id=${p.id}">
+          <a class="boton"
+            href="../../opciones/descripcion.html?id=${p.id}">
             Ver descripción
           </a>
         </div>
@@ -218,14 +253,16 @@ function mostrarCategoria(cat){
 
   if(videosCategorias[cat]){
     video.src = videosCategorias[cat];
-    video.style.display="block";
+    wrapper.style.display="block";
+    video.currentTime = 0;
+    video.play();
     video.onended = mostrarProductos;
   } else {
     mostrarProductos();
   }
 }
 
-// ================== CARRITO ==================
+/* ================== CARRITO ================== */
 function agregarCarrito(nombre,precio){
   let prod = carrito.find(p=>p.nombre===nombre);
   if(prod) prod.cantidad++;
@@ -255,4 +292,3 @@ function actualizarContador(){
 
 </body>
 </html>
-
