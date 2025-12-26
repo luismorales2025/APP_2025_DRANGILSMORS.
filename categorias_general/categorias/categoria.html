@@ -46,7 +46,10 @@ nav a{
   margin-left:8px;
 }
 
-h2{text-align:center;margin-top:15px;}
+h2{
+  text-align:center;
+  margin-top:15px;
+}
 
 .contenedor-categorias{
   display:flex;
@@ -54,8 +57,6 @@ h2{text-align:center;margin-top:15px;}
   justify-content:center;
   margin:1em;
 }
-
-.oculto{display:none !important;}
 
 .categoria-btn{
   background:#ff007f;
@@ -69,12 +70,20 @@ h2{text-align:center;margin-top:15px;}
   font-size:1em;
 }
 
-#video-anuncio{
+/* ===== VIDEO HORIZONTAL ===== */
+.video-wrapper{
   width:100%;
-  max-height:380px;
+  max-width:1400px;
+  margin:15px auto;
   display:none;
-  margin:10px auto;
-  border-radius:12px;
+}
+
+.video-wrapper video{
+  width:100%;
+  aspect-ratio:16/9; /* FORZAR HORIZONTAL */
+  object-fit:cover;
+  border-radius:14px;
+  box-shadow:0 6px 20px rgba(0,0,0,.5);
 }
 
 #productos-lista{
@@ -83,9 +92,15 @@ h2{text-align:center;margin-top:15px;}
   padding:1.2em;
 }
 
-@media(min-width:1200px){#productos-lista{grid-template-columns:repeat(4,1fr);}}
-@media(max-width:1199px){#productos-lista{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:600px){#productos-lista{grid-template-columns:1fr;}}
+@media(min-width:1200px){
+  #productos-lista{grid-template-columns:repeat(4,1fr);}
+}
+@media(max-width:1199px){
+  #productos-lista{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:600px){
+  #productos-lista{grid-template-columns:1fr;}
+}
 
 .producto{
   background:rgba(255,255,255,.9);
@@ -138,7 +153,10 @@ footer{
 
 <div class="contenedor-categorias" id="categoria-container"></div>
 
-<video id="video-anuncio" muted autoplay playsinline></video>
+<!-- VIDEO HORIZONTAL -->
+<div class="video-wrapper" id="videoWrapper">
+  <video id="video-anuncio" autoplay muted playsinline></video>
+</div>
 
 <h2 id="titulo-cat" style="display:none;"></h2>
 
@@ -147,22 +165,39 @@ footer{
 <footer>© 2025 DRANGILS MORALES</footer>
 
 <script>
+/* ======================================================
+   JSON DESDE GITHUB - NO TOCAR
+====================================================== */
 const URL_JSON =
 "https://raw.githubusercontent.com/luismorales2025/APP_2025_DRANGILSMORS./main/data/products.json";
 
-/* VIDEOS POR CATEGORÍA (DEBEN COINCIDIR CON EL JSON) */
+/* ======================================================
+   VIDEOS POR CATEGORÍA
+   👉 EL NOMBRE DEBE SER IGUAL AL "category" DEL JSON
+====================================================== */
 const videosCategorias = {
-  calzado: "../../videos/calzado.mp4",
-  ropa: "../../videos/ropa.mp4",
-  joyeria: "../../videos/joyeria.mp4",
-  plata: "../../videos/plata.mp4",
-  catalogos: "../../anuncio1.mp4"
+
+  // category: "catalogos"
+  catalogos: "../../videos/catalogos_horizontal.mp4",
+
+  // category: "ropa"
+  ropa: "../../videos/ropa_horizontal.mp4",
+
+  // category: "accesorios"
+  accesorios: "../../videos/accesorios_horizontal.mp4",
+
+  // category: "calzado"
+  calzado: "../../videos/calzado_horizontal.mp4"
+
 };
 
 let productos = [];
 
+/* ======================================================
+   CARGAR CATEGORÍAS DESDE JSON
+====================================================== */
 fetch(URL_JSON)
-  .then(resp => resp.json())
+  .then(r => r.json())
   .then(data => {
     productos = data;
 
@@ -170,53 +205,49 @@ fetch(URL_JSON)
 
     document.getElementById("categoria-container").innerHTML =
       categorias.map(cat =>
-        `<button class="categoria-btn" onclick="mostrarCategoria('${cat}')">${cat}</button>`
+        `<button class="categoria-btn" onclick="mostrarCategoria('${cat}')">
+          ${cat}
+        </button>`
       ).join("");
-  })
-  .catch(err => {
-    console.error("Error cargando JSON:", err);
   });
 
+/* ======================================================
+   MOSTRAR CATEGORÍA + VIDEO
+====================================================== */
 function mostrarCategoria(cat){
   const video = document.getElementById("video-anuncio");
+  const wrapper = document.getElementById("videoWrapper");
   const lista = document.getElementById("productos-lista");
   const titulo = document.getElementById("titulo-cat");
 
-  document.getElementById("categoria-container").classList.add("oculto");
-  document.getElementById("titulo-principal").style.display="none";
+  titulo.style.display = "block";
+  titulo.textContent = "Categoría: " + cat;
+  lista.innerHTML = "";
 
-  lista.innerHTML="";
-  titulo.style.display="none";
-
-  const mostrarProductos = () => {
-    video.style.display="none";
-    titulo.style.display="block";
-    titulo.textContent = "Categoría: " + cat;
-
-    lista.innerHTML = productos
-      .filter(p => p.category === cat)
-      .map(p => `
-        <div class="producto">
-          <img src="${p.image}">
-          <h3>${p.title}</h3>
-          <p><b>Q${p.price}</b></p>
-          <a class="boton-descripcion"
-             href="../../opciones/descripcion.html?id=${p.id}">
-             Ver descripción
-          </a>
-        </div>
-      `).join("");
-  };
-
-  if (videosCategorias[cat]) {
+  /* VIDEO */
+  if(videosCategorias[cat]){
     video.src = videosCategorias[cat];
-    video.style.display = "block";
-    video.load();
-    video.play().catch(()=>{});
-    video.onended = mostrarProductos;
-  } else {
-    mostrarProductos();
+    wrapper.style.display = "block";
+    video.currentTime = 0;
+    video.play();
+  }else{
+    wrapper.style.display = "none";
   }
+
+  /* PRODUCTOS */
+  lista.innerHTML = productos
+    .filter(p => p.category === cat)
+    .map(p => `
+      <div class="producto">
+        <img src="${p.image}">
+        <h3>${p.title}</h3>
+        <p><b>Q${p.price}</b></p>
+        <a class="boton-descripcion"
+           href="../../opciones/descripcion.html?id=${p.id}">
+           Ver descripción
+        </a>
+      </div>
+    `).join("");
 }
 </script>
 
